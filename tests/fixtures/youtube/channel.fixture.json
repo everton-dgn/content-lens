@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-channel",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-channel-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "channel-card-stable",
+      "surface": "channel",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-channel-synthetic:channel-card-stable",
+      "title": "Synthetic channel archive video",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "channelA001"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCchannelSyntheticAlpha01"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    }
+  ]
+}

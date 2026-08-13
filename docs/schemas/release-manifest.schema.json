@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/content-lens/content-lens/blob/main/docs/schemas/release-manifest.schema.json",
+  "title": "ContentLens release manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "product",
+    "channel",
+    "source",
+    "toolchain",
+    "versionDomains",
+    "inputs",
+    "capabilities",
+    "providers",
+    "models",
+    "datasets",
+    "classifier",
+    "artifacts",
+    "gates",
+    "reproducibility"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "content-lens" },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+        }
+      }
+    },
+    "channel": { "enum": ["dev", "alpha", "beta", "stable"] },
+    "source": { "$ref": "#/$defs/source" },
+    "toolchain": { "type": "object" },
+    "versionDomains": { "type": "object" },
+    "inputs": { "type": "object" },
+    "capabilities": { "type": "object" },
+    "providers": { "type": "array" },
+    "models": { "type": "array" },
+    "datasets": { "type": "array" },
+    "classifier": { "type": "object" },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "gates": { "type": "object" },
+    "reproducibility": { "type": "object" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "tag", "branch", "dirty"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/digest" },
+        "tag": { "type": ["string", "null"] },
+        "branch": { "type": ["string", "null"] },
+        "dirty": { "type": "boolean" }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "browser", "sha256"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^content-lens-[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?-(chrome|firefox|sources)\\.zip$"
+        },
+        "browser": { "enum": ["chrome", "firefox", "sources"] },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

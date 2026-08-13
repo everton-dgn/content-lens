@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "reddit-popular",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-reddit-popular",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "t3_pop001" },
+    "authorIdentity": { "status": "ephemeral", "reason": "not-exposed" },
+    "subredditIdentity": { "status": "stable", "value": "t5_pop001" },
+    "surface": "popular",
+    "title": "Synthetic popular promoted post",
+    "relations": [],
+    "promoted": true
+  }
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Synthetic YouTube Related fixture</title>
+  </head>
+  <body>
+    <aside id="related">
+      <ytd-compact-video-renderer id="related-card-stable">
+        <a id="thumbnail" href="/watch?v=relatedA01">Open video</a>
+        <h3>
+          <span id="video-title">Synthetic browser lifecycle analysis</span>
+        </h3>
+        <yt-formatted-string id="byline">
+          <a href="/@synthetic-runtime">Synthetic handle</a>
+          <a href="/channel/UCrelatedSyntheticAlpha01">
+            Synthetic Runtime Channel
+          </a>
+        </yt-formatted-string>
+      </ytd-compact-video-renderer>
+
+      <ytd-compact-video-renderer id="related-card-no-video">
+        <div id="thumbnail">Video identity unavailable</div>
+        <h3>
+          <span id="video-title">Synthetic case with an unavailable identity</span>
+        </h3>
+        <yt-formatted-string id="byline">
+          <a href="/channel/UCrelatedSyntheticBeta002">
+            Synthetic Recovery Channel
+          </a>
+        </yt-formatted-string>
+      </ytd-compact-video-renderer>
+
+      <yt-lockup-view-model id="related-card-lockup">
+        <a href="/watch?v=relatedC03">Open view-model video</a>
+        <h3>
+          <a href="/watch?v=relatedC03">
+            Synthetic current related-video markup
+          </a>
+        </h3>
+        <yt-decorated-avatar-view-model>
+          Synthetic channel without a stable channel link
+        </yt-decorated-avatar-view-model>
+      </yt-lockup-view-model>
+    </aside>
+  </body>
+</html>

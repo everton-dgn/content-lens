@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-subscriptions",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-subscriptions-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "subscriptions-card-stable",
+      "surface": "subscriptions",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-subscriptions-synthetic:subscriptions-card-stable",
+      "title": "Synthetic subscribed channel update",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "subscrA0001"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCsubscriptionsAlpha001"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    }
+  ]
+}

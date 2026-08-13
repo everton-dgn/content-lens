@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Synthetic Atom feed</title>
+  <entry>
+    <id>tag:example,2026:atom-001</id>
+    <title>Synthetic Atom title</title>
+    <summary><![CDATA[<p>Atom summary.</p><iframe>hostile</iframe>]]></summary>
+    <link rel="alternate" href="/atom-one" />
+    <updated>2026-07-31T09:00:00Z</updated>
+  </entry>
+</feed>

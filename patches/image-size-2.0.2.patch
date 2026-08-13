@@ -1,0 +1,68 @@
+diff --git a/dist/index.cjs b/dist/index.cjs
+index bde0210eb131db06ccca30a5c466c7252a03af50..73d31a55a7a145bd2ed9684175bdcf1d8785bd99 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -163,6 +163,9 @@ var HEIF = {
+     while (currentOffset < ipcoBox.offset + ipcoBox.size) {
+       const ispeBox = findBox(input, "ispe", currentOffset);
+       if (!ispeBox) break;
++      if (ispeBox.size === 0) {
++        throw new TypeError("Invalid HEIF, zero-length ispe box");
++      }
+       const rawWidth = readUInt32BE(input, ispeBox.offset + 12);
+       const rawHeight = readUInt32BE(input, ispeBox.offset + 16);
+       const clapBox = findBox(input, "clap", currentOffset);
+@@ -253,6 +256,9 @@ var ICNS = {
+     const images = [];
+     while (imageOffset < fileLength && imageOffset < inputLength) {
+       const imageHeader = readImageHeader(input, imageOffset);
++      if (imageHeader[1] === 0) {
++        throw new TypeError("Invalid ICNS, zero-length entry");
++      }
+       const imageSize2 = getImageSize2(imageHeader[0]);
+       images.push(imageSize2);
+       imageOffset += imageHeader[1];
+@@ -487,6 +493,9 @@ function extractPartialStreams(input) {
+   while (offset < input.length) {
+     const jxlpBox = findBox(input, "jxlp", offset);
+     if (!jxlpBox) break;
++    if (jxlpBox.size === 0) {
++      throw new TypeError("Invalid JXL, zero-length jxlp box");
++    }
+     partialStreams.push(
+       input.slice(jxlpBox.offset + 12, jxlpBox.offset + jxlpBox.size)
+     );
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 22c17afad4e406eba013fff7858366cb5f8e3ba4..158b8f80835bfd0ffa73130d307e90631fe2a3eb 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -159,6 +159,9 @@ var HEIF = {
+     while (currentOffset < ipcoBox.offset + ipcoBox.size) {
+       const ispeBox = findBox(input, "ispe", currentOffset);
+       if (!ispeBox) break;
++      if (ispeBox.size === 0) {
++        throw new TypeError("Invalid HEIF, zero-length ispe box");
++      }
+       const rawWidth = readUInt32BE(input, ispeBox.offset + 12);
+       const rawHeight = readUInt32BE(input, ispeBox.offset + 16);
+       const clapBox = findBox(input, "clap", currentOffset);
+@@ -249,6 +252,9 @@ var ICNS = {
+     const images = [];
+     while (imageOffset < fileLength && imageOffset < inputLength) {
+       const imageHeader = readImageHeader(input, imageOffset);
++      if (imageHeader[1] === 0) {
++        throw new TypeError("Invalid ICNS, zero-length entry");
++      }
+       const imageSize2 = getImageSize2(imageHeader[0]);
+       images.push(imageSize2);
+       imageOffset += imageHeader[1];
+@@ -483,6 +489,9 @@ function extractPartialStreams(input) {
+   while (offset < input.length) {
+     const jxlpBox = findBox(input, "jxlp", offset);
+     if (!jxlpBox) break;
++    if (jxlpBox.size === 0) {
++      throw new TypeError("Invalid JXL, zero-length jxlp box");
++    }
+     partialStreams.push(
+       input.slice(jxlpBox.offset + 12, jxlpBox.offset + jxlpBox.size)
+     );

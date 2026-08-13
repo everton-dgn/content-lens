@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "x-quoted-posts",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-x-quotes",
+  "expectedCandidate": {
+    "authorIdentity": { "status": "ephemeral", "reason": "not-exposed" },
+    "canonicalUrl": "https://x.com/synthetic_four/status/11004",
+    "domId": "x-quote-card",
+    "durableAuthorActions": false,
+    "durablePostActions": true,
+    "identity": { "status": "stable", "platformContentId": "11004" },
+    "media": [],
+    "pageInstanceId": "page-x-quotes:x-quote-card",
+    "promoted": false,
+    "relations": [{ "kind": "quote", "targetId": "10002" }],
+    "surface": "quoted-posts",
+    "text": "Synthetic quote with an ephemeral author.",
+    "textPartial": false
+  }
+}

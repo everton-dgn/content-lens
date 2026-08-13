@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "linkedin-reposts",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-linkedin-repost",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic Reviewer",
+    "authorIdentity": {
+      "status": "stable",
+      "authorId": "urn:li:member:502"
+    },
+    "authorProfileUrl": "https://www.linkedin.com/in/synthetic-reviewer/",
+    "canonicalUrl": "https://www.linkedin.com/feed/update/urn:li:activity:1002",
+    "domId": "linkedin-repost-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": {
+      "status": "stable",
+      "platformContentId": "urn:li:activity:1002"
+    },
+    "media": [],
+    "pageInstanceId": "page-linkedin-repost:linkedin-repost-card",
+    "relationTargetId": "urn:li:ugcPost:9002",
+    "surface": "reposts",
+    "text": "Synthetic commentary on a repost.",
+    "textPartial": true,
+    "traits": []
+  }
+}

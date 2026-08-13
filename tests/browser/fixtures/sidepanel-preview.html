@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ContentLens sidepanel preview</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      const bundleRoot = "/.output/chrome-mv3";
+      const locale = await fetch(`${bundleRoot}/_locales/pt_BR/messages.json`).then(
+        (response) => response.json(),
+      );
+      const now = "2026-07-31T15:30:00.000Z";
+      const tasks = [
+        "classification-text",
+        "classification-vision",
+        "embedding",
+        "assistance-draft",
+        "assistance-explain",
+      ];
+      const platforms = {
+        youtube: ["home", "search", "recommendations", "subscriptions", "shorts", "channel", "playlist", "end-screen"],
+        linkedin: ["feed", "reposts", "promoted-posts", "comment-preview"],
+        x: ["following", "for-you", "replies", "quoted-posts", "threads"],
+        reddit: ["home", "popular", "all", "subreddit", "search", "comments"],
+        "hacker-news": ["front-page", "new", "best", "ask", "show", "jobs", "item"],
+        rss: ["feed-entry"],
+      };
+      const settings = {
+        schemaVersion: 1,
+        routing: {
+          schemaVersion: 1,
+          globalRoutes: Object.fromEntries(tasks.map((task) => [task, { state: "disabled" }])),
+          platformOverrides: {},
+          budgets: {
+            maxConcurrentGlobal: 2,
+            maxConcurrentByProvider: 1,
+            requestsPerMinuteByProvider: 30,
+            requestsPerDayByProvider: 500,
+            monetaryBudget: {
+              enabled: false,
+              limit: 0,
+              currency: "USD",
+              priceMaxAgeHours: 24,
+            },
+          },
+        },
+        platforms: Object.fromEntries(
+          Object.entries(platforms).map(([platform, surfaces]) => [
+            platform,
+            {
+              platform,
+              state: platform === "youtube" ? "enabled" : "disabled",
+              permissionState: platform === "youtube" ? "granted" : "not-requested",
+              surfaces: Object.fromEntries(
+                surfaces.map((surface) => [
+                  `${platform}:${surface}`,
+                  platform === "youtube" && ["home", "search", "recommendations"].includes(surface),
+                ]),
+              ),
+            },
+          ]),
+        ),
+        interface: { advancedMode: false, colorMode: "system", locale: "auto" },
+      };
+      const provider = {
+        schemaVersion: 1,
+        providerConfigId: "browser:built-in",
+        displayName: "IA integrada do navegador",
+        kind: "browser-built-in",
+        execution: "browser",
+        endpointOrigin: "https://browser-ai.contentlens.invalid",
+        credentialMode: "none",
+        credentialRef: null,
+        policyUrl: null,
+        policyReviewedAt: null,
+        createdAt: now,
+        updatedAt: now,
+        status: "ready",
+      };
+      const model = {
+        providerConfigId: provider.providerConfigId,
+        modelId: "browser-ai",
+        displayName: "Modelo integrado do navegador",
+        declaredVersion: "built-in",
+        executionKind: "browser",
+        catalogSource: "built-in",
+        lastCheckedAt: now,
+        status: "available",
+        capabilities: tasks
+          .filter((task) => task !== "classification-vision")
+          .map((task) => ({
+            task,
+            modalities: ["text"],
+            languages: ["en", "pt", "es"],
+            imageMimeTypes: [],
+            maxInputBytes: 4194304,
+            maxOutputBytes: 65536,
+            structuredOutput: true,
+            evidence: "declared",
+            source: "built-in",
+            verifiedAt: null,
+          })),
+      };
+      let revision = 0;
+      const snapshot = () => ({
+        kind: "snapshot",
+        value: {
+          state: "ready",
+          settings: {
+            state: "ready",
+            revision,
+            settings,
+            capabilitySnapshot: { state: "ready" },
+            source: "default",
+            issues: [],
+          },
+          providers: {
+            providers: [provider],
+            models: [model],
+            credentials: [],
+            consents: [],
+          },
+          templates: [
+            {
+              templateId: "openai",
+              kind: "openai",
+              displayName: "OpenAI",
+              execution: "cloud",
+              suggestedEndpointOrigin: "https://api.openai.com",
+              credentialModes: ["session-only", "passphrase-wrapped", "external-vault"],
+              policyUrl: "https://openai.com/policies/privacy-policy/",
+              policyReviewedAt: now,
+            },
+            {
+              templateId: "anthropic",
+              kind: "anthropic",
+              displayName: "Anthropic",
+              execution: "cloud",
+              suggestedEndpointOrigin: "https://api.anthropic.com",
+              credentialModes: ["session-only", "passphrase-wrapped", "external-vault"],
+              policyUrl: "https://privacy.anthropic.com/en/",
+              policyReviewedAt: now,
+            },
+            {
+              templateId: "ollama",
+              kind: "ollama",
+              displayName: "Ollama",
+              execution: "local",
+              suggestedEndpointOrigin: "http://127.0.0.1:11434",
+              credentialModes: ["none"],
+              policyUrl: null,
+              policyReviewedAt: null,
+            },
+          ],
+          sync: {
+            id: "active-sync-connection",
+            configured: false,
+            enabled: false,
+            runtimeState: "disconnected",
+            providerConfigId: null,
+            endpointPath: null,
+            remoteObjectId: null,
+            scheduleMinutes: null,
+            retention: null,
+            revocation: null,
+            encryption: "none",
+            consentedAt: null,
+            connectedAt: null,
+            disconnectedAt: null,
+            lastAttemptAt: null,
+            lastConfirmedAt: null,
+            lastConfirmedDigest: null,
+            lastErrorCode: null,
+          },
+          syncConflict: null,
+          syncRecoveries: [],
+        },
+      });
+      const responseFor = (message) => {
+        if (message.type === "settings.snapshot") return snapshot();
+        if (message.type === "settings.save") {
+          revision += 1;
+          return {
+            kind: "settings-save",
+            value: {
+              state: "committed",
+              revision,
+              value: { settingsSchemaVersion: 1 },
+            },
+            activation: [],
+          };
+        }
+        return { kind: "provider", value: provider };
+      };
+      const listeners = () => ({ addListener() {}, removeListener() {} });
+      globalThis.chrome = {
+        i18n: {
+          getMessage(key, substitutions) {
+            const entry = locale[key];
+            if (!entry) return key;
+            const values = Array.isArray(substitutions)
+              ? substitutions
+              : substitutions === undefined
+                ? []
+                : [substitutions];
+            return Object.entries(entry.placeholders ?? {}).reduce(
+              (message, [name, placeholder]) => {
+                const index = Number(placeholder.content.replaceAll("$", "")) - 1;
+                return message.replaceAll(`$${name.toUpperCase()}$`, values[index] ?? "");
+              },
+              entry.message,
+            );
+          },
+          getUILanguage() {
+            return "pt-BR";
+          },
+        },
+        permissions: {
+          request(_request, callback) {
+            callback?.(true);
+            return Promise.resolve(true);
+          },
+        },
+        runtime: {
+          id: "contentlens-preview",
+          getURL(path) {
+            return `${location.origin}/${path}`;
+          },
+          connect({ name }) {
+            return {
+              name,
+              onMessage: listeners(),
+              onDisconnect: listeners(),
+              postMessage() {},
+              disconnect() {},
+            };
+          },
+          sendMessage(message, callback) {
+            const response = {
+              state: "acknowledged",
+              requestId: message.requestId,
+              settings: responseFor(message),
+            };
+            callback?.(response);
+            return Promise.resolve(response);
+          },
+        },
+      };
+
+      const shell = await fetch(`${bundleRoot}/sidepanel.html`).then((response) =>
+        response.text(),
+      );
+      const parsed = new DOMParser().parseFromString(shell, "text/html");
+      for (const source of parsed.querySelectorAll('link[rel="stylesheet"]')) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `${bundleRoot}/${source.getAttribute("href").replace(/^\//, "")}`;
+        document.head.append(link);
+      }
+      for (const source of parsed.querySelectorAll("script[src]")) {
+        const script = document.createElement("script");
+        script.type = "module";
+        script.src = `${bundleRoot}/${source.getAttribute("src").replace(/^\//, "")}`;
+        document.body.append(script);
+      }
+    </script>
+  </body>
+</html>

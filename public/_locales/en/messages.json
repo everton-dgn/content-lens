@@ -1,0 +1,2661 @@
+{
+  "feedsBrowserUnavailableBody": {
+    "message": "The browser cannot guarantee that fetch connects to the same address approved by a DNS check. ContentLens disables RSS and Atom downloads to prevent requests to private networks.",
+    "description": "Explains why RSS network acquisition is disabled."
+  },
+  "feedsBrowserUnavailableTitle": {
+    "message": "RSS feed downloads are disabled",
+    "description": "Unavailable RSS network acquisition title."
+  },
+  "feedsBrowserPortableNote": {
+    "message": "Existing subscriptions remain in the local portable profile. No feed request is made.",
+    "description": "Clarifies how existing RSS subscriptions are retained."
+  },
+  "feedsCancelAction": {
+    "message": "Cancel",
+    "description": "Cancels an RSS edit or removal review."
+  },
+  "feedsDescription": {
+    "message": "Review RSS and Atom subscriptions already stored in the local portable profile.",
+    "description": "RSS settings explanation."
+  },
+  "feedsEmptyBody": {
+    "message": "This profile has no stored subscriptions. Network acquisition is unavailable.",
+    "description": "Empty RSS list explanation."
+  },
+  "feedsEmptyTitle": {
+    "message": "No feeds yet",
+    "description": "Empty RSS list title."
+  },
+  "feedsErrorBody": {
+    "message": "The feed change did not finish. Existing subscriptions and entries remain unchanged.",
+    "description": "Safe RSS operation error."
+  },
+  "feedsErrorTitle": {
+    "message": "Feed change failed",
+    "description": "Safe RSS operation error title."
+  },
+  "feedsEyebrow": {
+    "message": "Portable sources",
+    "description": "RSS settings eyebrow."
+  },
+  "feedsIntervalSuffix": {
+    "message": "minutes between checks",
+    "description": "RSS interval suffix."
+  },
+  "feedsPauseAction": {
+    "message": "Pause",
+    "description": "Marks a stored RSS subscription as paused."
+  },
+  "feedsPausedStatus": {
+    "message": "Paused",
+    "description": "Paused RSS status."
+  },
+  "feedsRemoveAction": {
+    "message": "Remove",
+    "description": "Removes an RSS subscription."
+  },
+  "feedsRemoveReviewBody": {
+    "message": "This removes the subscription, queued work, recent entries and runtime state. Durable rules linked to this feed remain available for separate review.",
+    "description": "RSS removal scope."
+  },
+  "feedsRemoveReviewTitle": {
+    "message": "Review feed removal",
+    "description": "RSS removal review title."
+  },
+  "feedsResumeAction": {
+    "message": "Resume",
+    "description": "Marks a stored RSS subscription as active."
+  },
+  "feedsStatusFailed": {
+    "message": "Check failed",
+    "description": "Failed RSS status."
+  },
+  "feedsStatusFetching": {
+    "message": "Checking",
+    "description": "Fetching RSS status."
+  },
+  "feedsStatusIdle": { "message": "Idle", "description": "Idle RSS status." },
+  "feedsStatusNotChecked": {
+    "message": "Not checked",
+    "description": "Initial RSS status."
+  },
+  "feedsStatusReady": {
+    "message": "Ready",
+    "description": "Ready RSS status."
+  },
+  "feedsStatusScheduled": {
+    "message": "Scheduled",
+    "description": "Scheduled RSS status."
+  },
+  "feedsStatusUnavailable": {
+    "message": "Unavailable",
+    "description": "Unavailable RSS status."
+  },
+  "feedsSuccessBody": {
+    "message": "The subscription profile was updated locally.",
+    "description": "RSS mutation confirmation."
+  },
+  "feedsSuccessTitle": {
+    "message": "Feed settings saved",
+    "description": "RSS mutation confirmation title."
+  },
+  "feedsTitle": {
+    "message": "RSS and Atom feeds",
+    "description": "RSS and Atom settings heading."
+  },
+  "panelDataNavigation": {
+    "message": "Data",
+    "description": "Navigation to local data and health."
+  },
+  "panelFeedsNavigation": {
+    "message": "Feeds",
+    "description": "Navigation to RSS feed settings."
+  },
+  "panelNavigationLabel": {
+    "message": "ContentLens sections",
+    "description": "Accessible primary navigation label."
+  },
+  "panelRulesNavigation": {
+    "message": "Rules",
+    "description": "Navigation to local rules."
+  },
+  "actionOpen": {
+    "message": "Open ContentLens",
+    "description": "Toolbar action label."
+  },
+  "dataApplyMergeAction": {
+    "message": "Apply validated merge",
+    "description": "Confirms the three-way merge."
+  },
+  "dataImportMergeConflictBody": {
+    "message": "Merge found {count} conflict(s) that require an explicit decision. No changes were applied.",
+    "description": "Merge conflict summary."
+  },
+  "dataImportMergeConflictTitle": {
+    "message": "Conflicts block automatic merge",
+    "description": "Conflict state title."
+  },
+  "dataImportMergeDescription": {
+    "message": "Combines independent changes from the last common base and preserves both sides when a conflict exists.",
+    "description": "Merge mode description."
+  },
+  "dataImportMergeLabel": {
+    "message": "Merge with local configuration",
+    "description": "Three-way merge option."
+  },
+  "dataImportMergeReadyBody": {
+    "message": "The common base was validated. Independent changes can be combined without choosing by timestamp.",
+    "description": "Available merge explanation."
+  },
+  "dataImportMergeReadyTitle": {
+    "message": "Three-way merge available",
+    "description": "Available merge title."
+  },
+  "dataImportMergeReviewAction": {
+    "message": "Review merge",
+    "description": "Opens merge confirmation."
+  },
+  "dataImportMergeReviewBody": {
+    "message": "The validated result will be applied locally. The imported file becomes the new common base and a snapshot preserves the previous state.",
+    "description": "Final merge impact."
+  },
+  "dataImportMergeReviewTitle": {
+    "message": "Confirm validated merge?",
+    "description": "Merge confirmation title."
+  },
+  "dataApplyImportAction": {
+    "message": "Replace local profile",
+    "description": "Confirmed action that imports the reviewed portable profile."
+  },
+  "dataBackAction": {
+    "message": "Back to settings",
+    "description": "Action that returns from data and health to settings."
+  },
+  "dataBaselineCapability": {
+    "message": "Deterministic rules",
+    "description": "Name of the baseline rule capability."
+  },
+  "dataBaselineCapabilityDetail": {
+    "message": "Available without an account, network or model.",
+    "description": "Status explanation for the deterministic baseline."
+  },
+  "dataCapabilityTitle": {
+    "message": "Capability state",
+    "description": "Heading for the local capability summary."
+  },
+  "dataCancelAction": {
+    "message": "Cancel",
+    "description": "Action that closes an inline review without changing or exporting data."
+  },
+  "dataChooseFileAction": {
+    "message": "Choose JSON file",
+    "description": "Product-owned action label for the portable profile file picker."
+  },
+  "dataClearDiagnosticsAction": {
+    "message": "Clear diagnostics",
+    "description": "Action that starts review before clearing local diagnostics."
+  },
+  "dataClearDiagnosticsReviewBody": {
+    "message": "This removes only local diagnostic records. Rules, profile settings, feedback and cached decisions stay unchanged.",
+    "description": "Exact scope shown before clearing local diagnostics."
+  },
+  "dataClearDiagnosticsReviewTitle": {
+    "message": "Clear local diagnostics?",
+    "description": "Heading for the local diagnostics clearing confirmation."
+  },
+  "dataConfirmClearDiagnosticsAction": {
+    "message": "Confirm clear",
+    "description": "Confirmed action that clears only local diagnostics."
+  },
+  "dataConfirmDiagnosticsExportAction": {
+    "message": "Confirm sanitized export",
+    "description": "Confirmed action that downloads the reviewed diagnostics export."
+  },
+  "dataConfirmResetAction": {
+    "message": "Delete all local ContentLens data",
+    "description": "Confirmed destructive reset action naming its full scope."
+  },
+  "dataDescription": {
+    "message": "Inspect portable data, local health and recovery without sending anything off this device.",
+    "description": "Explanation at the top of the data and health view."
+  },
+  "dataDiagnosticsCountLabel": {
+    "message": "sanitized diagnostic signatures",
+    "description": "Label for the number of local diagnostic aggregates."
+  },
+  "dataDiagnosticsDescription": {
+    "message": "Records contain stable codes and bounded counts. They exclude content, URLs, account identifiers and profile values.",
+    "description": "Privacy explanation for local diagnostics."
+  },
+  "dataDiagnosticsExportReviewBody": {
+    "message": "The file will include only the sanitized signatures shown above, with stable codes and bounded counts. It will not include content, URLs, account identifiers or profile values.",
+    "description": "Exact privacy scope shown before diagnostics export."
+  },
+  "dataDiagnosticsExportReviewTitle": {
+    "message": "Review before export",
+    "description": "Heading for the diagnostics export confirmation."
+  },
+  "dataDiagnosticsTitle": {
+    "message": "Local diagnostics",
+    "description": "Heading for the diagnostics section."
+  },
+  "dataErrorBody": {
+    "message": "The requested local operation did not finish. Existing rules remain unchanged.",
+    "description": "Safe generic error explanation in data and recovery flows."
+  },
+  "dataErrorTitle": {
+    "message": "The local operation could not complete",
+    "description": "Safe generic error title in data and recovery flows."
+  },
+  "dataExportDiagnosticsAction": {
+    "message": "Export sanitized diagnostics",
+    "description": "Opt-in action that downloads a redacted diagnostics file."
+  },
+  "dataExportEncryptedAction": {
+    "message": "Export encrypted file",
+    "description": "Exports the portable profile protected by a passphrase."
+  },
+  "dataExportEncryptedDescription": {
+    "message": "Protects the content with AES-256-GCM and a passphrase kept only by you.",
+    "description": "Encrypted export description."
+  },
+  "dataExportEncryptedLabel": {
+    "message": "Encrypted, recommended",
+    "description": "Recommended export protection option."
+  },
+  "dataExportPassphraseConfirmationLabel": {
+    "message": "Confirm passphrase",
+    "description": "Portability passphrase confirmation label."
+  },
+  "dataExportPassphraseHint": {
+    "message": "Use at least 12 characters. It is never saved or sent.",
+    "description": "Portability passphrase guidance."
+  },
+  "dataExportPassphraseLabel": {
+    "message": "Portability passphrase",
+    "description": "Export passphrase label."
+  },
+  "dataExportPassphraseMismatchError": {
+    "message": "Passphrases must match and contain at least 12 characters.",
+    "description": "Export passphrase validation error."
+  },
+  "dataExportPassphraseWarningBody": {
+    "message": "ContentLens does not save or recover this passphrase. Without it, the encrypted file cannot be imported.",
+    "description": "Passphrase loss warning."
+  },
+  "dataExportPassphraseWarningTitle": {
+    "message": "Store the passphrase safely",
+    "description": "Passphrase warning title."
+  },
+  "dataExportPlaintextConfirmAction": {
+    "message": "Confirm readable JSON",
+    "description": "Confirms an unencrypted export."
+  },
+  "dataExportPlaintextDescription": {
+    "message": "Creates JSON readable by anyone who can access the file.",
+    "description": "Unencrypted export description."
+  },
+  "dataExportPlaintextLabel": {
+    "message": "Unencrypted JSON",
+    "description": "Readable export option."
+  },
+  "dataExportPlaintextReviewAction": {
+    "message": "Review readable export",
+    "description": "Opens confirmation for an unencrypted export."
+  },
+  "dataExportPlaintextReviewBody": {
+    "message": "The file exposes rules, preferences, providers without credentials, the model catalog, and routes. Credentials, consent receipts, history, cache, and diagnostics remain excluded.",
+    "description": "Readable export scope."
+  },
+  "dataExportPlaintextReviewTitle": {
+    "message": "Export portable data as readable text?",
+    "description": "Readable export confirmation title."
+  },
+  "dataExportProtectionLabel": {
+    "message": "File protection",
+    "description": "Export protection choice label."
+  },
+  "dataImportAddedLabel": {
+    "message": "Items added",
+    "description": "Count of items added by import."
+  },
+  "dataImportChangedLabel": {
+    "message": "Items changed",
+    "description": "Count of items changed by import."
+  },
+  "dataImportEncryptedBody": {
+    "message": "The passphrase is used only for this attempt and is not stored.",
+    "description": "Encrypted file opening guidance."
+  },
+  "dataImportEncryptedTitle": {
+    "message": "Encrypted file",
+    "description": "Passphrase request title."
+  },
+  "dataImportMergeUnavailableBody": {
+    "message": "This installation has no confirmed common base for the file. Merge is blocked to prevent silent loss; reviewed replacement remains available.",
+    "description": "Safe reason for blocking merge without a base."
+  },
+  "dataImportMergeUnavailableTitle": {
+    "message": "Merge unavailable without a common base",
+    "description": "Blocked merge state title."
+  },
+  "dataImportModeLabel": {
+    "message": "Import mode",
+    "description": "Import mode choice label."
+  },
+  "dataImportPassphraseLabel": {
+    "message": "File passphrase",
+    "description": "Import passphrase label."
+  },
+  "dataImportRemovedLabel": {
+    "message": "Items removed",
+    "description": "Count of items removed by import."
+  },
+  "dataImportReplaceDescription": {
+    "message": "Replaces portable rules and configuration, locks imported providers, and creates a complete local snapshot.",
+    "description": "Replacement mode description."
+  },
+  "dataImportReplaceLabel": {
+    "message": "Replace portable configuration",
+    "description": "Explicit replacement option."
+  },
+  "dataImportReplaceReviewAction": {
+    "message": "Review replacement",
+    "description": "Opens final replacement confirmation."
+  },
+  "dataImportReplaceReviewBody": {
+    "message": "The current portable configuration and local provider state will be replaced by the counts above. A recovery snapshot preserves the previous state.",
+    "description": "Final replacement impact."
+  },
+  "dataImportReplaceReviewTitle": {
+    "message": "Confirm portable state replacement?",
+    "description": "Final replacement confirmation title."
+  },
+  "dataImportTombstonesLabel": {
+    "message": "Recorded deletions",
+    "description": "File tombstone count."
+  },
+  "dataImportUnlockAction": {
+    "message": "Validate and open file",
+    "description": "Attempts to open the encrypted file."
+  },
+  "dataPortableImportSnapshotBody": {
+    "message": "The profile and provider state from before the last replacement are stored locally. Restore creates a new revision and keeps the current state as a return option.",
+    "description": "Complete portable snapshot description."
+  },
+  "dataPortableImportSnapshotTitle": {
+    "message": "Complete pre-import snapshot",
+    "description": "Portable snapshot title."
+  },
+  "dataRestorePortableImportAction": {
+    "message": "Restore previous profile and providers",
+    "description": "Complete portable snapshot restore action."
+  },
+  "dataExportProfileAction": {
+    "message": "Export portable profile",
+    "description": "Action that downloads only portable profile data."
+  },
+  "dataFeedbackCountLabel": {
+    "message": "Feedback examples",
+    "description": "Label for the feedback count in an import preview."
+  },
+  "dataImportConflictAllLocalAction": {
+    "message": "Use all local values",
+    "description": "Starts a local choice for every conflict."
+  },
+  "dataImportConflictAllLocalReviewBody": {
+    "message": "This selects the local side for every displayed conflict. You must still validate the result before applying it.",
+    "description": "Bulk local choice confirmation."
+  },
+  "dataImportConflictAllRemoteAction": {
+    "message": "Use all file values",
+    "description": "Starts a file-side choice for every conflict."
+  },
+  "dataImportConflictAllRemoteReviewBody": {
+    "message": "This selects the file side for every displayed conflict. You must still validate the result before applying it.",
+    "description": "Bulk file choice confirmation."
+  },
+  "dataImportConflictBulkConfirmAction": {
+    "message": "Confirm bulk choices",
+    "description": "Confirms the reviewed bulk choice."
+  },
+  "dataImportConflictBulkReviewTitle": {
+    "message": "Confirm one decision for all conflicts?",
+    "description": "Bulk confirmation title."
+  },
+  "dataImportConflictChoiceLabel": {
+    "message": "Decision for this conflict",
+    "description": "Conflict resolution option label."
+  },
+  "dataImportConflictEditHint": {
+    "message": "Enter a complete JSON value. The same schema validates it before acceptance.",
+    "description": "Manual conflict edit guidance."
+  },
+  "dataImportConflictEditLabel": {
+    "message": "Edit final value",
+    "description": "Manual edit option."
+  },
+  "dataImportConflictEditValueLabel": {
+    "message": "Final JSON value",
+    "description": "Manual value label."
+  },
+  "dataImportConflictItemTitle": {
+    "message": "Configuration conflict",
+    "description": "Conflict item title."
+  },
+  "dataImportConflictJsonError": {
+    "message": "Enter complete, valid JSON.",
+    "description": "Manual resolution JSON error."
+  },
+  "dataImportConflictLocalLabel": {
+    "message": "Local state",
+    "description": "Local side label."
+  },
+  "dataImportConflictRemoteLabel": {
+    "message": "File state",
+    "description": "Imported side label."
+  },
+  "dataImportConflictResolutionErrorBody": {
+    "message": "Choose an option for every conflict and fix each invalid JSON value. No changes were applied.",
+    "description": "Safe conflict resolution error."
+  },
+  "dataImportConflictResolutionErrorTitle": {
+    "message": "Resolution is still incomplete",
+    "description": "Resolution error title."
+  },
+  "dataImportConflictUnselectedLabel": {
+    "message": "Choose later",
+    "description": "Initial undecided state."
+  },
+  "dataImportConflictUseLocalLabel": {
+    "message": "Keep local value",
+    "description": "Local choice."
+  },
+  "dataImportConflictUseRemoteLabel": {
+    "message": "Use file value",
+    "description": "File choice."
+  },
+  "dataImportConflictValidateAction": {
+    "message": "Validate conflict resolution",
+    "description": "Validates every decision and creates the final candidate."
+  },
+  "dataImportHint": {
+    "message": "Choose a ContentLens JSON export. It is validated and previewed before replacement.",
+    "description": "Help text for the portable profile file input."
+  },
+  "dataImportInvalidBody": {
+    "message": "The selected file did not match the portable profile contract. No local data changed.",
+    "description": "Explanation after an invalid import dry run."
+  },
+  "dataImportInvalidTitle": {
+    "message": "Profile file rejected safely",
+    "description": "Title after an invalid import dry run."
+  },
+  "dataImportLabel": {
+    "message": "Import portable profile",
+    "description": "Label for the profile file input."
+  },
+  "dataImportPreviewTitle": {
+    "message": "Reviewed replacement scope",
+    "description": "Heading above the import dry-run counts."
+  },
+  "dataImportRestoreSuccessBody": {
+    "message": "The last import was undone. The previous local profile is active again.",
+    "description": "Confirmation after restoring the pre-import profile."
+  },
+  "dataImportRestoreSuccessTitle": {
+    "message": "Previous profile restored",
+    "description": "Title after restoring the pre-import profile."
+  },
+  "dataImportSnapshotBody": {
+    "message": "A local copy of the replaced profile is available. Restoring it undoes the last import and removes this copy.",
+    "description": "Scope explanation for pre-import recovery."
+  },
+  "dataImportSnapshotTitle": {
+    "message": "Profile before import",
+    "description": "Heading for the available pre-import recovery copy."
+  },
+  "dataImportSuccessBody": {
+    "message": "The reviewed profile replaced the active profile. A local pre-import snapshot is available for recovery.",
+    "description": "Confirmation after a portable profile import."
+  },
+  "dataImportSuccessTitle": {
+    "message": "Profile imported",
+    "description": "Title after a successful portable profile import."
+  },
+  "dataNoDiagnostics": {
+    "message": "No local failures recorded",
+    "description": "Empty label for the diagnostics aggregate count."
+  },
+  "dataNoFileSelected": {
+    "message": "No file selected",
+    "description": "Empty state shown by the portable profile file picker."
+  },
+  "dataOptionalCapability": {
+    "message": "Optional AI assistance",
+    "description": "Name of optional model-backed capabilities."
+  },
+  "dataOptionalCapabilityDetail": {
+    "message": "Not enabled. Deterministic rules remain fully available.",
+    "description": "Status explanation for optional model-backed capabilities."
+  },
+  "dataOptionalLabel": {
+    "message": "Optional",
+    "description": "Short state badge for an optional capability."
+  },
+  "dataOperationPendingAction": {
+    "message": "Check operation status",
+    "description": "Action that safely retries the same pending data operation."
+  },
+  "dataOperationPendingBody": {
+    "message": "ContentLens has not confirmed the local change yet. Check the same operation again to avoid repeating its effects.",
+    "description": "Explanation for an acknowledged data operation awaiting durable confirmation."
+  },
+  "dataOperationPendingTitle": {
+    "message": "Storage confirmation pending",
+    "description": "Title for a data operation that has not reached a durable terminal state."
+  },
+  "dataPending": {
+    "message": "Completing a bounded local operation.",
+    "description": "Pending status for data and recovery operations."
+  },
+  "dataProfileDescription": {
+    "message": "Profile export includes rules, explicit feedback and portable settings. It excludes diagnostics, cache, observed content and recovery snapshots.",
+    "description": "Scope explanation for portable profile data."
+  },
+  "dataProfileTitle": {
+    "message": "Portable profile",
+    "description": "Heading for profile import and export."
+  },
+  "dataRecoveryBlocked": {
+    "message": "Import required",
+    "description": "Recovery label when no readable local profile exists."
+  },
+  "dataRecoveryDescription": {
+    "message": "Readable data and validated snapshots are preferred before reset. Reset stays behind explicit confirmation.",
+    "description": "Explanation for the recovery priority order."
+  },
+  "dataRecoveryReadable": {
+    "message": "Profile readable",
+    "description": "Recovery label when the active profile can be exported."
+  },
+  "dataRecoveryRecoverable": {
+    "message": "Validated snapshot available",
+    "description": "Recovery label when a migration snapshot can be restored."
+  },
+  "dataRecoveryTitle": {
+    "message": "Recovery",
+    "description": "Heading for local recovery."
+  },
+  "dataResetWarningBody": {
+    "message": "This removes the active profile, rules, feedback, cache, history and recovery data. Diagnostics remain separate until cleared.",
+    "description": "Full scope explanation before local data reset."
+  },
+  "dataResetWarningTitle": {
+    "message": "Review the complete reset scope",
+    "description": "Warning title before local data reset."
+  },
+  "dataRestoreAction": {
+    "message": "Restore validated snapshot",
+    "description": "Primary recovery action when a validated migration snapshot exists."
+  },
+  "dataRestoreImportAction": {
+    "message": "Restore previous profile",
+    "description": "Action that restores and consumes the pre-import profile copy."
+  },
+  "dataReviewClearDiagnosticsAction": {
+    "message": "Review diagnostic clearing",
+    "description": "Inline review label before clearing diagnostics."
+  },
+  "dataReviewDiagnosticsExportAction": {
+    "message": "Review sanitized export",
+    "description": "Action that opens the diagnostics export scope before download."
+  },
+  "dataReviewResetAction": {
+    "message": "Review local data reset",
+    "description": "Progressively disclosed action that starts reset review."
+  },
+  "dataRulesCountLabel": {
+    "message": "Rules",
+    "description": "Label for the rule count in an import preview."
+  },
+  "dataStorageCapability": {
+    "message": "Local profile storage",
+    "description": "Name of the local durable profile capability."
+  },
+  "dataStorageCapabilityDetail": {
+    "message": "Readable and exportable from this browser profile.",
+    "description": "Status explanation for local profile storage."
+  },
+  "dataTitle": {
+    "message": "Data and health",
+    "description": "Heading for portable data, diagnostics and recovery."
+  },
+  "dataEyebrow": {
+    "message": "Local instrument panel",
+    "description": "Instrument-style label above data and health."
+  },
+  "extensionDescription": {
+    "message": "A local-first browser extension for intentional content filtering.",
+    "description": "Extension description shown by the browser."
+  },
+  "extensionName": {
+    "message": "ContentLens",
+    "description": "Product name shown by the browser and in the panel."
+  },
+  "injectedActionsLabel": {
+    "message": "ContentLens actions",
+    "description": "Accessible label for actions injected next to a platform item."
+  },
+  "injectedDecisionConflict": {
+    "message": "Conflicting local rules kept this item visible. Review the rules in ContentLens or hide it for this session.",
+    "description": "Accessible conflict explanation and safe next actions for an injected platform item."
+  },
+  "injectedDecisionFailed": {
+    "message": "ContentLens could not check this item. It stays visible. You can hide it for this session.",
+    "description": "Accessible fail-open explanation and recovery action for an injected platform item."
+  },
+  "injectedDecisionPending": {
+    "message": "Checking local rules. This item stays visible.",
+    "description": "Accessible pending explanation for an injected platform item."
+  },
+  "injectedHiddenHeading": {
+    "message": "Content hidden by ContentLens",
+    "description": "Heading and accessible label for a reversible hidden-content placeholder."
+  },
+  "injectedHideForSession": {
+    "message": "Hide for this session",
+    "description": "Action that hides only the current item for the current page session."
+  },
+  "injectedReasonRule": {
+    "message": "Reason: matched a local rule",
+    "description": "User-safe reason shown when a deterministic rule hides an item."
+  },
+  "injectedReasonSession": {
+    "message": "Reason: hidden for this session",
+    "description": "User-safe reason shown when the user hides an item for the current session."
+  },
+  "injectedReveal": {
+    "message": "Show",
+    "description": "Action that reveals a hidden platform item for the current session."
+  },
+  "panelEyebrow": {
+    "message": "Local-first content controls",
+    "description": "Short label above the panel heading."
+  },
+  "panelBrandKicker": {
+    "message": "Local control",
+    "description": "Compact instrument label above the product name."
+  },
+  "panelEmptyDescription": {
+    "message": "Your local rule list is empty. The first rule starts with a preview, so you can inspect its effect before saving.",
+    "description": "Explanation shown before the user creates a first rule."
+  },
+  "panelEmptyEyebrow": {
+    "message": "No rules",
+    "description": "Instrument-style label for the empty rule state."
+  },
+  "panelEmptyTitle": {
+    "message": "Shape your feed with a clear rule",
+    "description": "Heading shown before the user creates a first rule."
+  },
+  "panelErrorDescription": {
+    "message": "Your existing content remains visible. Retry the local profile check to continue.",
+    "description": "Safe recovery explanation when the local profile cannot be loaded."
+  },
+  "panelErrorEyebrow": {
+    "message": "Local profile",
+    "description": "Label above the side panel storage error."
+  },
+  "panelErrorTitle": {
+    "message": "The rules could not open",
+    "description": "Heading shown when local rule storage is unavailable."
+  },
+  "panelFooterLocal": {
+    "message": "Local processing · No account · No cloud",
+    "description": "Persistent privacy summary in the side panel footer."
+  },
+  "panelLocalBadge": {
+    "message": "Local",
+    "description": "Badge confirming that baseline processing stays on this device."
+  },
+  "panelLoadingDescription": {
+    "message": "Checking the local profile and preparing your rules.",
+    "description": "Explanation shown while the side panel loads local data."
+  },
+  "panelLoadingEyebrow": {
+    "message": "Local startup",
+    "description": "Label above the side panel loading state."
+  },
+  "panelLoadingTitle": {
+    "message": "Loading your rules",
+    "description": "Heading shown while the side panel loads local data."
+  },
+  "panelPrivacyBadge": {
+    "message": "Private by default",
+    "description": "Badge introducing the local privacy explanation."
+  },
+  "panelPrivacyDescription": {
+    "message": "Rules and corrections stay in this browser profile. ContentLens does not require an account for the deterministic baseline.",
+    "description": "Privacy explanation in the first-use state."
+  },
+  "panelPrivacyTitle": {
+    "message": "Your data stays in this browser",
+    "description": "Heading for the local privacy explanation."
+  },
+  "panelReady": {
+    "message": "The extension panel is ready. Content filtering arrives after the feasibility gates pass.",
+    "description": "Foundation status shown in the panel."
+  },
+  "panelRetryAction": {
+    "message": "Try again",
+    "description": "Primary recovery action for a local profile loading failure."
+  },
+  "panelStatusError": {
+    "message": "Local engine error",
+    "description": "Visible and accessible label for a panel error."
+  },
+  "panelStatusLoading": {
+    "message": "Loading local engine",
+    "description": "Visible and accessible label for a loading panel."
+  },
+  "panelStatusReady": {
+    "message": "Local engine ready",
+    "description": "Visible and accessible label for a ready panel."
+  },
+  "rulesAdvancedRuleLabel": {
+    "message": "Advanced rule",
+    "description": "Label for a valid imported rule that the basic editor does not change."
+  },
+  "rulesAllowDescription": {
+    "message": "Keep matching titles visible even when another rule would hide them.",
+    "description": "Explanation for the allow rule effect."
+  },
+  "rulesAllowLabel": {
+    "message": "Allow",
+    "description": "Label for an exact allow rule."
+  },
+  "rulesBackAction": {
+    "message": "Edit rule",
+    "description": "Action that returns from the preview to the rule editor."
+  },
+  "rulesBlockDescription": {
+    "message": "Hide matching titles with a reversible ContentLens placeholder.",
+    "description": "Explanation for the block rule effect."
+  },
+  "rulesBlockLabel": {
+    "message": "Block",
+    "description": "Label for an exact block rule."
+  },
+  "rulesCancelAction": {
+    "message": "Cancel",
+    "description": "Action that closes the rule editor without saving."
+  },
+  "rulesCreateAction": {
+    "message": "Create your first rule",
+    "description": "Primary first-run action that opens the rule editor."
+  },
+  "rulesDataAction": {
+    "message": "Data and health",
+    "description": "Secondary action that opens local data, diagnostics and recovery."
+  },
+  "rulesEditAction": {
+    "message": "Edit",
+    "description": "Action that opens an existing basic rule."
+  },
+  "rulesEditorDescription": {
+    "message": "Choose one clear effect and a phrase. You will inspect the result before anything is saved.",
+    "description": "Explanation at the top of the basic rule editor."
+  },
+  "rulesEditorEffectLabel": {
+    "message": "What should happen?",
+    "description": "Legend for the rule effect choice."
+  },
+  "rulesEditorEyebrow": {
+    "message": "Rule editor",
+    "description": "Instrument-style label above the basic rule editor."
+  },
+  "rulesEditorNewTitle": {
+    "message": "Define a title rule",
+    "description": "Heading for a new exact title rule."
+  },
+  "rulesEditorUpdateTitle": {
+    "message": "Adjust this title rule",
+    "description": "Heading for an existing exact title rule."
+  },
+  "rulesFailureBody": {
+    "message": "Your draft was preserved. Review it and try saving again.",
+    "description": "Recoverable rule operation failure explanation."
+  },
+  "rulesFailureTitle": {
+    "message": "The rule was not saved",
+    "description": "Title for a recoverable rule operation failure."
+  },
+  "rulesHideLabel": {
+    "message": "Hide",
+    "description": "Preview label for a hidden content decision."
+  },
+  "rulesListDescription": {
+    "message": "Rules run locally and deterministically on YouTube Home, search and recommendations.",
+    "description": "Explanation for the local rule list and first-use state."
+  },
+  "rulesListEyebrow": {
+    "message": "Saved rules",
+    "description": "Instrument-style label above the rule list."
+  },
+  "rulesListTitle": {
+    "message": "Your content rules",
+    "description": "Heading for the rule list."
+  },
+  "rulesNewAction": {
+    "message": "New rule",
+    "description": "Action that starts another rule."
+  },
+  "rulesPendingAction": {
+    "message": "Check operation status",
+    "description": "Action that safely retries the same pending rule operation."
+  },
+  "rulesPendingBody": {
+    "message": "ContentLens has not confirmed the local change yet. Check the same operation again to avoid a duplicate.",
+    "description": "Explanation for a rule operation that is acknowledged but not yet durable."
+  },
+  "rulesPendingTitle": {
+    "message": "Storage confirmation pending",
+    "description": "Title for an acknowledged rule operation awaiting durable confirmation."
+  },
+  "rulesPhraseError": {
+    "message": "Enter at least two characters.",
+    "description": "Validation error for an empty or too-short title phrase."
+  },
+  "rulesPhraseHint": {
+    "message": "The match ignores uppercase and lowercase differences.",
+    "description": "Help text for the exact title phrase."
+  },
+  "rulesPhraseLabel": {
+    "message": "Phrase in the title",
+    "description": "Label for the exact title phrase input."
+  },
+  "rulesPreviewAction": {
+    "message": "Preview rule",
+    "description": "Primary editor action that opens the dry-run preview."
+  },
+  "rulesPreviewDescription": {
+    "message": "This dry run shows one matching item and one protected exception. Nothing is saved yet.",
+    "description": "Explanation above the exact rule dry-run results."
+  },
+  "rulesPreviewEyebrow": {
+    "message": "Dry run",
+    "description": "Instrument-style label above the rule preview."
+  },
+  "rulesPreviewMatchLabel": {
+    "message": "Matching example",
+    "description": "Label for the synthetic item matched by the candidate rule."
+  },
+  "rulesPreviewProtectedLabel": {
+    "message": "Protected exception",
+    "description": "Label for the synthetic item not matched by the candidate rule."
+  },
+  "rulesPreviewProtectedItemTitle": {
+    "message": "Weekly game analysis",
+    "description": "Synthetic non-matching title used in the protected dry-run example."
+  },
+  "rulesPreviewTitle": {
+    "message": "Inspect the effect before saving",
+    "description": "Heading for the exact rule dry-run preview."
+  },
+  "rulesRuleScope": {
+    "message": "YouTube · Home, search and recommendations",
+    "description": "Visible scope summary for a baseline exact rule."
+  },
+  "rulesSaveAction": {
+    "message": "Save rule",
+    "description": "Primary action that commits the reviewed rule."
+  },
+  "rulesSavedBody": {
+    "message": "The rule is active locally. You can undo it in one action.",
+    "description": "Confirmation after a local rule is saved."
+  },
+  "rulesSavedTitle": {
+    "message": "Rule saved",
+    "description": "Title for the local rule save confirmation."
+  },
+  "rulesSavingAction": {
+    "message": "Saving locally…",
+    "description": "Pending label while a rule operation is unfinished."
+  },
+  "rulesShowLabel": {
+    "message": "Show",
+    "description": "Preview label for a visible content decision."
+  },
+  "rulesUnchangedLabel": {
+    "message": "No matching title, so this item stays unchanged.",
+    "description": "Explanation for the protected dry-run exception."
+  },
+  "rulesUndoAction": {
+    "message": "Undo saved rule",
+    "description": "One-action undo for the most recently saved rule."
+  },
+  "rulesUndoneBody": {
+    "message": "The saved rule was removed and the local profile was updated.",
+    "description": "Confirmation after the immediate rule undo."
+  },
+  "rulesUndoneTitle": {
+    "message": "Rule undone",
+    "description": "Title for the immediate rule undo confirmation."
+  },
+  "panelSettingsNavigation": {
+    "message": "Settings",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAddModelAction": {
+    "message": "Add model",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAddProviderAction": {
+    "message": "Add provider",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAdvancedDescription": {
+    "message": "Shows endpoint, routing and capability details.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAdvancedLabel": {
+    "message": "Advanced settings",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCloudConsentBody": {
+    "message": "Review every cloud destination, task, platform and data category below. Text and images are authorized separately.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCloudConsentLabel": {
+    "message": "I reviewed and authorize these exact cloud data flows",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCloudConsentTitle": {
+    "message": "Cloud processing review",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorDark": {
+    "message": "Dark",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorLabel": {
+    "message": "Color mode",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorLight": {
+    "message": "Light",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorSystem": {
+    "message": "Follow the system",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialExternal": {
+    "message": "External vault",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialExternalReference": {
+    "message": "External vault reference",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialModeLabel": {
+    "message": "Credential mode",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialNone": {
+    "message": "No credential",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialPassphrase": {
+    "message": "Passphrase",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSavedBody": {
+    "message": "Only protected metadata remains visible. The secret field was cleared.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSavedTitle": {
+    "message": "Credential updated",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSecretHint": {
+    "message": "Write-only. It is sent directly to the extension worker and cleared here after saving.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSecretLabel": {
+    "message": "API key or access token",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSession": {
+    "message": "This session only",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialWrapped": {
+    "message": "Protected with a passphrase",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsDescription": {
+    "message": "Configure AI, platforms, privacy, local data, diagnostics and interface preferences.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsDisabledOption": {
+    "message": "Disabled",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsDisconnectAction": {
+    "message": "Disconnect provider",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsEndpointHint": {
+    "message": "Cloud endpoints require HTTPS. Local loopback services may use HTTP.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsEndpointLabel": {
+    "message": "Endpoint origin",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsEyebrow": {
+    "message": "Local configuration",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsErrorBody": {
+    "message": "Settings could not be loaded. The active local profile was not changed.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsErrorTitle": {
+    "message": "Settings unavailable",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionLabel": {
+    "message": "Execution",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsGlobalRoutesBody": {
+    "message": "Choose one independent route for each task. Cloud fallbacks stay disabled until explicitly configured.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsGlobalRoutesTitle": {
+    "message": "Global model routes",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsHideSecretAction": {
+    "message": "Hide",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsInheritOption": {
+    "message": "Use global setting",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsInterfaceTitle": {
+    "message": "Interface preferences",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleAuto": {
+    "message": "Browser language",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleEnglish": {
+    "message": "English",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleLabel": {
+    "message": "Language",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocalePortuguese": {
+    "message": "Portuguese (Brazil)",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleSpanish": {
+    "message": "Spanish",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLoadingBody": {
+    "message": "Reading the local profile and provider catalog.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLoadingTitle": {
+    "message": "Loading settings",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelDisplayLabel": {
+    "message": "Model display name",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelIdLabel": {
+    "message": "Provider model ID",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelProviderLabel": {
+    "message": "Provider",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelTasksLabel": {
+    "message": "Declared capabilities",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelsEmpty": {
+    "message": "No compatible models are registered yet.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelsTitle": {
+    "message": "Models and routing",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPendingAction": {
+    "message": "Saving locally…",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionBody": {
+    "message": "Access is requested only for the selected platform host and only after this action.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionDenied": {
+    "message": "Permission was not granted",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionGranted": {
+    "message": "Permission granted",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionRequestAction": {
+    "message": "Request platform access",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformActivationLabel": {
+    "message": "Platform state",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformDisabled": {
+    "message": "Disabled",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformEnabled": {
+    "message": "Enabled",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformHackerNews": {
+    "message": "Hacker News",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformLinkedin": {
+    "message": "LinkedIn",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformPaused": {
+    "message": "Paused",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformReddit": {
+    "message": "Reddit",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformRoutingTitle": {
+    "message": "Platform model overrides",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformRss": {
+    "message": "RSS",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformSelectLabel": {
+    "message": "Platform",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformX": {
+    "message": "X",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformYoutube": {
+    "message": "YouTube",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderDisplayLabel": {
+    "message": "Provider name",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderEmpty": {
+    "message": "No provider is configured.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderPermissionAction": {
+    "message": "Request provider access",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderPermissionBody": {
+    "message": "The request names this provider's exact origin. A denied request is never repeated automatically.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderSelectLabel": {
+    "message": "Configured provider",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderStatusLabel": {
+    "message": "Status",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderTemplateLabel": {
+    "message": "Provider type",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProvidersTitle": {
+    "message": "Providers and credentials",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsQuotaAcknowledgement": {
+    "message": "I understand that this explicit connection test may consume provider quota",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsRevealSecretAction": {
+    "message": "Reveal",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveAction": {
+    "message": "Save settings",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveCredentialAction": {
+    "message": "Store credential",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveFailedBody": {
+    "message": "The previous active settings remain unchanged. Review provider status, model capabilities and cloud consent.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveFailedTitle": {
+    "message": "Settings were not saved",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSavedBody": {
+    "message": "The validated settings are active in the local profile.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSavedTitle": {
+    "message": "Settings saved",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSurfacesTitle": {
+    "message": "Content surfaces",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabInterface": {
+    "message": "Interface",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabModels": {
+    "message": "Models",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabPlatforms": {
+    "message": "Platforms",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabProviders": {
+    "message": "Providers",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskAssistanceDraft": {
+    "message": "Draft rule assistance",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskAssistanceExplain": {
+    "message": "Explain rule assistance",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskClassificationText": {
+    "message": "Text classification",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskClassificationVision": {
+    "message": "Image classification",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskEmbedding": {
+    "message": "Similarity embeddings",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTestConnectionAction": {
+    "message": "Test connection",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTestConnectionHint": {
+    "message": "Uses a synthetic prompt without page, feed, profile or rule content.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTextOnlyBody": {
+    "message": "Text classification continues to work. Select a vision-capable model for image analysis.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTextOnlyTitle": {
+    "message": "Image analysis is disabled",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTitle": {
+    "message": "Settings",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionLocal": {
+    "message": "Local",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionCloud": {
+    "message": "Cloud",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionBrowser": {
+    "message": "Browser",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusUnconfigured": {
+    "message": "Not configured",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusLocked": {
+    "message": "Locked",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusReady": {
+    "message": "Ready",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusDegraded": {
+    "message": "Degraded",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusRateLimited": {
+    "message": "Rate limited",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusUnauthorized": {
+    "message": "Unauthorized",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusRevoked": {
+    "message": "Revoked",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionNotRequested": {
+    "message": "Not requested",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionRevoked": {
+    "message": "Revoked",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionUnavailable": {
+    "message": "Unavailable",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsConnectionCodeLabel": {
+    "message": "Technical code",
+    "description": "ContentLens settings connection result copy."
+  },
+  "settingsConnectionReadyBody": {
+    "message": "The synthetic check succeeded. No page, feed, profile or rule content was sent.",
+    "description": "ContentLens settings connection result copy."
+  },
+  "settingsConnectionFailedBody": {
+    "message": "The local rules baseline stays active. Resolve the reported issue, then run the test again.",
+    "description": "ContentLens settings connection result copy."
+  },
+  "settingsConnectionReadyTitle": {
+    "message": "Connection is ready",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionAuthenticationFailedTitle": {
+    "message": "The credential was not accepted",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionAuthorizationFailedTitle": {
+    "message": "The credential lacks access",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionTlsFailedTitle": {
+    "message": "The secure connection failed",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionHostUnreachableTitle": {
+    "message": "The provider host could not be reached",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionRateLimitedTitle": {
+    "message": "The provider limited this request",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionQuotaExhaustedTitle": {
+    "message": "The provider quota is exhausted",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionModelUnavailableTitle": {
+    "message": "The selected model is unavailable",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionSchemaInvalidTitle": {
+    "message": "The provider returned an unsupported response",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionProtocolInvalidTitle": {
+    "message": "The provider protocol is incompatible",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionTimeoutTitle": {
+    "message": "The connection timed out",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionOfflineTitle": {
+    "message": "The browser is offline",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionCancelledTitle": {
+    "message": "The connection test was cancelled",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionPermissionDeniedTitle": {
+    "message": "Provider permission was denied",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionCredentialLockedTitle": {
+    "message": "Unlock the credential before testing",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionCredentialUnavailableTitle": {
+    "message": "Add a credential before testing",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsSurfaceYoutubeHome": {
+    "message": "Home",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeSearch": {
+    "message": "Search results",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeRecommendations": {
+    "message": "Recommendations",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeSubscriptions": {
+    "message": "Subscriptions",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeShorts": {
+    "message": "Shorts",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeChannel": {
+    "message": "Channel pages",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubePlaylist": {
+    "message": "Playlists",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeEndScreen": {
+    "message": "End screen",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinFeed": {
+    "message": "Feed",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinReposts": {
+    "message": "Reposts",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinPromotedPosts": {
+    "message": "Promoted posts",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinCommentPreview": {
+    "message": "Comment previews",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceXFollowing": {
+    "message": "Following",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXForYou": {
+    "message": "For You",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXReplies": {
+    "message": "Replies",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXQuotedPosts": {
+    "message": "Quoted posts",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXThreads": {
+    "message": "Threads",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditHome": {
+    "message": "Home",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditPopular": {
+    "message": "Popular",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditAll": {
+    "message": "All",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditSubreddit": {
+    "message": "Subreddits",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditSearch": {
+    "message": "Search results",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditComments": {
+    "message": "Comments",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsFrontPage": {
+    "message": "Front page",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsNew": {
+    "message": "New stories",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsBest": {
+    "message": "Best stories",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsAsk": {
+    "message": "Ask HN",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsShow": {
+    "message": "Show HN",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsJobs": {
+    "message": "Jobs",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsItem": {
+    "message": "Story pages",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceRssFeedEntry": {
+    "message": "Feed entries",
+    "description": "RSS surface label in ContentLens settings."
+  },
+  "settingsUnsavedTitle": {
+    "message": "You have unsaved changes",
+    "description": "ContentLens settings unsaved changes title."
+  },
+  "settingsUnsavedBody": {
+    "message": "Choose what to do before opening another settings section.",
+    "description": "ContentLens settings unsaved changes body."
+  },
+  "settingsUnsavedSaveAction": {
+    "message": "Save and continue",
+    "description": "ContentLens settings unsaved changes action."
+  },
+  "settingsUnsavedDiscardAction": {
+    "message": "Discard changes",
+    "description": "ContentLens settings unsaved changes action."
+  },
+  "settingsUnsavedContinueAction": {
+    "message": "Continue editing",
+    "description": "ContentLens settings unsaved changes action."
+  },
+  "panelHomeNavigation": {
+    "message": "Home",
+    "description": "Primary side panel navigation label."
+  },
+  "panelReviewNavigation": {
+    "message": "Review",
+    "description": "Primary side panel navigation label."
+  },
+  "homeTitle": {
+    "message": "Your local overview",
+    "description": "ContentLens home panel title."
+  },
+  "homeOverviewTitle": {
+    "message": "Overview",
+    "description": "ContentLens home panel section label."
+  },
+  "homeDescription": {
+    "message": "See active rules, recent changes and local profile statistics.",
+    "description": "ContentLens home panel description."
+  },
+  "homeActiveRulesLabel": {
+    "message": "Active rules",
+    "description": "ContentLens home statistic label."
+  },
+  "homeFeedbackLabel": {
+    "message": "Corrections",
+    "description": "ContentLens home statistic label."
+  },
+  "homeEnabledPlatformsLabel": {
+    "message": "Enabled platforms",
+    "description": "ContentLens home statistic label."
+  },
+  "homeHistoryTitle": {
+    "message": "History",
+    "description": "ContentLens home panel section title."
+  },
+  "homeHistoryEmpty": {
+    "message": "No rule changes have been saved yet.",
+    "description": "ContentLens home history empty state."
+  },
+  "homeStatisticsTitle": {
+    "message": "Statistics",
+    "description": "ContentLens home panel section title."
+  },
+  "homeProfileRevisionLabel": {
+    "message": "Profile revision",
+    "description": "ContentLens home profile statistic label."
+  },
+  "homeUpdatedLabel": {
+    "message": "Last updated",
+    "description": "ContentLens home profile date label."
+  },
+  "homeOpenRulesAction": {
+    "message": "Create or review rules",
+    "description": "ContentLens home primary action."
+  },
+  "reviewTitle": {
+    "message": "Review",
+    "description": "ContentLens review panel title."
+  },
+  "reviewDescription": {
+    "message": "Check decisions that need your input before any stronger action is applied.",
+    "description": "ContentLens review panel description."
+  },
+  "reviewEmptyEyebrow": {
+    "message": "Review queue",
+    "description": "ContentLens review empty state eyebrow."
+  },
+  "reviewEmptyTitle": {
+    "message": "Nothing needs review",
+    "description": "ContentLens review empty state title."
+  },
+  "reviewEmptyDescription": {
+    "message": "Low-confidence and conflicting decisions stay visible and will appear here when review is available.",
+    "description": "ContentLens review empty state description."
+  },
+  "reviewLoadingEyebrow": {
+    "message": "Local analysis",
+    "description": "Review loading eyebrow."
+  },
+  "reviewLoadingTitle": {
+    "message": "Loading relations",
+    "description": "Review loading title."
+  },
+  "reviewLoadingDescription": {
+    "message": "Reading the local similarity index and content graph.",
+    "description": "Review loading description."
+  },
+  "reviewErrorEyebrow": {
+    "message": "Local analysis",
+    "description": "Review error eyebrow."
+  },
+  "reviewErrorTitle": {
+    "message": "Relations are unavailable",
+    "description": "Review error title."
+  },
+  "reviewErrorDescription": {
+    "message": "The derived index could not be read. Exact rules and your profile remain active.",
+    "description": "Review error description."
+  },
+  "reviewSummaryTitle": {
+    "message": "Relationship summary",
+    "description": "Review relationship summary title."
+  },
+  "reviewRelationsLabel": {
+    "message": "$COUNT$ relations",
+    "description": "Review relation count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewClustersLabel": {
+    "message": "$COUNT$ groups",
+    "description": "Review cluster count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewGraphNodesLabel": {
+    "message": "$COUNT$ graph nodes",
+    "description": "Review graph node count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewGraphEdgesLabel": {
+    "message": "$COUNT$ graph edges",
+    "description": "Review graph edge count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewRepresentativeLabel": {
+    "message": "Representative item",
+    "description": "Cluster representative label."
+  },
+  "reviewProtectedLabel": {
+    "message": "Protected",
+    "description": "Protected cluster item label."
+  },
+  "reviewUpdatesLabel": {
+    "message": "Updates",
+    "description": "Story updates label."
+  },
+  "reviewSponsoredLabel": {
+    "message": "Sponsored",
+    "description": "Sponsored cluster item label."
+  },
+  "reviewPreservedLabel": {
+    "message": "Preserved items",
+    "description": "Preserved cluster items label."
+  },
+  "reviewScoreLabel": {
+    "message": "$SCORE$ match",
+    "description": "Relation score label.",
+    "placeholders": { "score": { "content": "$1" } }
+  },
+  "reviewEvidenceLabel": {
+    "message": "Evidence",
+    "description": "Relation evidence label."
+  },
+  "reviewAdvisoryLabel": {
+    "message": "Review only",
+    "description": "Advisory relation label."
+  },
+  "reviewSeparateAction": {
+    "message": "Separate this relation",
+    "description": "Open relation correction action."
+  },
+  "reviewSeparateTitle": {
+    "message": "Separate these items?",
+    "description": "Relation correction title."
+  },
+  "reviewSeparateDescription": {
+    "message": "This suppresses only this relationship for the current evidence version. Rules and feedback stay unchanged.",
+    "description": "Relation correction description."
+  },
+  "reviewSeparateConfirmAction": {
+    "message": "Separate relation",
+    "description": "Confirm relation correction."
+  },
+  "reviewCancelAction": {
+    "message": "Cancel",
+    "description": "Cancel review action."
+  },
+  "reviewHideSimilarAction": {
+    "message": "Review Hide similar",
+    "description": "Open batch similarity action review."
+  },
+  "reviewHideSimilarTitle": {
+    "message": "Hide similar items?",
+    "description": "Batch similarity review title."
+  },
+  "reviewHideSimilarDescription": {
+    "message": "$COUNT$ items are in scope, including $UPDATES$ updates and $PROTECTED$ protected items. Protected items and updates stay visible.",
+    "description": "Batch similarity scope review.",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "updates": { "content": "$2" },
+      "protected": { "content": "$3" }
+    }
+  },
+  "reviewHideSimilarConfirmAction": {
+    "message": "Hide eligible items",
+    "description": "Confirm batch similarity action."
+  },
+  "reviewRelationExactDuplicate": {
+    "message": "Exact duplicate",
+    "description": "Exact duplicate relation label."
+  },
+  "reviewRelationNearDuplicate": {
+    "message": "Near duplicate",
+    "description": "Near duplicate relation label."
+  },
+  "reviewRelationSemanticallySimilar": {
+    "message": "Semantically similar",
+    "description": "Semantic relation label."
+  },
+  "reviewRelationStoryUpdate": {
+    "message": "Story update",
+    "description": "Story update relation label."
+  },
+  "reviewRelationRelatedDistinct": {
+    "message": "Related, distinct content",
+    "description": "Related distinct relation label."
+  },
+  "settingsShortcutsTitle": {
+    "message": "More settings tools",
+    "description": "ContentLens settings shortcuts title."
+  },
+  "settingsShortcutsDescription": {
+    "message": "Manage feed sources or inspect local data, privacy, diagnostics and recovery.",
+    "description": "ContentLens settings shortcuts description."
+  },
+  "settingsFeedsShortcutAction": {
+    "message": "Manage feeds",
+    "description": "ContentLens settings shortcut action."
+  },
+  "settingsDataShortcutAction": {
+    "message": "Data and health",
+    "description": "ContentLens settings shortcut action."
+  },
+  "settingsSyncTitle": {
+    "message": "User-owned sync",
+    "description": "Sync settings title."
+  },
+  "settingsSyncDescription": {
+    "message": "Keep portable configuration in a conditional HTTP endpoint you control. Local data remains operational when the endpoint is offline.",
+    "description": "Sync settings description."
+  },
+  "settingsSyncPlaintextTitle": {
+    "message": "The remote configuration is readable",
+    "description": "Plaintext sync warning title."
+  },
+  "settingsSyncPlaintextBody": {
+    "message": "This version sends the filtered configuration as JSON. Credentials, consent receipts, observed content, history, cache and diagnostics are excluded.",
+    "description": "Plaintext sync warning."
+  },
+  "settingsSyncCategoriesTitle": {
+    "message": "Synchronized categories",
+    "description": "Sync categories title."
+  },
+  "settingsSyncCategoriesBody": {
+    "message": "Rules, exclusions, platform preferences, portable provider descriptions, model catalog and model bindings.",
+    "description": "Sync categories list."
+  },
+  "settingsSyncProviderLabel": {
+    "message": "Connection provider",
+    "description": "Sync provider label."
+  },
+  "settingsSyncProviderHint": {
+    "message": "Uses a configured provider credential and its exact host permission. Add or unlock it under AI providers first.",
+    "description": "Sync provider guidance."
+  },
+  "settingsSyncEndpointLabel": {
+    "message": "Remote endpoint path",
+    "description": "Sync endpoint label."
+  },
+  "settingsSyncEndpointHint": {
+    "message": "Path only, without a query, fragment or credential. The configured provider origin is fixed.",
+    "description": "Sync endpoint guidance."
+  },
+  "settingsSyncRemoteObjectLabel": {
+    "message": "Remote object name",
+    "description": "Remote object label."
+  },
+  "settingsSyncScheduleLabel": {
+    "message": "Automatic sync interval",
+    "description": "Sync schedule label."
+  },
+  "settingsSyncScheduleFiveMinutes": {
+    "message": "Every 5 minutes",
+    "description": "Five minute sync schedule."
+  },
+  "settingsSyncScheduleFifteenMinutes": {
+    "message": "Every 15 minutes",
+    "description": "Fifteen minute sync schedule."
+  },
+  "settingsSyncScheduleHourly": {
+    "message": "Every hour",
+    "description": "Hourly sync schedule."
+  },
+  "settingsSyncRetentionLabel": {
+    "message": "Provider retention",
+    "description": "Sync retention label."
+  },
+  "settingsSyncRetentionDefault": {
+    "message": "Controlled by the endpoint owner",
+    "description": "Default sync retention disclosure."
+  },
+  "settingsSyncRevocationLabel": {
+    "message": "How to revoke access",
+    "description": "Sync revocation label."
+  },
+  "settingsSyncRevocationDefault": {
+    "message": "Remove or revoke the provider token",
+    "description": "Default sync revocation disclosure."
+  },
+  "settingsSyncConsentLabel": {
+    "message": "I reviewed the endpoint, readable categories, retention and revocation method",
+    "description": "Sync consent label."
+  },
+  "settingsSyncConsentDescription": {
+    "message": "Connection requests the exact host permission and sends no credential inside the synchronized envelope.",
+    "description": "Sync consent description."
+  },
+  "settingsSyncConnectAction": {
+    "message": "Connect sync",
+    "description": "Connect sync action."
+  },
+  "settingsSyncNowAction": {
+    "message": "Sync now",
+    "description": "Manual sync action."
+  },
+  "settingsSyncDisconnectAction": {
+    "message": "Disconnect",
+    "description": "Disconnect sync action."
+  },
+  "settingsSyncDisconnectReviewTitle": {
+    "message": "Disconnect synchronization?",
+    "description": "Disconnect sync review title."
+  },
+  "settingsSyncDisconnectReviewBody": {
+    "message": "Queued runs are cancelled and automatic sync stops. Local configuration and the remote object remain in place.",
+    "description": "Disconnect sync review body."
+  },
+  "settingsSyncDisconnectConfirmAction": {
+    "message": "Confirm disconnection",
+    "description": "Disconnect sync confirmation."
+  },
+  "settingsSyncCredentialRequiredTitle": {
+    "message": "This provider needs a local credential",
+    "description": "Missing sync credential title."
+  },
+  "settingsSyncCredentialRequiredBody": {
+    "message": "Open AI providers, save or unlock a credential, then return here. The credential never enters export or sync data.",
+    "description": "Missing sync credential body."
+  },
+  "settingsSyncPermissionTitle": {
+    "message": "Host permission was not granted",
+    "description": "Sync permission title."
+  },
+  "settingsSyncPermissionBody": {
+    "message": "No connection was made. Grant the exact provider origin when you are ready.",
+    "description": "Sync permission body."
+  },
+  "settingsSyncConnectedTitle": {
+    "message": "Synchronization connected",
+    "description": "Sync connected title."
+  },
+  "settingsSyncConnectedBody": {
+    "message": "The remote digest was confirmed and the common base was stored locally.",
+    "description": "Sync connected body."
+  },
+  "settingsSyncCompletedTitle": {
+    "message": "Synchronization confirmed",
+    "description": "Sync completed title."
+  },
+  "settingsSyncCompletedBody": {
+    "message": "Local and remote configuration share the confirmed digest.",
+    "description": "Sync completed body."
+  },
+  "settingsSyncConflictTitle": {
+    "message": "Synchronization needs review",
+    "description": "Sync conflict title."
+  },
+  "settingsSyncConflictBody": {
+    "message": "No remote overwrite occurred. Review the saved conflict or establish a compatible base before trying again.",
+    "description": "Sync conflict body."
+  },
+  "settingsSyncConflictChoiceLabel": {
+    "message": "Resolution",
+    "description": "Conflict resolution choice label."
+  },
+  "settingsSyncConflictCustomLabel": {
+    "message": "Final JSON value",
+    "description": "Custom conflict value label."
+  },
+  "settingsSyncConflictLocalOption": {
+    "message": "Use local value",
+    "description": "Local conflict option."
+  },
+  "settingsSyncConflictRemoteOption": {
+    "message": "Use remote value",
+    "description": "Remote conflict option."
+  },
+  "settingsSyncConflictCustomOption": {
+    "message": "Edit final value",
+    "description": "Custom conflict option."
+  },
+  "settingsSyncConflictResolveAction": {
+    "message": "Validate and synchronize resolution",
+    "description": "Resolve conflicts action."
+  },
+  "settingsSyncConflictResolvedTitle": {
+    "message": "Conflict resolved",
+    "description": "Resolved conflict title."
+  },
+  "settingsSyncConflictResolvedBody": {
+    "message": "The validated result was confirmed locally and remotely.",
+    "description": "Resolved conflict body."
+  },
+  "settingsSyncConflictUseAllLocalAction": {
+    "message": "Choose all local values",
+    "description": "Bulk local resolution action."
+  },
+  "settingsSyncConflictUseAllRemoteAction": {
+    "message": "Choose all remote values",
+    "description": "Bulk remote resolution action."
+  },
+  "settingsSyncConflictBulkReviewTitle": {
+    "message": "Confirm bulk resolution",
+    "description": "Bulk resolution review title."
+  },
+  "settingsSyncConflictBulkReviewBody": {
+    "message": "This applies one side to $COUNT$ conflicts. Review the count before continuing.",
+    "description": "Bulk resolution review body.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "settingsSyncConflictBulkConfirmAction": {
+    "message": "Apply these choices",
+    "description": "Bulk resolution confirmation action."
+  },
+  "settingsSyncRecoveryTitle": {
+    "message": "Recovery snapshots",
+    "description": "Sync recovery section title."
+  },
+  "settingsSyncRecoveryDescription": {
+    "message": "Restore a validated local snapshot as a new revision. Restoration pauses synchronization and never pushes automatically.",
+    "description": "Sync recovery description."
+  },
+  "settingsSyncRecoveryRevisionLabel": {
+    "message": "Local revision $REVISION$",
+    "description": "Recovery snapshot revision.",
+    "placeholders": { "revision": { "content": "$1" } }
+  },
+  "settingsSyncRecoveryDiffLabel": {
+    "message": "$ADDED$ added, $CHANGED$ changed, $REMOVED$ removed",
+    "description": "Recovery snapshot diff summary.",
+    "placeholders": {
+      "added": { "content": "$1" },
+      "changed": { "content": "$2" },
+      "removed": { "content": "$3" }
+    }
+  },
+  "settingsSyncRecoveryRestoreAction": {
+    "message": "Review restoration",
+    "description": "Review recovery restoration action."
+  },
+  "settingsSyncRecoveryReviewTitle": {
+    "message": "Restore this local snapshot?",
+    "description": "Recovery confirmation title."
+  },
+  "settingsSyncRecoveryReviewBody": {
+    "message": "Current local configuration receives its own recovery snapshot. The selected state becomes a new revision, and synchronization remains paused.",
+    "description": "Recovery confirmation body."
+  },
+  "settingsSyncRecoveryConfirmAction": {
+    "message": "Restore local snapshot",
+    "description": "Confirm recovery action."
+  },
+  "settingsSyncRecoveryRestoredTitle": {
+    "message": "Snapshot restored",
+    "description": "Recovery success title."
+  },
+  "settingsSyncRecoveryRestoredBody": {
+    "message": "Review the restored local revision before reconnecting synchronization.",
+    "description": "Recovery success body."
+  },
+  "settingsSyncRemoteDeleteAction": {
+    "message": "Delete remote data",
+    "description": "Open remote deletion review."
+  },
+  "settingsSyncRemoteDeleteReviewTitle": {
+    "message": "Delete the remote sync object?",
+    "description": "Remote deletion review title."
+  },
+  "settingsSyncRemoteDeleteReviewBody": {
+    "message": "Target: $TARGET$. This removes only the remote sync object. Local configuration remains.",
+    "description": "Remote deletion review body.",
+    "placeholders": { "target": { "content": "$1" } }
+  },
+  "settingsSyncRemoteDeleteConfirmationLabel": {
+    "message": "Type the exact remote object name",
+    "description": "Remote deletion confirmation label."
+  },
+  "settingsSyncRemoteDeleteConfirmAction": {
+    "message": "Delete remote object",
+    "description": "Confirm remote deletion action."
+  },
+  "settingsSyncRemoteDeletedTitle": {
+    "message": "Remote data deleted",
+    "description": "Remote deletion success title."
+  },
+  "settingsSyncRemoteDeletedBody": {
+    "message": "The remote object is absent and synchronization is disconnected. Local configuration was preserved.",
+    "description": "Remote deletion success body."
+  },
+  "settingsSyncFailureTitle": {
+    "message": "Synchronization could not continue",
+    "description": "Sync failure title."
+  },
+  "settingsSyncFailureBody": {
+    "message": "The operation stopped safely. Check the provider credential, host permission, endpoint and status before retrying.",
+    "description": "Sync failure body."
+  },
+  "settingsSyncDisconnectedTitle": {
+    "message": "Synchronization disconnected",
+    "description": "Sync disconnected title."
+  },
+  "settingsSyncDisconnectedBody": {
+    "message": "Automatic and manual runs are disabled. Local configuration was preserved.",
+    "description": "Sync disconnected body."
+  },
+  "settingsSyncStateDisconnected": {
+    "message": "Disconnected",
+    "description": "Disconnected sync state."
+  },
+  "settingsSyncStateConnecting": {
+    "message": "Connecting",
+    "description": "Connecting sync state."
+  },
+  "settingsSyncStateIdle": {
+    "message": "No changes",
+    "description": "Idle sync state."
+  },
+  "settingsSyncStatePulling": {
+    "message": "Reading remote",
+    "description": "Pulling sync state."
+  },
+  "settingsSyncStateMerging": {
+    "message": "Merging",
+    "description": "Merging sync state."
+  },
+  "settingsSyncStatePushing": {
+    "message": "Sending with CAS",
+    "description": "Pushing sync state."
+  },
+  "settingsSyncStateConflict": {
+    "message": "Waiting for conflict review",
+    "description": "Conflict sync state."
+  },
+  "settingsSyncStateDegraded": {
+    "message": "Degraded",
+    "description": "Degraded sync state."
+  },
+  "settingsGeneralTitle": {
+    "message": "General settings",
+    "description": "ContentLens general settings title."
+  },
+  "settingsGeneralDescription": {
+    "message": "Review the local baseline and open the settings tools you use most often.",
+    "description": "ContentLens general settings description."
+  },
+  "settingsGeneralModelCount": {
+    "message": "$COUNT$ in the model catalog",
+    "description": "Model count in the general settings summary.",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "settingsGeneralModelCountSingular": {
+    "message": "1 model in the catalog",
+    "description": "Singular model count in the general settings summary."
+  },
+  "settingsGeneralProviderCount": {
+    "message": "$COUNT$ configured providers",
+    "description": "Provider count in the general settings summary.",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "settingsGeneralProviderCountSingular": {
+    "message": "1 configured provider",
+    "description": "Singular provider count in the general settings summary."
+  },
+  "settingsDisconnectReviewTitle": {
+    "message": "Disconnect this provider?",
+    "description": "ContentLens provider disconnect confirmation title."
+  },
+  "settingsDisconnectReviewBody": {
+    "message": "This removes local credentials, consent, cache and unused host permission. Provider settings and local rules remain. Revoke the external key separately when needed.",
+    "description": "ContentLens provider disconnect confirmation body."
+  },
+  "settingsDisconnectConfirmAction": {
+    "message": "Disconnect provider",
+    "description": "ContentLens provider disconnect confirmation action."
+  },
+  "settingsModelInputPriceLabel": {
+    "message": "Declared input price",
+    "description": "ContentLens model input pricing label."
+  },
+  "settingsModelOutputPriceLabel": {
+    "message": "Declared output price",
+    "description": "ContentLens model output pricing label."
+  },
+  "settingsModelPriceSourceLabel": {
+    "message": "Price source and verification",
+    "description": "ContentLens model pricing source label."
+  },
+  "settingsAiNavigationLabel": {
+    "message": "AI and provider settings",
+    "description": "Accessible label for AI settings navigation."
+  },
+  "settingsPrivacyDataTitle": {
+    "message": "Privacy and data",
+    "description": "ContentLens privacy and data settings title."
+  },
+  "settingsPrivacyDataDescription": {
+    "message": "Manage local retention, portable profiles, cache, history and complete data removal.",
+    "description": "ContentLens privacy and data settings description."
+  },
+  "settingsPrivacyDataAction": {
+    "message": "Open privacy and data",
+    "description": "ContentLens privacy and data action."
+  },
+  "settingsDiagnosticsTitle": {
+    "message": "Diagnostics",
+    "description": "ContentLens diagnostics settings title."
+  },
+  "settingsDiagnosticsDescription": {
+    "message": "Inspect redacted local health records, export a reviewed report or clear diagnostics.",
+    "description": "ContentLens diagnostics settings description."
+  },
+  "settingsDiagnosticsAction": {
+    "message": "Open diagnostics",
+    "description": "ContentLens diagnostics settings action."
+  },
+  "settingsTabGeneral": {
+    "message": "General",
+    "description": "ContentLens settings section label."
+  },
+  "settingsTabAiProviders": {
+    "message": "AI and providers",
+    "description": "ContentLens settings section label."
+  },
+  "settingsTabPrivacyData": {
+    "message": "Privacy and data",
+    "description": "ContentLens settings section label."
+  },
+  "settingsTabDiagnostics": {
+    "message": "Diagnostics",
+    "description": "ContentLens settings section label."
+  },
+  "settingsModelCatalogTitle": {
+    "message": "Model catalog",
+    "description": "Model catalog title."
+  },
+  "settingsAdvancedRoutingSummary": {
+    "message": "Fallback order and policy",
+    "description": "Advanced route disclosure summary."
+  },
+  "settingsRoutingBudgetsSummary": {
+    "message": "Request and cost limits",
+    "description": "Advanced routing budget disclosure summary."
+  },
+  "settingsMaxConcurrentGlobalLabel": {
+    "message": "Maximum concurrent requests",
+    "description": "Global concurrent request limit label."
+  },
+  "settingsMaxConcurrentProviderLabel": {
+    "message": "Maximum concurrent requests per provider",
+    "description": "Per-provider concurrent request limit label."
+  },
+  "settingsRequestsPerMinuteLabel": {
+    "message": "Requests per minute per provider",
+    "description": "Per-provider minute request limit label."
+  },
+  "settingsRequestsPerDayLabel": {
+    "message": "Requests per day per provider",
+    "description": "Per-provider daily request limit label."
+  },
+  "settingsMonetaryBudgetLabel": {
+    "message": "Enable a monetary budget",
+    "description": "Monetary routing budget switch label."
+  },
+  "settingsMonetaryBudgetDescription": {
+    "message": "Requests without current verified pricing are blocked while this budget is enabled.",
+    "description": "Monetary routing budget explanation."
+  },
+  "settingsMonetaryLimitLabel": {
+    "message": "Budget limit",
+    "description": "Monetary budget amount label."
+  },
+  "settingsMonetaryCurrencyLabel": {
+    "message": "Budget currency",
+    "description": "Monetary budget currency label."
+  },
+  "settingsPriceMaxAgeLabel": {
+    "message": "Maximum pricing age",
+    "description": "Maximum accepted pricing age label."
+  },
+  "settingsHoursLabel": {
+    "message": "$HOURS$ hours",
+    "description": "A duration in hours.",
+    "placeholders": {
+      "hours": { "content": "$1" }
+    }
+  },
+  "settingsFallbackOrderLabel": {
+    "message": "Effective order",
+    "description": "Label for the ordered model fallback chain."
+  },
+  "settingsFallbackPositionLabel": {
+    "message": "Fallback $POSITION$",
+    "description": "Label for one ordered fallback position.",
+    "placeholders": {
+      "position": { "content": "$1" }
+    }
+  },
+  "settingsNoFallbackOption": {
+    "message": "No further fallback",
+    "description": "Option that ends an explicit fallback chain."
+  },
+  "settingsDeterministicBaselineLabel": {
+    "message": "Deterministic local baseline",
+    "description": "Final safe fallback after configured models."
+  },
+  "settingsAllowCloudFallbackLabel": {
+    "message": "Allow an authorized cloud fallback",
+    "description": "Cloud fallback policy switch label."
+  },
+  "settingsAllowCloudFallbackDescription": {
+    "message": "Cloud is used only when the exact provider, platform, task and fields have consent.",
+    "description": "Cloud fallback policy explanation."
+  },
+  "settingsAllowHigherCostFallbackLabel": {
+    "message": "Allow a higher-cost fallback",
+    "description": "Higher-cost fallback policy switch label."
+  },
+  "settingsAllowHigherCostFallbackDescription": {
+    "message": "A fallback with a higher verified token price may run within the configured budget.",
+    "description": "Higher-cost fallback policy explanation."
+  },
+  "settingsCatalogRefreshAction": {
+    "message": "Update model catalog",
+    "description": "Action that explicitly refreshes the selected provider model catalog."
+  },
+  "settingsCatalogRefreshedTitle": {
+    "message": "Model catalog updated",
+    "description": "Provider model catalog refresh success title."
+  },
+  "settingsCatalogRefreshedBody": {
+    "message": "Models found: $COUNT$. Capability claims still require review before routing.",
+    "description": "Provider model catalog refresh success body.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "settingsModelCatalogStatusLabel": {
+    "message": "Catalog status",
+    "description": "Model catalog status label."
+  },
+  "settingsModelCatalogStatusAvailable": {
+    "message": "Available",
+    "description": "Available model status."
+  },
+  "settingsModelCatalogStatusUnavailable": {
+    "message": "Unavailable",
+    "description": "Unavailable model status."
+  },
+  "settingsModelCatalogStatusInvalid": {
+    "message": "Invalid",
+    "description": "Invalid model status."
+  },
+  "settingsModelDeclaredVersionLabel": {
+    "message": "Declared version",
+    "description": "Model declared version label."
+  },
+  "settingsModelInputLimitLabel": {
+    "message": "Maximum input bytes",
+    "description": "Model input resource limit label."
+  },
+  "settingsModelLanguagesLabel": {
+    "message": "Languages",
+    "description": "Model languages label."
+  },
+  "settingsModelLastCheckedLabel": {
+    "message": "Last checked",
+    "description": "Model last catalog check label."
+  },
+  "settingsModelModalitiesLabel": {
+    "message": "Modalities",
+    "description": "Model modalities label."
+  },
+  "settingsModelModalityImage": {
+    "message": "Image",
+    "description": "Image model modality."
+  },
+  "settingsModelModalityText": {
+    "message": "Text",
+    "description": "Text model modality."
+  },
+  "settingsModelOutputLimitLabel": {
+    "message": "Maximum output bytes",
+    "description": "Model output resource limit label."
+  },
+  "settingsModelProviderNameLabel": {
+    "message": "Provider",
+    "description": "Model provider label."
+  },
+  "settingsModelVerificationLabel": {
+    "message": "Capability evidence",
+    "description": "Model verification evidence label."
+  },
+  "settingsModelVerificationDeclared": {
+    "message": "Declared",
+    "description": "Declared model capability evidence."
+  },
+  "settingsModelVerificationProbe": {
+    "message": "Probe verified",
+    "description": "Probe verified model capability evidence."
+  },
+  "settingsModelVerificationBenchmark": {
+    "message": "Benchmark accepted",
+    "description": "Benchmark accepted model capability evidence."
+  },
+  "settingsModelVersionUnknown": {
+    "message": "Not reported",
+    "description": "Missing model metadata value."
+  },
+  "settingsModelSearchLabel": {
+    "message": "Search available models",
+    "description": "Search field label for a long model list."
+  },
+  "settingsEditProviderAction": {
+    "message": "Update provider",
+    "description": "Action that updates provider metadata."
+  },
+  "settingsProviderUpdatedTitle": {
+    "message": "Provider updated",
+    "description": "Provider update success title."
+  },
+  "settingsProviderTypeLabel": {
+    "message": "Provider type",
+    "description": "Configured provider type label."
+  },
+  "settingsProviderModelsLabel": {
+    "message": "Models",
+    "description": "Configured provider model count label."
+  },
+  "settingsProviderModelCount": {
+    "message": "Models in catalog: $COUNT$",
+    "description": "Configured provider model count.",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "settingsProviderLastVerificationLabel": {
+    "message": "Last connection verification",
+    "description": "Configured provider last connection verification label."
+  },
+  "settingsProviderUpdatedBody": {
+    "message": "The provider metadata is current. Changing its endpoint clears the bound credential and consent.",
+    "description": "Provider update success body."
+  },
+  "settingsProviderRemovedTitle": {
+    "message": "Provider removed",
+    "description": "Provider removal success title."
+  },
+  "settingsProviderRemovedBody": {
+    "message": "The provider, its models, credentials and consent records were removed locally.",
+    "description": "Provider removal success body."
+  },
+  "settingsRemoveProviderReviewAction": {
+    "message": "Review provider removal",
+    "description": "Action that previews provider removal impact."
+  },
+  "settingsRemoveProviderReviewTitle": {
+    "message": "Remove this provider?",
+    "description": "Provider removal confirmation title."
+  },
+  "settingsRemoveProviderReviewBody": {
+    "message": "This removes the provider and its local models, credentials and consent records. This action cannot be undone.",
+    "description": "Provider removal confirmation body."
+  },
+  "settingsRemoveProviderBlockedTitle": {
+    "message": "Provider is still used by model routes",
+    "description": "Blocked provider removal title."
+  },
+  "settingsRemoveProviderBlockedBody": {
+    "message": "Change or disable every affected route before removing this provider. The current settings remain active.",
+    "description": "Blocked provider removal body."
+  },
+  "settingsRemoveProviderConfirmAction": {
+    "message": "Remove provider",
+    "description": "Provider removal confirmation action."
+  },
+  "settingsRemoveProviderCancelAction": {
+    "message": "Cancel",
+    "description": "Provider removal cancellation action."
+  },
+  "settingsRemoveProviderModelsLabel": {
+    "message": "Models that will be removed",
+    "description": "Provider removal model impact label."
+  },
+  "settingsRemoveProviderRoutesLabel": {
+    "message": "Routes that must be changed",
+    "description": "Provider removal route impact label."
+  },
+  "settingsRemoveProviderPrimaryRole": {
+    "message": "Primary model",
+    "description": "Primary model route role."
+  },
+  "settingsRemoveProviderFallbackRole": {
+    "message": "Fallback model",
+    "description": "Fallback model route role."
+  },
+  "settingsRemoveProviderReviewRoutesAction": {
+    "message": "Review model routes",
+    "description": "Action that opens model routes after blocked removal."
+  },
+  "settingsNativeFeedbackTitle": {
+    "message": "Platform feedback",
+    "description": "Native platform feedback settings title."
+  },
+  "settingsNativeFeedbackToggleLabel": {
+    "message": "Offer reviewed platform feedback after a local action",
+    "description": "Native platform feedback opt-in label."
+  },
+  "settingsNativeFeedbackAvailableTitle": {
+    "message": "Available after every review",
+    "description": "Native feedback available state title."
+  },
+  "settingsNativeFeedbackAvailableBody": {
+    "message": "Each platform action needs a separate confirmation. ContentLens rechecks the target immediately before activating the visible control.",
+    "description": "Native feedback available state body."
+  },
+  "settingsNativeFeedbackUnavailableTitle": {
+    "message": "Unavailable for this platform version",
+    "description": "Native feedback unavailable state title."
+  },
+  "settingsNativeFeedbackUnavailableBody": {
+    "message": "The local action still works. Platform feedback stays off until its visible control and positive confirmation pass a documented live check.",
+    "description": "Native feedback unavailable state body."
+  },
+  "nativeFeedbackReviewTitle": {
+    "message": "Review platform feedback",
+    "description": "Native feedback review title."
+  },
+  "nativeFeedbackReviewDescription": {
+    "message": "Check the exact target, action and consequence before continuing.",
+    "description": "Native feedback review description."
+  },
+  "nativeFeedbackPlatformLabel": {
+    "message": "Platform and surface",
+    "description": "Native feedback platform label."
+  },
+  "nativeFeedbackActionLabel": {
+    "message": "Visible action",
+    "description": "Native feedback action label."
+  },
+  "nativeFeedbackScopeLabel": {
+    "message": "Scope",
+    "description": "Native feedback scope label."
+  },
+  "nativeFeedbackConsequenceLabel": {
+    "message": "Consequence",
+    "description": "Native feedback consequence label."
+  },
+  "nativeFeedbackIrreversible": {
+    "message": "The platform does not provide a verified undo",
+    "description": "Native feedback irreversibility warning."
+  },
+  "nativeFeedbackConfirmAction": {
+    "message": "Confirm platform action",
+    "description": "Native feedback confirmation action."
+  },
+  "nativeFeedbackCancelAction": {
+    "message": "Keep only the local action",
+    "description": "Native feedback cancellation action."
+  },
+  "nativeFeedbackStatePendingReview": {
+    "message": "Pending review",
+    "description": "Native feedback pending state."
+  },
+  "nativeFeedbackStateSubmitting": {
+    "message": "Submitting",
+    "description": "Native feedback submitting state."
+  },
+  "nativeFeedbackStateSubmitted": {
+    "message": "Confirmed",
+    "description": "Native feedback submitted state."
+  },
+  "nativeFeedbackStateRejected": {
+    "message": "Rejected",
+    "description": "Native feedback rejected state."
+  },
+  "nativeFeedbackStateUnavailable": {
+    "message": "Unavailable",
+    "description": "Native feedback unavailable state."
+  },
+  "nativeFeedbackStateUncertain": {
+    "message": "Needs verification",
+    "description": "Native feedback uncertain state."
+  },
+  "nativeFeedbackStateCancelled": {
+    "message": "Cancelled",
+    "description": "Native feedback cancelled state."
+  },
+  "nativeFeedbackStateCooldown": {
+    "message": "Cooldown",
+    "description": "Native feedback cooldown state."
+  },
+  "nativeFeedbackMessagePendingReview": {
+    "message": "A separate user confirmation is required. The local result is already saved.",
+    "description": "Native feedback pending message."
+  },
+  "nativeFeedbackMessageSubmitting": {
+    "message": "The target is being revalidated before one activation.",
+    "description": "Native feedback submitting message."
+  },
+  "nativeFeedbackMessageSubmitted": {
+    "message": "The platform showed positive confirmation for this target.",
+    "description": "Native feedback submitted message."
+  },
+  "nativeFeedbackMessageRejected": {
+    "message": "The platform action was not sent. There is no automatic retry.",
+    "description": "Native feedback rejected message."
+  },
+  "nativeFeedbackMessageUnavailable": {
+    "message": "The platform action is unavailable. The local result remains active.",
+    "description": "Native feedback unavailable message."
+  },
+  "nativeFeedbackMessageUncertain": {
+    "message": "The result could not be verified. Check the platform before trying again manually.",
+    "description": "Native feedback uncertain message."
+  },
+  "nativeFeedbackMessageCancelled": {
+    "message": "The platform action was cancelled. The local result remains active.",
+    "description": "Native feedback cancelled message."
+  },
+  "nativeFeedbackMessageCooldown": {
+    "message": "Platform feedback is paused for this action. There is no automatic retry.",
+    "description": "Native feedback cooldown message."
+  }
+}

@@ -1,0 +1,12 @@
+.cl-shell__header > *,
+.cl-shell__content {
+  inline-size: 100%;
+  margin-inline: auto;
+  max-inline-size: var(--cl-options-content-max-inline);
+}
+
+.cl-shell__footer {
+  margin-inline: auto;
+  max-inline-size: var(--cl-options-content-max-inline);
+  width: 100%;
+}

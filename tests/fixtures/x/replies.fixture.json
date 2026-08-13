@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "x-replies",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-x-replies",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic Three",
+    "authorIdentity": { "status": "stable", "authorId": "503" },
+    "authorProfileUrl": "https://x.com/synthetic_three",
+    "canonicalUrl": "https://x.com/synthetic_three/status/11003",
+    "domId": "x-reply-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": { "status": "stable", "platformContentId": "11003" },
+    "media": [],
+    "pageInstanceId": "page-x-replies:x-reply-card",
+    "promoted": false,
+    "relations": [{ "kind": "reply", "targetId": "10001" }],
+    "surface": "replies",
+    "text": "Synthetic reply preserving its parent.",
+    "textPartial": false
+  }
+}

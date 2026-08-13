@@ -1,0 +1,13 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `useRef<$type | null>(null)`,
+  `useRef<null | $type>(null)`
+} as $call where {
+  register_diagnostic(
+    span = $call,
+    message = "A ref initialized with null already has a nullable current value in React 19. Use useRef<T>(null) (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

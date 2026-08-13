@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "reddit-all",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-reddit-all",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "t3_all001" },
+    "authorIdentity": { "status": "stable", "value": "t2_author03" },
+    "subredditIdentity": { "status": "stable", "value": "t5_all001" },
+    "surface": "all",
+    "title": "Synthetic all feed post",
+    "relations": [],
+    "promoted": false
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-home",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-home-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "home-card-stable",
+      "surface": "home",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-home-synthetic:home-card-stable",
+      "title": "Synthetic compiler walkthrough",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "homeA000001"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UChomeSyntheticAlpha000001"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    },
+    {
+      "domId": "home-card-no-channel",
+      "surface": "home",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-home-synthetic:home-card-no-channel",
+      "title": "Synthetic browser architecture notes",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "homeB000002"
+      },
+      "channelIdentity": {
+        "status": "ephemeral",
+        "reason": "not-exposed"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": false,
+      "diagnosticReason": "channel-id-not-exposed"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "reddit-comments",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-reddit-comments",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "t1_comm01" },
+    "authorIdentity": { "status": "stable", "value": "t2_author06" },
+    "subredditIdentity": { "status": "stable", "value": "t5_sub006" },
+    "surface": "comments",
+    "body": "Synthetic nested comment.",
+    "relations": [
+      { "kind": "reply", "targetId": "t1_parent1" },
+      { "kind": "thread-root", "targetId": "t3_root01" }
+    ],
+    "promoted": false
+  }
+}

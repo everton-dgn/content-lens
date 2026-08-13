@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "runtime-feasibility",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["browser-feasibility", "performance-benchmark"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true
+}

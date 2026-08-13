@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "reddit-subreddit",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-reddit-subreddit",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "t3_wrap01" },
+    "authorIdentity": { "status": "ephemeral", "reason": "not-exposed" },
+    "subredditIdentity": { "status": "stable", "value": "t5_dest01" },
+    "surface": "subreddit",
+    "title": "Synthetic crosspost wrapper",
+    "relations": [{ "kind": "crosspost", "targetId": "t3_orig01" }],
+    "promoted": false
+  }
+}

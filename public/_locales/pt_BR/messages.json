@@ -1,0 +1,2664 @@
+{
+  "feedsBrowserUnavailableBody": {
+    "message": "O navegador não consegue garantir que o fetch use o mesmo endereço aprovado na verificação de DNS. O ContentLens desativa o download de feeds RSS e Atom para impedir requisições a redes privadas.",
+    "description": "Explica por que a aquisição RSS por rede está desativada."
+  },
+  "feedsBrowserUnavailableTitle": {
+    "message": "O download de feeds RSS está desativado",
+    "description": "Título de aquisição RSS por rede indisponível."
+  },
+  "feedsBrowserPortableNote": {
+    "message": "As assinaturas existentes permanecem no perfil portátil local. Nenhuma requisição ao feed é feita.",
+    "description": "Esclarece como assinaturas RSS existentes são mantidas."
+  },
+  "feedsCancelAction": {
+    "message": "Cancelar",
+    "description": "Cancela a edição ou a revisão de remoção de RSS."
+  },
+  "feedsDescription": {
+    "message": "Revise assinaturas RSS e Atom já armazenadas no perfil portátil local.",
+    "description": "Explicação das configurações RSS."
+  },
+  "feedsEmptyBody": {
+    "message": "Este perfil não tem assinaturas armazenadas. A aquisição por rede está indisponível.",
+    "description": "Explicação da lista RSS vazia."
+  },
+  "feedsEmptyTitle": {
+    "message": "Nenhum feed ainda",
+    "description": "Título da lista RSS vazia."
+  },
+  "feedsErrorBody": {
+    "message": "A alteração do feed não terminou. As assinaturas e entradas existentes continuam inalteradas.",
+    "description": "Erro seguro de operação RSS."
+  },
+  "feedsErrorTitle": {
+    "message": "Falha ao alterar o feed",
+    "description": "Título de erro de operação RSS."
+  },
+  "feedsEyebrow": {
+    "message": "Fontes portáteis",
+    "description": "Rótulo das configurações RSS."
+  },
+  "feedsIntervalSuffix": {
+    "message": "minutos entre verificações",
+    "description": "Sufixo do intervalo RSS."
+  },
+  "feedsPauseAction": {
+    "message": "Pausar",
+    "description": "Marca uma assinatura RSS armazenada como pausada."
+  },
+  "feedsPausedStatus": {
+    "message": "Pausado",
+    "description": "Estado RSS pausado."
+  },
+  "feedsRemoveAction": {
+    "message": "Remover",
+    "description": "Remove uma assinatura RSS."
+  },
+  "feedsRemoveReviewBody": {
+    "message": "Isto remove a assinatura, o trabalho na fila, as entradas recentes e o estado de execução. Regras duráveis ligadas a este feed continuam disponíveis para revisão separada.",
+    "description": "Escopo da remoção RSS."
+  },
+  "feedsRemoveReviewTitle": {
+    "message": "Revise a remoção do feed",
+    "description": "Título da revisão de remoção RSS."
+  },
+  "feedsResumeAction": {
+    "message": "Retomar",
+    "description": "Marca uma assinatura RSS armazenada como ativa."
+  },
+  "feedsStatusFailed": {
+    "message": "Falha na verificação",
+    "description": "Estado RSS com falha."
+  },
+  "feedsStatusFetching": {
+    "message": "Verificando",
+    "description": "Estado RSS em verificação."
+  },
+  "feedsStatusIdle": {
+    "message": "Inativo",
+    "description": "Estado RSS inativo."
+  },
+  "feedsStatusNotChecked": {
+    "message": "Não verificado",
+    "description": "Estado RSS inicial."
+  },
+  "feedsStatusReady": {
+    "message": "Pronto",
+    "description": "Estado RSS pronto."
+  },
+  "feedsStatusScheduled": {
+    "message": "Agendado",
+    "description": "Estado RSS agendado."
+  },
+  "feedsStatusUnavailable": {
+    "message": "Indisponível",
+    "description": "Estado RSS indisponível."
+  },
+  "feedsSuccessBody": {
+    "message": "O perfil de assinaturas foi atualizado localmente.",
+    "description": "Confirmação de alteração RSS."
+  },
+  "feedsSuccessTitle": {
+    "message": "Configurações do feed salvas",
+    "description": "Título de confirmação RSS."
+  },
+  "feedsTitle": {
+    "message": "Feeds RSS e Atom",
+    "description": "Título das configurações RSS e Atom."
+  },
+  "panelDataNavigation": {
+    "message": "Dados",
+    "description": "Navegação para dados e integridade."
+  },
+  "panelFeedsNavigation": {
+    "message": "Feeds",
+    "description": "Navegação para configurações RSS."
+  },
+  "panelNavigationLabel": {
+    "message": "Seções do ContentLens",
+    "description": "Rótulo acessível da navegação principal."
+  },
+  "panelRulesNavigation": {
+    "message": "Regras",
+    "description": "Navegação para regras locais."
+  },
+  "actionOpen": {
+    "message": "Abrir o ContentLens",
+    "description": "Rótulo da ação na barra de ferramentas."
+  },
+  "dataApplyMergeAction": {
+    "message": "Aplicar mesclagem validada",
+    "description": "Confirma a mesclagem de três vias."
+  },
+  "dataImportMergeConflictBody": {
+    "message": "A mesclagem encontrou {count} conflito(s) que exigem decisão explícita. Nenhuma alteração foi aplicada.",
+    "description": "Resumo de conflitos da mesclagem."
+  },
+  "dataImportMergeConflictTitle": {
+    "message": "Conflitos impedem a mesclagem automática",
+    "description": "Título do estado de conflito."
+  },
+  "dataImportMergeDescription": {
+    "message": "Combina mudanças independentes usando a última base comum e preserva os dois lados quando há conflito.",
+    "description": "Descrição do modo de mesclagem."
+  },
+  "dataImportMergeLabel": {
+    "message": "Mesclar com a configuração local",
+    "description": "Opção de mesclagem de três vias."
+  },
+  "dataImportMergeReadyBody": {
+    "message": "A base comum foi validada. Mudanças independentes podem ser combinadas sem escolher pelo horário.",
+    "description": "Explicação da mesclagem disponível."
+  },
+  "dataImportMergeReadyTitle": {
+    "message": "Mesclagem de três vias disponível",
+    "description": "Título da mesclagem disponível."
+  },
+  "dataImportMergeReviewAction": {
+    "message": "Revisar mesclagem",
+    "description": "Abre a confirmação da mesclagem."
+  },
+  "dataImportMergeReviewBody": {
+    "message": "O resultado validado será aplicado localmente. O arquivo importado ficará salvo como nova base comum e um snapshot preservará o estado anterior.",
+    "description": "Impacto final da mesclagem."
+  },
+  "dataImportMergeReviewTitle": {
+    "message": "Confirmar mesclagem validada?",
+    "description": "Título da confirmação da mesclagem."
+  },
+  "dataApplyImportAction": {
+    "message": "Substituir perfil local",
+    "description": "Ação confirmada que importa o perfil portátil revisado."
+  },
+  "dataBackAction": {
+    "message": "Voltar para ajustes",
+    "description": "Ação que volta de dados e integridade para os ajustes."
+  },
+  "dataBaselineCapability": {
+    "message": "Regras determinísticas",
+    "description": "Nome da capacidade básica de regras."
+  },
+  "dataBaselineCapabilityDetail": {
+    "message": "Disponível sem conta, rede ou modelo.",
+    "description": "Explicação do estado do funcionamento determinístico básico."
+  },
+  "dataCapabilityTitle": {
+    "message": "Estado das capacidades",
+    "description": "Título do resumo de capacidades locais."
+  },
+  "dataCancelAction": {
+    "message": "Cancelar",
+    "description": "Ação que fecha uma revisão sem alterar nem exportar dados."
+  },
+  "dataChooseFileAction": {
+    "message": "Escolher arquivo JSON",
+    "description": "Rótulo próprio do produto para selecionar o arquivo de perfil portátil."
+  },
+  "dataClearDiagnosticsAction": {
+    "message": "Limpar diagnósticos",
+    "description": "Ação que inicia a revisão antes de limpar diagnósticos locais."
+  },
+  "dataClearDiagnosticsReviewBody": {
+    "message": "Isso remove somente os registros de diagnóstico locais. Regras, configurações do perfil, feedback e decisões em cache permanecem iguais.",
+    "description": "Escopo exato exibido antes de limpar os diagnósticos locais."
+  },
+  "dataClearDiagnosticsReviewTitle": {
+    "message": "Limpar diagnósticos locais?",
+    "description": "Título da confirmação de limpeza dos diagnósticos locais."
+  },
+  "dataConfirmClearDiagnosticsAction": {
+    "message": "Confirmar limpeza",
+    "description": "Ação confirmada que limpa somente os diagnósticos locais."
+  },
+  "dataConfirmDiagnosticsExportAction": {
+    "message": "Confirmar exportação sanitizada",
+    "description": "Ação confirmada que baixa a exportação de diagnósticos revisada."
+  },
+  "dataConfirmResetAction": {
+    "message": "Excluir todos os dados locais do ContentLens",
+    "description": "Ação destrutiva confirmada que nomeia todo o escopo."
+  },
+  "dataDescription": {
+    "message": "Confira dados portáteis, integridade local e recuperação sem enviar nada para fora deste dispositivo.",
+    "description": "Explicação no topo da tela de dados e integridade."
+  },
+  "dataDiagnosticsCountLabel": {
+    "message": "assinaturas de diagnóstico sanitizadas",
+    "description": "Rótulo da quantidade de diagnósticos locais agregados."
+  },
+  "dataDiagnosticsDescription": {
+    "message": "Os registros contêm códigos estáveis e contagens limitadas. Eles excluem conteúdo, URLs, identificadores de conta e valores do perfil.",
+    "description": "Explicação de privacidade dos diagnósticos locais."
+  },
+  "dataDiagnosticsExportReviewBody": {
+    "message": "O arquivo incluirá somente as assinaturas sanitizadas exibidas acima, com códigos estáveis e contagens limitadas. Ele não incluirá conteúdo, URLs, identificadores de conta nem valores do perfil.",
+    "description": "Escopo exato de privacidade exibido antes da exportação de diagnósticos."
+  },
+  "dataDiagnosticsExportReviewTitle": {
+    "message": "Revise antes de exportar",
+    "description": "Título da confirmação de exportação de diagnósticos."
+  },
+  "dataDiagnosticsTitle": {
+    "message": "Diagnósticos locais",
+    "description": "Título da seção de diagnósticos."
+  },
+  "dataErrorBody": {
+    "message": "A operação local solicitada não terminou. As regras existentes permanecem iguais.",
+    "description": "Explicação genérica segura para erros de dados e recuperação."
+  },
+  "dataErrorTitle": {
+    "message": "A operação local não pôde ser concluída",
+    "description": "Título genérico seguro para erros de dados e recuperação."
+  },
+  "dataExportDiagnosticsAction": {
+    "message": "Exportar diagnósticos sanitizados",
+    "description": "Ação opcional que baixa um arquivo de diagnósticos sem dados proibidos."
+  },
+  "dataExportEncryptedAction": {
+    "message": "Exportar arquivo criptografado",
+    "description": "Ação que exporta o perfil portátil protegido por passphrase."
+  },
+  "dataExportEncryptedDescription": {
+    "message": "Protege o conteúdo com AES-256-GCM e uma passphrase que fica somente com você.",
+    "description": "Descrição da exportação criptografada."
+  },
+  "dataExportEncryptedLabel": {
+    "message": "Criptografado, recomendado",
+    "description": "Opção recomendada de proteção da exportação."
+  },
+  "dataExportPassphraseConfirmationLabel": {
+    "message": "Confirmar passphrase",
+    "description": "Rótulo da confirmação da passphrase de portabilidade."
+  },
+  "dataExportPassphraseHint": {
+    "message": "Use pelo menos 12 caracteres. Ela não é salva nem enviada.",
+    "description": "Ajuda da passphrase de portabilidade."
+  },
+  "dataExportPassphraseLabel": {
+    "message": "Passphrase de portabilidade",
+    "description": "Rótulo da passphrase de exportação."
+  },
+  "dataExportPassphraseMismatchError": {
+    "message": "As passphrases precisam coincidir e ter pelo menos 12 caracteres.",
+    "description": "Erro de validação da passphrase de exportação."
+  },
+  "dataExportPassphraseWarningBody": {
+    "message": "O ContentLens não salva nem recupera esta passphrase. Sem ela, o arquivo criptografado não pode ser importado.",
+    "description": "Aviso sobre perda da passphrase."
+  },
+  "dataExportPassphraseWarningTitle": {
+    "message": "Guarde a passphrase em local seguro",
+    "description": "Título do aviso da passphrase."
+  },
+  "dataExportPlaintextConfirmAction": {
+    "message": "Confirmar JSON legível",
+    "description": "Confirma a exportação sem criptografia."
+  },
+  "dataExportPlaintextDescription": {
+    "message": "Cria um JSON legível por qualquer pessoa com acesso ao arquivo.",
+    "description": "Descrição da exportação sem criptografia."
+  },
+  "dataExportPlaintextLabel": {
+    "message": "JSON sem criptografia",
+    "description": "Opção de exportação legível."
+  },
+  "dataExportPlaintextReviewAction": {
+    "message": "Revisar exportação legível",
+    "description": "Abre a confirmação da exportação sem criptografia."
+  },
+  "dataExportPlaintextReviewBody": {
+    "message": "O arquivo mostrará regras, preferências, provedores sem credenciais, catálogo e rotas. Credenciais, consentimentos, histórico, cache e diagnósticos ficam de fora.",
+    "description": "Escopo da exportação legível."
+  },
+  "dataExportPlaintextReviewTitle": {
+    "message": "Exportar dados portáteis em texto legível?",
+    "description": "Título da confirmação da exportação legível."
+  },
+  "dataExportProtectionLabel": {
+    "message": "Proteção do arquivo",
+    "description": "Rótulo da escolha de proteção da exportação."
+  },
+  "dataImportAddedLabel": {
+    "message": "Itens adicionados",
+    "description": "Contagem de itens adicionados pela importação."
+  },
+  "dataImportChangedLabel": {
+    "message": "Itens alterados",
+    "description": "Contagem de itens alterados pela importação."
+  },
+  "dataImportEncryptedBody": {
+    "message": "A passphrase é usada somente nesta tentativa e não fica armazenada.",
+    "description": "Explicação da abertura de arquivo criptografado."
+  },
+  "dataImportEncryptedTitle": {
+    "message": "Arquivo criptografado",
+    "description": "Título da solicitação de passphrase."
+  },
+  "dataImportMergeUnavailableBody": {
+    "message": "Este arquivo não possui uma base comum confirmada nesta instalação. A mesclagem fica bloqueada para evitar perda silenciosa; a substituição revisada continua disponível.",
+    "description": "Motivo seguro para bloquear merge sem base."
+  },
+  "dataImportMergeUnavailableTitle": {
+    "message": "Mesclagem indisponível sem base comum",
+    "description": "Título do estado de merge bloqueado."
+  },
+  "dataImportModeLabel": {
+    "message": "Modo de importação",
+    "description": "Rótulo da escolha do modo de importação."
+  },
+  "dataImportPassphraseLabel": {
+    "message": "Passphrase do arquivo",
+    "description": "Rótulo da passphrase de importação."
+  },
+  "dataImportRemovedLabel": {
+    "message": "Itens removidos",
+    "description": "Contagem de itens removidos pela importação."
+  },
+  "dataImportReplaceDescription": {
+    "message": "Substitui regras e configuração portátil, bloqueia provedores importados e cria um snapshot local completo.",
+    "description": "Descrição do modo de substituição."
+  },
+  "dataImportReplaceLabel": {
+    "message": "Substituir configuração portátil",
+    "description": "Opção explícita de substituição."
+  },
+  "dataImportReplaceReviewAction": {
+    "message": "Revisar substituição",
+    "description": "Abre a confirmação final da substituição."
+  },
+  "dataImportReplaceReviewBody": {
+    "message": "A configuração portátil atual e o estado local dos provedores serão substituídos pelas contagens acima. Um snapshot de recuperação preservará o estado anterior.",
+    "description": "Impacto final da substituição."
+  },
+  "dataImportReplaceReviewTitle": {
+    "message": "Confirmar substituição do estado portátil?",
+    "description": "Título da confirmação final da substituição."
+  },
+  "dataImportTombstonesLabel": {
+    "message": "Exclusões registradas",
+    "description": "Contagem de tombstones do arquivo."
+  },
+  "dataImportUnlockAction": {
+    "message": "Validar e abrir arquivo",
+    "description": "Ação que tenta abrir o arquivo criptografado."
+  },
+  "dataPortableImportSnapshotBody": {
+    "message": "O perfil e o estado dos provedores anteriores à última substituição estão preservados localmente. A restauração cria uma nova revisão e mantém o estado atual como opção de retorno.",
+    "description": "Descrição do snapshot portátil completo."
+  },
+  "dataPortableImportSnapshotTitle": {
+    "message": "Snapshot completo anterior à importação",
+    "description": "Título do snapshot portátil."
+  },
+  "dataRestorePortableImportAction": {
+    "message": "Restaurar perfil e provedores anteriores",
+    "description": "Ação de restauração do snapshot portátil completo."
+  },
+  "dataExportProfileAction": {
+    "message": "Exportar perfil portátil",
+    "description": "Ação que baixa somente os dados portáteis do perfil."
+  },
+  "dataFeedbackCountLabel": {
+    "message": "Exemplos de feedback",
+    "description": "Rótulo da contagem de feedback na prévia de importação."
+  },
+  "dataImportConflictAllLocalAction": {
+    "message": "Usar todos os valores locais",
+    "description": "Inicia a escolha local em todos os conflitos."
+  },
+  "dataImportConflictAllLocalReviewBody": {
+    "message": "Isso escolherá o lado local em todos os conflitos exibidos. Você ainda precisará validar o resultado antes de aplicar.",
+    "description": "Confirmação da escolha local em massa."
+  },
+  "dataImportConflictAllRemoteAction": {
+    "message": "Usar todos os valores do arquivo",
+    "description": "Inicia a escolha remota em todos os conflitos."
+  },
+  "dataImportConflictAllRemoteReviewBody": {
+    "message": "Isso escolherá o lado do arquivo em todos os conflitos exibidos. Você ainda precisará validar o resultado antes de aplicar.",
+    "description": "Confirmação da escolha remota em massa."
+  },
+  "dataImportConflictBulkConfirmAction": {
+    "message": "Confirmar escolhas em massa",
+    "description": "Confirma a escolha em massa revisada."
+  },
+  "dataImportConflictBulkReviewTitle": {
+    "message": "Confirmar decisão para todos os conflitos?",
+    "description": "Título da confirmação em massa."
+  },
+  "dataImportConflictChoiceLabel": {
+    "message": "Decisão para este conflito",
+    "description": "Rótulo das opções de resolução."
+  },
+  "dataImportConflictEditHint": {
+    "message": "Informe um valor JSON completo. Ele será validado pelo mesmo schema antes de ser aceito.",
+    "description": "Ajuda da edição manual do conflito."
+  },
+  "dataImportConflictEditLabel": {
+    "message": "Editar valor final",
+    "description": "Opção de edição manual."
+  },
+  "dataImportConflictEditValueLabel": {
+    "message": "Valor JSON final",
+    "description": "Rótulo do valor manual."
+  },
+  "dataImportConflictItemTitle": {
+    "message": "Conflito de configuração",
+    "description": "Título de cada conflito."
+  },
+  "dataImportConflictJsonError": {
+    "message": "Informe um JSON válido e completo.",
+    "description": "Erro de JSON da resolução manual."
+  },
+  "dataImportConflictLocalLabel": {
+    "message": "Estado local",
+    "description": "Rótulo do lado local."
+  },
+  "dataImportConflictRemoteLabel": {
+    "message": "Estado do arquivo",
+    "description": "Rótulo do lado importado."
+  },
+  "dataImportConflictResolutionErrorBody": {
+    "message": "Escolha uma opção para cada conflito e corrija qualquer valor JSON inválido. Nenhuma alteração foi aplicada.",
+    "description": "Erro seguro da resolução de conflitos."
+  },
+  "dataImportConflictResolutionErrorTitle": {
+    "message": "A resolução ainda está incompleta",
+    "description": "Título do erro de resolução."
+  },
+  "dataImportConflictUnselectedLabel": {
+    "message": "Escolher depois",
+    "description": "Estado inicial sem decisão."
+  },
+  "dataImportConflictUseLocalLabel": {
+    "message": "Manter valor local",
+    "description": "Opção local."
+  },
+  "dataImportConflictUseRemoteLabel": {
+    "message": "Usar valor do arquivo",
+    "description": "Opção remota."
+  },
+  "dataImportConflictValidateAction": {
+    "message": "Validar resolução dos conflitos",
+    "description": "Valida todas as decisões e cria o candidato final."
+  },
+  "dataImportHint": {
+    "message": "Escolha um JSON exportado pelo ContentLens. O arquivo é validado e exibido em prévia antes da substituição.",
+    "description": "Ajuda do campo de arquivo do perfil portátil."
+  },
+  "dataImportInvalidBody": {
+    "message": "O arquivo escolhido não atende ao contrato de perfil portátil. Nenhum dado local foi alterado.",
+    "description": "Explicação após um dry run de importação inválido."
+  },
+  "dataImportInvalidTitle": {
+    "message": "Arquivo de perfil rejeitado com segurança",
+    "description": "Título após um dry run de importação inválido."
+  },
+  "dataImportLabel": {
+    "message": "Importar perfil portátil",
+    "description": "Rótulo do campo de arquivo do perfil."
+  },
+  "dataImportPreviewTitle": {
+    "message": "Escopo revisado da substituição",
+    "description": "Título acima das contagens do dry run de importação."
+  },
+  "dataImportRestoreSuccessBody": {
+    "message": "A última importação foi desfeita. O perfil local anterior voltou a ficar ativo.",
+    "description": "Confirmação após restaurar o perfil anterior à importação."
+  },
+  "dataImportRestoreSuccessTitle": {
+    "message": "Perfil anterior restaurado",
+    "description": "Título após restaurar o perfil anterior à importação."
+  },
+  "dataImportSnapshotBody": {
+    "message": "Uma cópia local do perfil substituído está disponível. Restaurá-la desfaz a última importação e remove esta cópia.",
+    "description": "Explicação do escopo de recuperação anterior à importação."
+  },
+  "dataImportSnapshotTitle": {
+    "message": "Perfil anterior à importação",
+    "description": "Título da cópia de recuperação anterior à importação."
+  },
+  "dataImportSuccessBody": {
+    "message": "O perfil revisado substituiu o perfil ativo. Um snapshot local anterior à importação ficou disponível para recuperação.",
+    "description": "Confirmação após importar um perfil portátil."
+  },
+  "dataImportSuccessTitle": {
+    "message": "Perfil importado",
+    "description": "Título após importar um perfil portátil."
+  },
+  "dataNoDiagnostics": {
+    "message": "Nenhuma falha local registrada",
+    "description": "Rótulo vazio da contagem de diagnósticos."
+  },
+  "dataNoFileSelected": {
+    "message": "Nenhum arquivo selecionado",
+    "description": "Estado vazio exibido pelo seletor de arquivo do perfil portátil."
+  },
+  "dataOptionalCapability": {
+    "message": "Assistência opcional por IA",
+    "description": "Nome das capacidades opcionais apoiadas por modelo."
+  },
+  "dataOptionalCapabilityDetail": {
+    "message": "Não habilitada. As regras determinísticas continuam totalmente disponíveis.",
+    "description": "Explicação do estado das capacidades opcionais apoiadas por modelo."
+  },
+  "dataOptionalLabel": {
+    "message": "Opcional",
+    "description": "Badge curto do estado de uma capacidade opcional."
+  },
+  "dataOperationPendingAction": {
+    "message": "Verificar status da operação",
+    "description": "Ação que repete com segurança a mesma operação de dados pendente."
+  },
+  "dataOperationPendingBody": {
+    "message": "O ContentLens ainda não confirmou a alteração local. Verifique a mesma operação novamente para evitar repetir seus efeitos.",
+    "description": "Explicação de uma operação de dados reconhecida que aguarda confirmação durável."
+  },
+  "dataOperationPendingTitle": {
+    "message": "Confirmação de armazenamento pendente",
+    "description": "Título de uma operação de dados que ainda não chegou a um estado terminal durável."
+  },
+  "dataPending": {
+    "message": "Concluindo uma operação local limitada.",
+    "description": "Estado pendente de operações de dados e recuperação."
+  },
+  "dataProfileDescription": {
+    "message": "A exportação inclui regras, feedback explícito e configurações portáteis. Exclui diagnósticos, cache, conteúdo observado e snapshots de recuperação.",
+    "description": "Explicação do escopo dos dados portáteis."
+  },
+  "dataProfileTitle": {
+    "message": "Perfil portátil",
+    "description": "Título da importação e exportação de perfil."
+  },
+  "dataRecoveryBlocked": {
+    "message": "Importação necessária",
+    "description": "Rótulo de recuperação quando não existe perfil local legível."
+  },
+  "dataRecoveryDescription": {
+    "message": "Dados legíveis e snapshots validados têm preferência sobre a redefinição. A redefinição exige confirmação explícita.",
+    "description": "Explicação da ordem de prioridade da recuperação."
+  },
+  "dataRecoveryReadable": {
+    "message": "Perfil legível",
+    "description": "Rótulo de recuperação quando o perfil ativo pode ser exportado."
+  },
+  "dataRecoveryRecoverable": {
+    "message": "Snapshot validado disponível",
+    "description": "Rótulo de recuperação quando um snapshot de migração pode ser restaurado."
+  },
+  "dataRecoveryTitle": {
+    "message": "Recuperação",
+    "description": "Título da recuperação local."
+  },
+  "dataResetWarningBody": {
+    "message": "Isso remove o perfil ativo, regras, feedback, cache, histórico e dados de recuperação. Os diagnósticos permanecem separados até serem limpos.",
+    "description": "Explicação completa do escopo antes de redefinir dados locais."
+  },
+  "dataResetWarningTitle": {
+    "message": "Revise todo o escopo da redefinição",
+    "description": "Título do aviso antes de redefinir dados locais."
+  },
+  "dataRestoreAction": {
+    "message": "Restaurar snapshot validado",
+    "description": "Ação primária quando existe um snapshot de migração validado."
+  },
+  "dataRestoreImportAction": {
+    "message": "Restaurar perfil anterior",
+    "description": "Ação que restaura e consome a cópia do perfil anterior à importação."
+  },
+  "dataReviewClearDiagnosticsAction": {
+    "message": "Revisar limpeza de diagnósticos",
+    "description": "Rótulo de revisão antes de limpar diagnósticos."
+  },
+  "dataReviewDiagnosticsExportAction": {
+    "message": "Revisar exportação sanitizada",
+    "description": "Ação que abre o escopo da exportação de diagnósticos antes do download."
+  },
+  "dataReviewResetAction": {
+    "message": "Revisar redefinição de dados locais",
+    "description": "Ação progressiva que inicia a revisão da redefinição."
+  },
+  "dataRulesCountLabel": {
+    "message": "Regras",
+    "description": "Rótulo da contagem de regras na prévia de importação."
+  },
+  "dataStorageCapability": {
+    "message": "Armazenamento local do perfil",
+    "description": "Nome da capacidade de perfil local durável."
+  },
+  "dataStorageCapabilityDetail": {
+    "message": "Legível e exportável neste perfil do navegador.",
+    "description": "Explicação do estado do armazenamento local."
+  },
+  "dataTitle": {
+    "message": "Dados e integridade",
+    "description": "Título de dados portáteis, diagnósticos e recuperação."
+  },
+  "dataEyebrow": {
+    "message": "Painel do instrumento local",
+    "description": "Rótulo de instrumento acima de dados e integridade."
+  },
+  "extensionDescription": {
+    "message": "Uma extensão de navegador com processamento local para filtragem intencional de conteúdo.",
+    "description": "Descrição da extensão exibida pelo navegador."
+  },
+  "extensionName": {
+    "message": "ContentLens",
+    "description": "Nome do produto exibido pelo navegador e no painel."
+  },
+  "injectedActionsLabel": {
+    "message": "Ações do ContentLens",
+    "description": "Rótulo acessível para ações inseridas ao lado de um item da plataforma."
+  },
+  "injectedDecisionConflict": {
+    "message": "Regras locais conflitantes mantiveram este item visível. Revise as regras no ContentLens ou oculte-o nesta sessão.",
+    "description": "Explicação acessível do conflito e das próximas ações seguras para um item inserido na plataforma."
+  },
+  "injectedDecisionFailed": {
+    "message": "O ContentLens não conseguiu verificar este item. Ele continua visível. Você pode ocultá-lo nesta sessão.",
+    "description": "Explicação acessível da falha segura e da ação de recuperação para um item inserido na plataforma."
+  },
+  "injectedDecisionPending": {
+    "message": "Verificando regras locais. Este item continua visível.",
+    "description": "Explicação acessível do estado pendente de um item inserido na plataforma."
+  },
+  "injectedHiddenHeading": {
+    "message": "Conteúdo ocultado pelo ContentLens",
+    "description": "Título e rótulo acessível do placeholder reversível de conteúdo ocultado."
+  },
+  "injectedHideForSession": {
+    "message": "Ocultar nesta sessão",
+    "description": "Ação que oculta somente o item atual durante a sessão da página."
+  },
+  "injectedReasonRule": {
+    "message": "Motivo: correspondência com uma regra local",
+    "description": "Motivo seguro exibido quando uma regra determinística oculta um item."
+  },
+  "injectedReasonSession": {
+    "message": "Motivo: ocultado nesta sessão",
+    "description": "Motivo seguro exibido quando o usuário oculta um item na sessão atual."
+  },
+  "injectedReveal": {
+    "message": "Mostrar",
+    "description": "Ação que revela um item ocultado durante a sessão atual."
+  },
+  "panelEyebrow": {
+    "message": "Controles de conteúdo com processamento local",
+    "description": "Rótulo curto acima do título do painel."
+  },
+  "panelBrandKicker": {
+    "message": "Controle local",
+    "description": "Rótulo compacto do instrumento acima do nome do produto."
+  },
+  "panelEmptyDescription": {
+    "message": "Sua lista local de regras está vazia. A primeira regra começa com uma prévia para você conferir o efeito antes de salvar.",
+    "description": "Explicação exibida antes da criação da primeira regra."
+  },
+  "panelEmptyEyebrow": {
+    "message": "Sem regras",
+    "description": "Rótulo de instrumento para o estado sem regras."
+  },
+  "panelEmptyTitle": {
+    "message": "Ajuste seu feed com uma regra clara",
+    "description": "Título exibido antes da criação da primeira regra."
+  },
+  "panelErrorDescription": {
+    "message": "O conteúdo existente continua visível. Tente verificar o perfil local novamente para continuar.",
+    "description": "Explicação segura de recuperação quando o perfil local não carrega."
+  },
+  "panelErrorEyebrow": {
+    "message": "Perfil local",
+    "description": "Rótulo acima do erro de armazenamento no painel."
+  },
+  "panelErrorTitle": {
+    "message": "Não foi possível abrir as regras",
+    "description": "Título exibido quando o armazenamento local de regras não está disponível."
+  },
+  "panelFooterLocal": {
+    "message": "Processamento local · Sem conta · Sem nuvem",
+    "description": "Resumo de privacidade persistente no rodapé do painel."
+  },
+  "panelLocalBadge": {
+    "message": "Local",
+    "description": "Selo que confirma que o processamento básico permanece neste dispositivo."
+  },
+  "panelLoadingDescription": {
+    "message": "Verificando o perfil local e preparando suas regras.",
+    "description": "Explicação exibida enquanto o painel carrega dados locais."
+  },
+  "panelLoadingEyebrow": {
+    "message": "Inicialização local",
+    "description": "Rótulo acima do estado de carregamento do painel."
+  },
+  "panelLoadingTitle": {
+    "message": "Carregando suas regras",
+    "description": "Título exibido enquanto o painel carrega dados locais."
+  },
+  "panelPrivacyBadge": {
+    "message": "Privado por padrão",
+    "description": "Selo que introduz a explicação sobre processamento local."
+  },
+  "panelPrivacyDescription": {
+    "message": "Regras e correções ficam neste perfil do navegador. O ContentLens não exige uma conta para o funcionamento determinístico básico.",
+    "description": "Explicação de privacidade no primeiro uso."
+  },
+  "panelPrivacyTitle": {
+    "message": "Seus dados ficam neste navegador",
+    "description": "Título da explicação sobre privacidade local."
+  },
+  "panelReady": {
+    "message": "O painel da extensão está pronto. A filtragem de conteúdo estará disponível após a aprovação nos testes de viabilidade.",
+    "description": "Status da fundação exibido no painel."
+  },
+  "panelRetryAction": {
+    "message": "Tentar novamente",
+    "description": "Ação primária de recuperação para falha ao carregar o perfil local."
+  },
+  "panelStatusError": {
+    "message": "Erro no mecanismo local",
+    "description": "Rótulo visível e acessível para erro no painel."
+  },
+  "panelStatusLoading": {
+    "message": "Carregando mecanismo local",
+    "description": "Rótulo visível e acessível para painel em carregamento."
+  },
+  "panelStatusReady": {
+    "message": "Mecanismo local pronto",
+    "description": "Rótulo visível e acessível do painel pronto."
+  },
+  "rulesAdvancedRuleLabel": {
+    "message": "Regra avançada",
+    "description": "Rótulo de uma regra importada válida que o editor básico não altera."
+  },
+  "rulesAllowDescription": {
+    "message": "Mantém títulos correspondentes visíveis mesmo quando outra regra tentaria ocultá-los.",
+    "description": "Explicação do efeito de permitir."
+  },
+  "rulesAllowLabel": {
+    "message": "Permitir",
+    "description": "Rótulo para uma regra exata de permissão."
+  },
+  "rulesBackAction": {
+    "message": "Editar regra",
+    "description": "Ação que volta da prévia para o editor."
+  },
+  "rulesBlockDescription": {
+    "message": "Oculta títulos correspondentes com um placeholder reversível do ContentLens.",
+    "description": "Explicação do efeito de bloquear."
+  },
+  "rulesBlockLabel": {
+    "message": "Bloquear",
+    "description": "Rótulo para uma regra exata de bloqueio."
+  },
+  "rulesCancelAction": {
+    "message": "Cancelar",
+    "description": "Ação que fecha o editor sem salvar."
+  },
+  "rulesCreateAction": {
+    "message": "Criar sua primeira regra",
+    "description": "Ação primária do primeiro uso que abre o editor."
+  },
+  "rulesDataAction": {
+    "message": "Dados e integridade",
+    "description": "Ação secundária que abre dados locais, diagnósticos e recuperação."
+  },
+  "rulesEditAction": {
+    "message": "Editar",
+    "description": "Ação que abre uma regra básica existente."
+  },
+  "rulesEditorDescription": {
+    "message": "Escolha um efeito claro e uma frase. Você confere o resultado antes de qualquer salvamento.",
+    "description": "Explicação no topo do editor básico."
+  },
+  "rulesEditorEffectLabel": {
+    "message": "O que deve acontecer?",
+    "description": "Legenda da escolha de efeito da regra."
+  },
+  "rulesEditorEyebrow": {
+    "message": "Editor de regras",
+    "description": "Rótulo de instrumento acima do editor básico."
+  },
+  "rulesEditorNewTitle": {
+    "message": "Defina uma regra de título",
+    "description": "Título para uma nova regra exata."
+  },
+  "rulesEditorUpdateTitle": {
+    "message": "Ajuste esta regra de título",
+    "description": "Título para uma regra exata existente."
+  },
+  "rulesFailureBody": {
+    "message": "Seu rascunho foi preservado. Revise e tente salvar novamente.",
+    "description": "Explicação de falha recuperável em uma operação de regra."
+  },
+  "rulesFailureTitle": {
+    "message": "A regra não foi salva",
+    "description": "Título de falha recuperável em uma operação de regra."
+  },
+  "rulesHideLabel": {
+    "message": "Ocultar",
+    "description": "Rótulo da prévia para uma decisão de conteúdo ocultado."
+  },
+  "rulesListDescription": {
+    "message": "As regras rodam localmente e de forma determinística no Início, na busca e nas recomendações do YouTube.",
+    "description": "Explicação da lista local de regras e do primeiro uso."
+  },
+  "rulesListEyebrow": {
+    "message": "Regras salvas",
+    "description": "Rótulo de instrumento acima da lista de regras."
+  },
+  "rulesListTitle": {
+    "message": "Suas regras de conteúdo",
+    "description": "Título da lista de regras."
+  },
+  "rulesNewAction": {
+    "message": "Nova regra",
+    "description": "Ação que inicia outra regra."
+  },
+  "rulesPendingAction": {
+    "message": "Verificar status da operação",
+    "description": "Ação que repete com segurança a mesma operação de regra pendente."
+  },
+  "rulesPendingBody": {
+    "message": "O ContentLens ainda não confirmou a alteração local. Verifique a mesma operação novamente para evitar duplicação.",
+    "description": "Explicação de uma operação de regra reconhecida, mas ainda sem confirmação durável."
+  },
+  "rulesPendingTitle": {
+    "message": "Confirmação de armazenamento pendente",
+    "description": "Título de uma operação de regra reconhecida que aguarda confirmação durável."
+  },
+  "rulesPhraseError": {
+    "message": "Digite pelo menos dois caracteres.",
+    "description": "Erro de validação para uma frase vazia ou curta demais."
+  },
+  "rulesPhraseHint": {
+    "message": "A correspondência ignora diferenças entre maiúsculas e minúsculas.",
+    "description": "Ajuda para a frase exata no título."
+  },
+  "rulesPhraseLabel": {
+    "message": "Frase no título",
+    "description": "Rótulo do campo da frase exata."
+  },
+  "rulesPreviewAction": {
+    "message": "Ver prévia da regra",
+    "description": "Ação primária do editor que abre a prévia em dry run."
+  },
+  "rulesPreviewDescription": {
+    "message": "Este dry run mostra um item correspondente e uma exceção protegida. Nada foi salvo ainda.",
+    "description": "Explicação acima dos resultados da prévia."
+  },
+  "rulesPreviewEyebrow": {
+    "message": "Dry run",
+    "description": "Rótulo de instrumento acima da prévia."
+  },
+  "rulesPreviewMatchLabel": {
+    "message": "Exemplo correspondente",
+    "description": "Rótulo do item sintético alcançado pela regra candidata."
+  },
+  "rulesPreviewProtectedLabel": {
+    "message": "Exceção protegida",
+    "description": "Rótulo do item sintético não alcançado pela regra candidata."
+  },
+  "rulesPreviewProtectedItemTitle": {
+    "message": "Análise semanal do jogo",
+    "description": "Título sintético sem correspondência usado no exemplo protegido do dry run."
+  },
+  "rulesPreviewTitle": {
+    "message": "Confira o efeito antes de salvar",
+    "description": "Título da prévia em dry run."
+  },
+  "rulesRuleScope": {
+    "message": "YouTube · Início, busca e recomendações",
+    "description": "Resumo visível do escopo de uma regra exata básica."
+  },
+  "rulesSaveAction": {
+    "message": "Salvar regra",
+    "description": "Ação primária que confirma a regra revisada."
+  },
+  "rulesSavedBody": {
+    "message": "A regra está ativa localmente. Você pode desfazê-la com uma ação.",
+    "description": "Confirmação depois de salvar uma regra local."
+  },
+  "rulesSavedTitle": {
+    "message": "Regra salva",
+    "description": "Título da confirmação de salvamento local."
+  },
+  "rulesSavingAction": {
+    "message": "Salvando localmente…",
+    "description": "Rótulo pendente enquanto a operação de regra não terminou."
+  },
+  "rulesShowLabel": {
+    "message": "Mostrar",
+    "description": "Rótulo da prévia para uma decisão de conteúdo visível."
+  },
+  "rulesUnchangedLabel": {
+    "message": "Sem título correspondente, este item permanece igual.",
+    "description": "Explicação da exceção protegida no dry run."
+  },
+  "rulesUndoAction": {
+    "message": "Desfazer regra salva",
+    "description": "Desfazer em uma ação a regra salva mais recentemente."
+  },
+  "rulesUndoneBody": {
+    "message": "A regra salva foi removida e o perfil local foi atualizado.",
+    "description": "Confirmação depois de desfazer a regra."
+  },
+  "rulesUndoneTitle": {
+    "message": "Regra desfeita",
+    "description": "Título da confirmação de desfazer."
+  },
+  "panelSettingsNavigation": {
+    "message": "Ajustes",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAddModelAction": {
+    "message": "Adicionar modelo",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAddProviderAction": {
+    "message": "Adicionar provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAdvancedDescription": {
+    "message": "Mostra detalhes de endpoint, roteamento e capacidades.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsAdvancedLabel": {
+    "message": "Ajustes avançados",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCloudConsentBody": {
+    "message": "Revise abaixo cada destino cloud, tarefa, plataforma e categoria de dado. Texto e imagens recebem autorizações separadas.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCloudConsentLabel": {
+    "message": "Revisei e autorizo estes fluxos exatos de dados para cloud",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCloudConsentTitle": {
+    "message": "Revisão do processamento em cloud",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorDark": {
+    "message": "Escuro",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorLabel": {
+    "message": "Modo de cor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorLight": {
+    "message": "Claro",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsColorSystem": {
+    "message": "Seguir o sistema",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialExternal": {
+    "message": "Cofre externo",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialExternalReference": {
+    "message": "Referência do cofre externo",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialModeLabel": {
+    "message": "Modo da credencial",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialNone": {
+    "message": "Sem credencial",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialPassphrase": {
+    "message": "Frase secreta",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSavedBody": {
+    "message": "Somente metadados protegidos continuam visíveis. O campo de segredo foi limpo.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSavedTitle": {
+    "message": "Credencial atualizada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSecretHint": {
+    "message": "Somente escrita. O valor vai direto ao worker da extensão e é limpo daqui após salvar.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSecretLabel": {
+    "message": "Chave de API ou token de acesso",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialSession": {
+    "message": "Somente nesta sessão",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsCredentialWrapped": {
+    "message": "Protegida por frase secreta",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsDescription": {
+    "message": "Configure IA, plataformas, privacidade, dados locais, diagnóstico e preferências da interface.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsDisabledOption": {
+    "message": "Desativado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsDisconnectAction": {
+    "message": "Desconectar provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsEndpointHint": {
+    "message": "Endpoints cloud exigem HTTPS. Serviços locais em loopback podem usar HTTP.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsEndpointLabel": {
+    "message": "Origem do endpoint",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsEyebrow": {
+    "message": "Configuração local",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsErrorBody": {
+    "message": "Os ajustes não puderam ser carregados. O perfil local ativo não foi alterado.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsErrorTitle": {
+    "message": "Ajustes indisponíveis",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionLabel": {
+    "message": "Execução",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsGlobalRoutesBody": {
+    "message": "Escolha uma rota independente para cada tarefa. Fallbacks cloud ficam desativados até uma configuração explícita.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsGlobalRoutesTitle": {
+    "message": "Rotas globais de modelos",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsHideSecretAction": {
+    "message": "Ocultar",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsInheritOption": {
+    "message": "Usar configuração global",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsInterfaceTitle": {
+    "message": "Preferências da interface",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleAuto": {
+    "message": "Idioma do navegador",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleEnglish": {
+    "message": "Inglês",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleLabel": {
+    "message": "Idioma",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocalePortuguese": {
+    "message": "Português (Brasil)",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLocaleSpanish": {
+    "message": "Espanhol",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLoadingBody": {
+    "message": "Lendo o perfil local e o catálogo de provedores.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsLoadingTitle": {
+    "message": "Carregando ajustes",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelDisplayLabel": {
+    "message": "Nome visível do modelo",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelIdLabel": {
+    "message": "ID do modelo no provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelProviderLabel": {
+    "message": "Provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelTasksLabel": {
+    "message": "Capacidades declaradas",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelsEmpty": {
+    "message": "Nenhum modelo compatível foi registrado ainda.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsModelsTitle": {
+    "message": "Modelos e roteamento",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPendingAction": {
+    "message": "Salvando localmente…",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionBody": {
+    "message": "O acesso é pedido somente para o host da plataforma escolhida e apenas depois desta ação.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionDenied": {
+    "message": "A permissão não foi concedida",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionGranted": {
+    "message": "Permissão concedida",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionRequestAction": {
+    "message": "Solicitar acesso à plataforma",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformActivationLabel": {
+    "message": "Estado da plataforma",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformDisabled": {
+    "message": "Desativada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformEnabled": {
+    "message": "Ativada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformHackerNews": {
+    "message": "Hacker News",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformLinkedin": {
+    "message": "LinkedIn",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformPaused": {
+    "message": "Pausada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformReddit": {
+    "message": "Reddit",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformRoutingTitle": {
+    "message": "Overrides de modelo da plataforma",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformRss": {
+    "message": "RSS",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformSelectLabel": {
+    "message": "Plataforma",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformX": {
+    "message": "X",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPlatformYoutube": {
+    "message": "YouTube",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderDisplayLabel": {
+    "message": "Nome do provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderEmpty": {
+    "message": "Nenhum provedor está configurado.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderPermissionAction": {
+    "message": "Solicitar acesso ao provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderPermissionBody": {
+    "message": "O pedido informa a origem exata deste provedor. Uma recusa nunca repete o prompt automaticamente.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderSelectLabel": {
+    "message": "Provedor configurado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderStatusLabel": {
+    "message": "Estado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProviderTemplateLabel": {
+    "message": "Tipo de provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsProvidersTitle": {
+    "message": "Provedores e credenciais",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsQuotaAcknowledgement": {
+    "message": "Entendo que este teste explícito de conexão pode consumir cota do provedor",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsRevealSecretAction": {
+    "message": "Revelar",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveAction": {
+    "message": "Salvar ajustes",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveCredentialAction": {
+    "message": "Guardar credencial",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveFailedBody": {
+    "message": "Os ajustes ativos anteriores continuam iguais. Revise o estado do provedor, as capacidades do modelo e o consentimento cloud.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSaveFailedTitle": {
+    "message": "Os ajustes não foram salvos",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSavedBody": {
+    "message": "Os ajustes validados estão ativos no perfil local.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSavedTitle": {
+    "message": "Ajustes salvos",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsSurfacesTitle": {
+    "message": "Superfícies de conteúdo",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabInterface": {
+    "message": "Interface",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabModels": {
+    "message": "Modelos",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabPlatforms": {
+    "message": "Plataformas",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTabProviders": {
+    "message": "Provedores",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskAssistanceDraft": {
+    "message": "Rascunho assistido de regra",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskAssistanceExplain": {
+    "message": "Explicação assistida de regra",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskClassificationText": {
+    "message": "Classificação de texto",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskClassificationVision": {
+    "message": "Classificação de imagem",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTaskEmbedding": {
+    "message": "Embeddings de similaridade",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTestConnectionAction": {
+    "message": "Testar conexão",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTestConnectionHint": {
+    "message": "Usa um prompt sintético sem conteúdo de página, feed, perfil ou regra.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTextOnlyBody": {
+    "message": "A classificação de texto continua funcionando. Selecione um modelo com visão para analisar imagens.",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTextOnlyTitle": {
+    "message": "A análise de imagem está desativada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsTitle": {
+    "message": "Ajustes",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionLocal": {
+    "message": "Local",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionCloud": {
+    "message": "Nuvem",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsExecutionBrowser": {
+    "message": "Navegador",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusUnconfigured": {
+    "message": "Não configurado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusLocked": {
+    "message": "Bloqueado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusReady": {
+    "message": "Pronto",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusDegraded": {
+    "message": "Degradado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusRateLimited": {
+    "message": "Limitado pela taxa",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusUnauthorized": {
+    "message": "Não autorizado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsStatusRevoked": {
+    "message": "Revogado",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionNotRequested": {
+    "message": "Ainda não solicitada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionRevoked": {
+    "message": "Revogada",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsPermissionUnavailable": {
+    "message": "Indisponível",
+    "description": "ContentLens settings interface copy."
+  },
+  "settingsConnectionCodeLabel": {
+    "message": "Código técnico",
+    "description": "ContentLens settings connection result copy."
+  },
+  "settingsConnectionReadyBody": {
+    "message": "O teste sintético funcionou. Nenhum conteúdo de página, feed, perfil ou regra foi enviado.",
+    "description": "ContentLens settings connection result copy."
+  },
+  "settingsConnectionFailedBody": {
+    "message": "As regras locais continuam ativas. Resolva o problema informado e execute o teste novamente.",
+    "description": "ContentLens settings connection result copy."
+  },
+  "settingsConnectionReadyTitle": {
+    "message": "A conexão está pronta",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionAuthenticationFailedTitle": {
+    "message": "A credencial não foi aceita",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionAuthorizationFailedTitle": {
+    "message": "A credencial não possui acesso",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionTlsFailedTitle": {
+    "message": "A conexão segura falhou",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionHostUnreachableTitle": {
+    "message": "Não foi possível acessar o servidor do provedor",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionRateLimitedTitle": {
+    "message": "O provedor limitou esta solicitação",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionQuotaExhaustedTitle": {
+    "message": "A cota do provedor acabou",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionModelUnavailableTitle": {
+    "message": "O modelo selecionado está indisponível",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionSchemaInvalidTitle": {
+    "message": "O provedor retornou uma resposta incompatível",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionProtocolInvalidTitle": {
+    "message": "O protocolo do provedor é incompatível",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionTimeoutTitle": {
+    "message": "A conexão excedeu o tempo limite",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionOfflineTitle": {
+    "message": "O navegador está sem conexão",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionCancelledTitle": {
+    "message": "O teste de conexão foi cancelado",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionPermissionDeniedTitle": {
+    "message": "A permissão do provedor foi recusada",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionCredentialLockedTitle": {
+    "message": "Desbloqueie a credencial antes do teste",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsConnectionCredentialUnavailableTitle": {
+    "message": "Adicione uma credencial antes do teste",
+    "description": "ContentLens settings connection result title."
+  },
+  "settingsSurfaceYoutubeHome": {
+    "message": "Início",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeSearch": {
+    "message": "Resultados da busca",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeRecommendations": {
+    "message": "Recomendações",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeSubscriptions": {
+    "message": "Inscrições",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeShorts": {
+    "message": "Shorts",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeChannel": {
+    "message": "Páginas de canal",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubePlaylist": {
+    "message": "Playlists",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceYoutubeEndScreen": {
+    "message": "Tela final",
+    "description": "YouTube surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinFeed": {
+    "message": "Feed",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinReposts": {
+    "message": "Republicações",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinPromotedPosts": {
+    "message": "Publicações patrocinadas",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceLinkedinCommentPreview": {
+    "message": "Prévias de comentários",
+    "description": "LinkedIn surface label in ContentLens settings."
+  },
+  "settingsSurfaceXFollowing": {
+    "message": "Seguindo",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXForYou": {
+    "message": "Para você",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXReplies": {
+    "message": "Respostas",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXQuotedPosts": {
+    "message": "Publicações citadas",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceXThreads": {
+    "message": "Sequências",
+    "description": "X surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditHome": {
+    "message": "Início",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditPopular": {
+    "message": "Popular",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditAll": {
+    "message": "Tudo",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditSubreddit": {
+    "message": "Subreddits",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditSearch": {
+    "message": "Resultados da busca",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceRedditComments": {
+    "message": "Comentários",
+    "description": "Reddit surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsFrontPage": {
+    "message": "Página inicial",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsNew": {
+    "message": "Novas histórias",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsBest": {
+    "message": "Melhores histórias",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsAsk": {
+    "message": "Perguntas",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsShow": {
+    "message": "Projetos",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsJobs": {
+    "message": "Vagas",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceHackerNewsItem": {
+    "message": "Páginas de histórias",
+    "description": "Hacker News surface label in ContentLens settings."
+  },
+  "settingsSurfaceRssFeedEntry": {
+    "message": "Itens do feed",
+    "description": "RSS surface label in ContentLens settings."
+  },
+  "settingsUnsavedTitle": {
+    "message": "Há alterações não salvas",
+    "description": "ContentLens settings unsaved changes title."
+  },
+  "settingsUnsavedBody": {
+    "message": "Escolha o que fazer antes de abrir outra seção dos ajustes.",
+    "description": "ContentLens settings unsaved changes body."
+  },
+  "settingsUnsavedSaveAction": {
+    "message": "Salvar e continuar",
+    "description": "ContentLens settings unsaved changes action."
+  },
+  "settingsUnsavedDiscardAction": {
+    "message": "Descartar alterações",
+    "description": "ContentLens settings unsaved changes action."
+  },
+  "settingsUnsavedContinueAction": {
+    "message": "Continuar editando",
+    "description": "ContentLens settings unsaved changes action."
+  },
+  "panelHomeNavigation": {
+    "message": "Início",
+    "description": "Primary side panel navigation label."
+  },
+  "panelReviewNavigation": {
+    "message": "Revisão",
+    "description": "Primary side panel navigation label."
+  },
+  "homeTitle": {
+    "message": "Sua visão geral local",
+    "description": "ContentLens home panel title."
+  },
+  "homeOverviewTitle": {
+    "message": "Visão geral",
+    "description": "ContentLens home panel section label."
+  },
+  "homeDescription": {
+    "message": "Veja regras ativas, alterações recentes e estatísticas do perfil local.",
+    "description": "ContentLens home panel description."
+  },
+  "homeActiveRulesLabel": {
+    "message": "Regras ativas",
+    "description": "ContentLens home statistic label."
+  },
+  "homeFeedbackLabel": {
+    "message": "Correções",
+    "description": "ContentLens home statistic label."
+  },
+  "homeEnabledPlatformsLabel": {
+    "message": "Plataformas ativas",
+    "description": "ContentLens home statistic label."
+  },
+  "homeHistoryTitle": {
+    "message": "Histórico",
+    "description": "ContentLens home panel section title."
+  },
+  "homeHistoryEmpty": {
+    "message": "Nenhuma alteração de regra foi salva ainda.",
+    "description": "ContentLens home history empty state."
+  },
+  "homeStatisticsTitle": {
+    "message": "Estatísticas",
+    "description": "ContentLens home panel section title."
+  },
+  "homeProfileRevisionLabel": {
+    "message": "Revisão do perfil",
+    "description": "ContentLens home profile statistic label."
+  },
+  "homeUpdatedLabel": {
+    "message": "Última atualização",
+    "description": "ContentLens home profile date label."
+  },
+  "homeOpenRulesAction": {
+    "message": "Criar ou revisar regras",
+    "description": "ContentLens home primary action."
+  },
+  "reviewTitle": {
+    "message": "Revisão",
+    "description": "ContentLens review panel title."
+  },
+  "reviewDescription": {
+    "message": "Confira decisões que precisam da sua avaliação antes de qualquer ação mais forte.",
+    "description": "ContentLens review panel description."
+  },
+  "reviewEmptyEyebrow": {
+    "message": "Fila de revisão",
+    "description": "ContentLens review empty state eyebrow."
+  },
+  "reviewEmptyTitle": {
+    "message": "Nada precisa de revisão",
+    "description": "ContentLens review empty state title."
+  },
+  "reviewEmptyDescription": {
+    "message": "Decisões com baixa confiança ou conflito continuam visíveis e aparecerão aqui quando a revisão estiver disponível.",
+    "description": "ContentLens review empty state description."
+  },
+  "reviewLoadingEyebrow": {
+    "message": "Análise local",
+    "description": "Review loading eyebrow."
+  },
+  "reviewLoadingTitle": {
+    "message": "Carregando relações",
+    "description": "Review loading title."
+  },
+  "reviewLoadingDescription": {
+    "message": "Lendo o índice local de similaridade e o grafo de conteúdo.",
+    "description": "Review loading description."
+  },
+  "reviewErrorEyebrow": {
+    "message": "Análise local",
+    "description": "Review error eyebrow."
+  },
+  "reviewErrorTitle": {
+    "message": "As relações estão indisponíveis",
+    "description": "Review error title."
+  },
+  "reviewErrorDescription": {
+    "message": "Não foi possível ler o índice derivado. Regras exatas e seu perfil continuam ativos.",
+    "description": "Review error description."
+  },
+  "reviewSummaryTitle": {
+    "message": "Resumo das relações",
+    "description": "Review relationship summary title."
+  },
+  "reviewRelationsLabel": {
+    "message": "$COUNT$ relações",
+    "description": "Review relation count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewClustersLabel": {
+    "message": "$COUNT$ grupos",
+    "description": "Review cluster count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewGraphNodesLabel": {
+    "message": "$COUNT$ nós no grafo",
+    "description": "Review graph node count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewGraphEdgesLabel": {
+    "message": "$COUNT$ arestas no grafo",
+    "description": "Review graph edge count.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "reviewRepresentativeLabel": {
+    "message": "Item representativo",
+    "description": "Cluster representative label."
+  },
+  "reviewProtectedLabel": {
+    "message": "Protegidos",
+    "description": "Protected cluster item label."
+  },
+  "reviewUpdatesLabel": {
+    "message": "Atualizações",
+    "description": "Story updates label."
+  },
+  "reviewSponsoredLabel": {
+    "message": "Patrocinados",
+    "description": "Sponsored cluster item label."
+  },
+  "reviewPreservedLabel": {
+    "message": "Itens preservados",
+    "description": "Preserved cluster items label."
+  },
+  "reviewScoreLabel": {
+    "message": "$SCORE$ de correspondência",
+    "description": "Relation score label.",
+    "placeholders": { "score": { "content": "$1" } }
+  },
+  "reviewEvidenceLabel": {
+    "message": "Evidências",
+    "description": "Relation evidence label."
+  },
+  "reviewAdvisoryLabel": {
+    "message": "Somente revisão",
+    "description": "Advisory relation label."
+  },
+  "reviewSeparateAction": {
+    "message": "Separar esta relação",
+    "description": "Open relation correction action."
+  },
+  "reviewSeparateTitle": {
+    "message": "Separar estes itens?",
+    "description": "Relation correction title."
+  },
+  "reviewSeparateDescription": {
+    "message": "Isto suprime somente esta relação na versão atual das evidências. Regras e feedback continuam iguais.",
+    "description": "Relation correction description."
+  },
+  "reviewSeparateConfirmAction": {
+    "message": "Separar relação",
+    "description": "Confirm relation correction."
+  },
+  "reviewCancelAction": {
+    "message": "Cancelar",
+    "description": "Cancel review action."
+  },
+  "reviewHideSimilarAction": {
+    "message": "Revisar Ocultar similares",
+    "description": "Open batch similarity action review."
+  },
+  "reviewHideSimilarTitle": {
+    "message": "Ocultar itens similares?",
+    "description": "Batch similarity review title."
+  },
+  "reviewHideSimilarDescription": {
+    "message": "$COUNT$ itens estão no escopo, incluindo $UPDATES$ atualizações e $PROTECTED$ itens protegidos. Itens protegidos e atualizações continuam visíveis.",
+    "description": "Batch similarity scope review.",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "updates": { "content": "$2" },
+      "protected": { "content": "$3" }
+    }
+  },
+  "reviewHideSimilarConfirmAction": {
+    "message": "Ocultar itens elegíveis",
+    "description": "Confirm batch similarity action."
+  },
+  "reviewRelationExactDuplicate": {
+    "message": "Duplicata exata",
+    "description": "Exact duplicate relation label."
+  },
+  "reviewRelationNearDuplicate": {
+    "message": "Quase duplicata",
+    "description": "Near duplicate relation label."
+  },
+  "reviewRelationSemanticallySimilar": {
+    "message": "Semanticamente semelhante",
+    "description": "Semantic relation label."
+  },
+  "reviewRelationStoryUpdate": {
+    "message": "Atualização da história",
+    "description": "Story update relation label."
+  },
+  "reviewRelationRelatedDistinct": {
+    "message": "Relacionado, com conteúdo distinto",
+    "description": "Related distinct relation label."
+  },
+  "settingsShortcutsTitle": {
+    "message": "Mais ferramentas de ajustes",
+    "description": "ContentLens settings shortcuts title."
+  },
+  "settingsShortcutsDescription": {
+    "message": "Gerencie fontes de feed ou consulte dados locais, privacidade, diagnósticos e recuperação.",
+    "description": "ContentLens settings shortcuts description."
+  },
+  "settingsFeedsShortcutAction": {
+    "message": "Gerenciar feeds",
+    "description": "ContentLens settings shortcut action."
+  },
+  "settingsDataShortcutAction": {
+    "message": "Dados e integridade",
+    "description": "ContentLens settings shortcut action."
+  },
+  "settingsSyncTitle": {
+    "message": "Sincronização controlada por você",
+    "description": "Sync settings title."
+  },
+  "settingsSyncDescription": {
+    "message": "Mantenha a configuração portátil em um endpoint HTTP condicional sob seu controle. Os dados locais continuam operacionais quando o endpoint fica offline.",
+    "description": "Sync settings description."
+  },
+  "settingsSyncPlaintextTitle": {
+    "message": "A configuração remota fica legível",
+    "description": "Plaintext sync warning title."
+  },
+  "settingsSyncPlaintextBody": {
+    "message": "Esta versão envia a configuração filtrada como JSON. Credenciais, recibos de consentimento, conteúdo observado, histórico, cache e diagnósticos ficam de fora.",
+    "description": "Plaintext sync warning."
+  },
+  "settingsSyncCategoriesTitle": {
+    "message": "Categorias sincronizadas",
+    "description": "Sync categories title."
+  },
+  "settingsSyncCategoriesBody": {
+    "message": "Regras, exclusões, preferências por plataforma, descrições portáteis de provedores, catálogo e vínculos de modelos.",
+    "description": "Sync categories list."
+  },
+  "settingsSyncProviderLabel": {
+    "message": "Provedor da conexão",
+    "description": "Sync provider label."
+  },
+  "settingsSyncProviderHint": {
+    "message": "Usa a credencial de um provedor configurado e a permissão exata da origem. Adicione ou desbloqueie em Provedores de IA primeiro.",
+    "description": "Sync provider guidance."
+  },
+  "settingsSyncEndpointLabel": {
+    "message": "Caminho do endpoint remoto",
+    "description": "Sync endpoint label."
+  },
+  "settingsSyncEndpointHint": {
+    "message": "Somente o caminho, sem query, fragmento ou credencial. A origem do provedor configurado permanece fixa.",
+    "description": "Sync endpoint guidance."
+  },
+  "settingsSyncRemoteObjectLabel": {
+    "message": "Nome do objeto remoto",
+    "description": "Remote object label."
+  },
+  "settingsSyncScheduleLabel": {
+    "message": "Intervalo da sincronização automática",
+    "description": "Sync schedule label."
+  },
+  "settingsSyncScheduleFiveMinutes": {
+    "message": "A cada 5 minutos",
+    "description": "Five minute sync schedule."
+  },
+  "settingsSyncScheduleFifteenMinutes": {
+    "message": "A cada 15 minutos",
+    "description": "Fifteen minute sync schedule."
+  },
+  "settingsSyncScheduleHourly": {
+    "message": "A cada hora",
+    "description": "Hourly sync schedule."
+  },
+  "settingsSyncRetentionLabel": {
+    "message": "Retenção do provedor",
+    "description": "Sync retention label."
+  },
+  "settingsSyncRetentionDefault": {
+    "message": "Controlada pelo proprietário do endpoint",
+    "description": "Default sync retention disclosure."
+  },
+  "settingsSyncRevocationLabel": {
+    "message": "Como revogar o acesso",
+    "description": "Sync revocation label."
+  },
+  "settingsSyncRevocationDefault": {
+    "message": "Remova ou revogue o token no provedor",
+    "description": "Default sync revocation disclosure."
+  },
+  "settingsSyncConsentLabel": {
+    "message": "Revisei o endpoint, as categorias legíveis, a retenção e o método de revogação",
+    "description": "Sync consent label."
+  },
+  "settingsSyncConsentDescription": {
+    "message": "A conexão solicita a permissão exata da origem e não envia a credencial dentro do envelope sincronizado.",
+    "description": "Sync consent description."
+  },
+  "settingsSyncConnectAction": {
+    "message": "Conectar sincronização",
+    "description": "Connect sync action."
+  },
+  "settingsSyncNowAction": {
+    "message": "Sincronizar agora",
+    "description": "Manual sync action."
+  },
+  "settingsSyncDisconnectAction": {
+    "message": "Desconectar",
+    "description": "Disconnect sync action."
+  },
+  "settingsSyncDisconnectReviewTitle": {
+    "message": "Desconectar a sincronização?",
+    "description": "Disconnect sync review title."
+  },
+  "settingsSyncDisconnectReviewBody": {
+    "message": "Execuções na fila serão canceladas e a sincronização automática será interrompida. A configuração local e o objeto remoto serão preservados.",
+    "description": "Disconnect sync review body."
+  },
+  "settingsSyncDisconnectConfirmAction": {
+    "message": "Confirmar desconexão",
+    "description": "Disconnect sync confirmation."
+  },
+  "settingsSyncCredentialRequiredTitle": {
+    "message": "Este provedor precisa de uma credencial local",
+    "description": "Missing sync credential title."
+  },
+  "settingsSyncCredentialRequiredBody": {
+    "message": "Abra Provedores de IA, salve ou desbloqueie uma credencial e volte aqui. A credencial nunca entra na exportação nem nos dados sincronizados.",
+    "description": "Missing sync credential body."
+  },
+  "settingsSyncPermissionTitle": {
+    "message": "A permissão da origem não foi concedida",
+    "description": "Sync permission title."
+  },
+  "settingsSyncPermissionBody": {
+    "message": "Nenhuma conexão foi feita. Conceda a origem exata do provedor quando estiver pronto.",
+    "description": "Sync permission body."
+  },
+  "settingsSyncConnectedTitle": {
+    "message": "Sincronização conectada",
+    "description": "Sync connected title."
+  },
+  "settingsSyncConnectedBody": {
+    "message": "O digest remoto foi confirmado e a base comum foi salva localmente.",
+    "description": "Sync connected body."
+  },
+  "settingsSyncCompletedTitle": {
+    "message": "Sincronização confirmada",
+    "description": "Sync completed title."
+  },
+  "settingsSyncCompletedBody": {
+    "message": "As configurações local e remota compartilham o digest confirmado.",
+    "description": "Sync completed body."
+  },
+  "settingsSyncConflictTitle": {
+    "message": "A sincronização precisa de revisão",
+    "description": "Sync conflict title."
+  },
+  "settingsSyncConflictBody": {
+    "message": "Nenhuma sobrescrita remota ocorreu. Revise o conflito salvo ou estabeleça uma base compatível antes de tentar novamente.",
+    "description": "Sync conflict body."
+  },
+  "settingsSyncConflictChoiceLabel": {
+    "message": "Resolução",
+    "description": "Conflict resolution choice label."
+  },
+  "settingsSyncConflictCustomLabel": {
+    "message": "Valor JSON final",
+    "description": "Custom conflict value label."
+  },
+  "settingsSyncConflictLocalOption": {
+    "message": "Usar valor local",
+    "description": "Local conflict option."
+  },
+  "settingsSyncConflictRemoteOption": {
+    "message": "Usar valor remoto",
+    "description": "Remote conflict option."
+  },
+  "settingsSyncConflictCustomOption": {
+    "message": "Editar valor final",
+    "description": "Custom conflict option."
+  },
+  "settingsSyncConflictResolveAction": {
+    "message": "Validar e sincronizar resolução",
+    "description": "Resolve conflicts action."
+  },
+  "settingsSyncConflictResolvedTitle": {
+    "message": "Conflito resolvido",
+    "description": "Resolved conflict title."
+  },
+  "settingsSyncConflictResolvedBody": {
+    "message": "O resultado validado foi confirmado localmente e no remoto.",
+    "description": "Resolved conflict body."
+  },
+  "settingsSyncConflictUseAllLocalAction": {
+    "message": "Escolher todos os valores locais",
+    "description": "Bulk local resolution action."
+  },
+  "settingsSyncConflictUseAllRemoteAction": {
+    "message": "Escolher todos os valores remotos",
+    "description": "Bulk remote resolution action."
+  },
+  "settingsSyncConflictBulkReviewTitle": {
+    "message": "Confirmar resolução em lote",
+    "description": "Bulk resolution review title."
+  },
+  "settingsSyncConflictBulkReviewBody": {
+    "message": "Isso aplica um lado a $COUNT$ conflitos. Confira a contagem antes de continuar.",
+    "description": "Bulk resolution review body.",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "settingsSyncConflictBulkConfirmAction": {
+    "message": "Aplicar estas escolhas",
+    "description": "Bulk resolution confirmation action."
+  },
+  "settingsSyncRecoveryTitle": {
+    "message": "Snapshots de recuperação",
+    "description": "Sync recovery section title."
+  },
+  "settingsSyncRecoveryDescription": {
+    "message": "Restaure um snapshot local validado como nova revisão. A restauração pausa a sincronização e nunca envia dados automaticamente.",
+    "description": "Sync recovery description."
+  },
+  "settingsSyncRecoveryRevisionLabel": {
+    "message": "Revisão local $REVISION$",
+    "description": "Recovery snapshot revision.",
+    "placeholders": { "revision": { "content": "$1" } }
+  },
+  "settingsSyncRecoveryDiffLabel": {
+    "message": "$ADDED$ adicionados, $CHANGED$ alterados, $REMOVED$ removidos",
+    "description": "Recovery snapshot diff summary.",
+    "placeholders": {
+      "added": { "content": "$1" },
+      "changed": { "content": "$2" },
+      "removed": { "content": "$3" }
+    }
+  },
+  "settingsSyncRecoveryRestoreAction": {
+    "message": "Revisar restauração",
+    "description": "Review recovery restoration action."
+  },
+  "settingsSyncRecoveryReviewTitle": {
+    "message": "Restaurar este snapshot local?",
+    "description": "Recovery confirmation title."
+  },
+  "settingsSyncRecoveryReviewBody": {
+    "message": "A configuração local atual recebe seu próprio snapshot de recuperação. O estado selecionado vira uma nova revisão, e a sincronização permanece pausada.",
+    "description": "Recovery confirmation body."
+  },
+  "settingsSyncRecoveryConfirmAction": {
+    "message": "Restaurar snapshot local",
+    "description": "Confirm recovery action."
+  },
+  "settingsSyncRecoveryRestoredTitle": {
+    "message": "Snapshot restaurado",
+    "description": "Recovery success title."
+  },
+  "settingsSyncRecoveryRestoredBody": {
+    "message": "Revise a nova versão local antes de reconectar a sincronização.",
+    "description": "Recovery success body."
+  },
+  "settingsSyncRemoteDeleteAction": {
+    "message": "Apagar dados remotos",
+    "description": "Open remote deletion review."
+  },
+  "settingsSyncRemoteDeleteReviewTitle": {
+    "message": "Apagar o objeto remoto de sincronização?",
+    "description": "Remote deletion review title."
+  },
+  "settingsSyncRemoteDeleteReviewBody": {
+    "message": "Alvo: $TARGET$. Isso remove somente o objeto remoto de sincronização. A configuração local permanece.",
+    "description": "Remote deletion review body.",
+    "placeholders": { "target": { "content": "$1" } }
+  },
+  "settingsSyncRemoteDeleteConfirmationLabel": {
+    "message": "Digite o nome exato do objeto remoto",
+    "description": "Remote deletion confirmation label."
+  },
+  "settingsSyncRemoteDeleteConfirmAction": {
+    "message": "Apagar objeto remoto",
+    "description": "Confirm remote deletion action."
+  },
+  "settingsSyncRemoteDeletedTitle": {
+    "message": "Dados remotos apagados",
+    "description": "Remote deletion success title."
+  },
+  "settingsSyncRemoteDeletedBody": {
+    "message": "O objeto remoto foi removido e a sincronização foi desconectada. A configuração local foi preservada.",
+    "description": "Remote deletion success body."
+  },
+  "settingsSyncFailureTitle": {
+    "message": "A sincronização não pôde continuar",
+    "description": "Sync failure title."
+  },
+  "settingsSyncFailureBody": {
+    "message": "A operação foi interrompida com segurança. Verifique a credencial, a permissão da origem, o endpoint e o estado antes de tentar novamente.",
+    "description": "Sync failure body."
+  },
+  "settingsSyncDisconnectedTitle": {
+    "message": "Sincronização desconectada",
+    "description": "Sync disconnected title."
+  },
+  "settingsSyncDisconnectedBody": {
+    "message": "As execuções automáticas e manuais foram desativadas. A configuração local foi preservada.",
+    "description": "Sync disconnected body."
+  },
+  "settingsSyncStateDisconnected": {
+    "message": "Desconectado",
+    "description": "Disconnected sync state."
+  },
+  "settingsSyncStateConnecting": {
+    "message": "Conectando",
+    "description": "Connecting sync state."
+  },
+  "settingsSyncStateIdle": {
+    "message": "Sem alterações",
+    "description": "Idle sync state."
+  },
+  "settingsSyncStatePulling": {
+    "message": "Lendo o remoto",
+    "description": "Pulling sync state."
+  },
+  "settingsSyncStateMerging": {
+    "message": "Mesclando",
+    "description": "Merging sync state."
+  },
+  "settingsSyncStatePushing": {
+    "message": "Enviando com CAS",
+    "description": "Pushing sync state."
+  },
+  "settingsSyncStateConflict": {
+    "message": "Aguardando revisão do conflito",
+    "description": "Conflict sync state."
+  },
+  "settingsSyncStateDegraded": {
+    "message": "Degradado",
+    "description": "Degraded sync state."
+  },
+  "settingsGeneralTitle": {
+    "message": "Ajustes gerais",
+    "description": "ContentLens general settings title."
+  },
+  "settingsGeneralDescription": {
+    "message": "Revise o funcionamento local e abra as ferramentas de ajustes que você mais usa.",
+    "description": "ContentLens general settings description."
+  },
+  "settingsGeneralModelCount": {
+    "message": "$COUNT$ no catálogo de modelos",
+    "description": "Quantidade de modelos no resumo dos ajustes gerais.",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "settingsGeneralModelCountSingular": {
+    "message": "1 modelo no catálogo",
+    "description": "Quantidade singular de modelos no resumo dos ajustes gerais."
+  },
+  "settingsGeneralProviderCount": {
+    "message": "$COUNT$ provedores configurados",
+    "description": "Quantidade de provedores no resumo dos ajustes gerais.",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "settingsGeneralProviderCountSingular": {
+    "message": "1 provedor configurado",
+    "description": "Quantidade singular de provedores no resumo dos ajustes gerais."
+  },
+  "settingsDisconnectReviewTitle": {
+    "message": "Desconectar este provedor?",
+    "description": "ContentLens provider disconnect confirmation title."
+  },
+  "settingsDisconnectReviewBody": {
+    "message": "Isso remove credenciais locais, consentimentos, cache e a permissão de host sem outro uso. Os ajustes do provedor e as regras locais permanecem. Revogue a chave externa separadamente quando necessário.",
+    "description": "ContentLens provider disconnect confirmation body."
+  },
+  "settingsDisconnectConfirmAction": {
+    "message": "Desconectar provedor",
+    "description": "ContentLens provider disconnect confirmation action."
+  },
+  "settingsModelInputPriceLabel": {
+    "message": "Preço declarado de entrada",
+    "description": "ContentLens model input pricing label."
+  },
+  "settingsModelOutputPriceLabel": {
+    "message": "Preço declarado de saída",
+    "description": "ContentLens model output pricing label."
+  },
+  "settingsModelPriceSourceLabel": {
+    "message": "Fonte e verificação do preço",
+    "description": "ContentLens model pricing source label."
+  },
+  "settingsAiNavigationLabel": {
+    "message": "Ajustes de IA e provedores",
+    "description": "Accessible label for AI settings navigation."
+  },
+  "settingsPrivacyDataTitle": {
+    "message": "Privacidade e dados",
+    "description": "ContentLens privacy and data settings title."
+  },
+  "settingsPrivacyDataDescription": {
+    "message": "Gerencie retenção local, perfil portátil, cache, histórico e exclusão completa dos dados.",
+    "description": "ContentLens privacy and data settings description."
+  },
+  "settingsPrivacyDataAction": {
+    "message": "Abrir privacidade e dados",
+    "description": "ContentLens privacy and data action."
+  },
+  "settingsDiagnosticsTitle": {
+    "message": "Diagnóstico",
+    "description": "ContentLens diagnostics settings title."
+  },
+  "settingsDiagnosticsDescription": {
+    "message": "Consulte registros locais redigidos, exporte um relatório revisado ou limpe o diagnóstico.",
+    "description": "ContentLens diagnostics settings description."
+  },
+  "settingsDiagnosticsAction": {
+    "message": "Abrir diagnóstico",
+    "description": "ContentLens diagnostics settings action."
+  },
+  "settingsTabGeneral": {
+    "message": "Geral",
+    "description": "ContentLens settings section label."
+  },
+  "settingsTabAiProviders": {
+    "message": "IA e provedores",
+    "description": "ContentLens settings section label."
+  },
+  "settingsTabPrivacyData": {
+    "message": "Privacidade e dados",
+    "description": "ContentLens settings section label."
+  },
+  "settingsTabDiagnostics": {
+    "message": "Diagnóstico",
+    "description": "ContentLens settings section label."
+  },
+  "settingsModelCatalogTitle": {
+    "message": "Catálogo de modelos",
+    "description": "Model catalog title."
+  },
+  "settingsAdvancedRoutingSummary": {
+    "message": "Ordem e política de fallback",
+    "description": "Resumo da seção avançada de rota."
+  },
+  "settingsRoutingBudgetsSummary": {
+    "message": "Limites de requisições e custo",
+    "description": "Resumo da seção avançada de orçamento de roteamento."
+  },
+  "settingsMaxConcurrentGlobalLabel": {
+    "message": "Máximo de requisições simultâneas",
+    "description": "Rótulo do limite global de requisições simultâneas."
+  },
+  "settingsMaxConcurrentProviderLabel": {
+    "message": "Máximo simultâneo por provedor",
+    "description": "Rótulo do limite de requisições simultâneas por provedor."
+  },
+  "settingsRequestsPerMinuteLabel": {
+    "message": "Requisições por minuto por provedor",
+    "description": "Rótulo do limite de requisições por minuto."
+  },
+  "settingsRequestsPerDayLabel": {
+    "message": "Requisições por dia por provedor",
+    "description": "Rótulo do limite diário de requisições."
+  },
+  "settingsMonetaryBudgetLabel": {
+    "message": "Ativar orçamento monetário",
+    "description": "Rótulo do switch de orçamento monetário."
+  },
+  "settingsMonetaryBudgetDescription": {
+    "message": "Requisições sem preço atual verificado são bloqueadas enquanto este orçamento estiver ativo.",
+    "description": "Explicação do orçamento monetário de roteamento."
+  },
+  "settingsMonetaryLimitLabel": {
+    "message": "Limite do orçamento",
+    "description": "Rótulo do valor do orçamento monetário."
+  },
+  "settingsMonetaryCurrencyLabel": {
+    "message": "Moeda do orçamento",
+    "description": "Rótulo da moeda do orçamento monetário."
+  },
+  "settingsPriceMaxAgeLabel": {
+    "message": "Idade máxima do preço",
+    "description": "Rótulo da idade máxima aceita para o preço."
+  },
+  "settingsHoursLabel": {
+    "message": "$HOURS$ horas",
+    "description": "Uma duração em horas.",
+    "placeholders": {
+      "hours": { "content": "$1" }
+    }
+  },
+  "settingsFallbackOrderLabel": {
+    "message": "Ordem efetiva",
+    "description": "Rótulo da cadeia ordenada de fallback de modelos."
+  },
+  "settingsFallbackPositionLabel": {
+    "message": "Fallback $POSITION$",
+    "description": "Rótulo de uma posição ordenada de fallback.",
+    "placeholders": {
+      "position": { "content": "$1" }
+    }
+  },
+  "settingsNoFallbackOption": {
+    "message": "Sem outro fallback",
+    "description": "Opção que encerra uma cadeia explícita de fallback."
+  },
+  "settingsDeterministicBaselineLabel": {
+    "message": "Baseline local determinístico",
+    "description": "Fallback seguro final depois dos modelos configurados."
+  },
+  "settingsAllowCloudFallbackLabel": {
+    "message": "Permitir fallback cloud autorizado",
+    "description": "Rótulo da política de fallback cloud."
+  },
+  "settingsAllowCloudFallbackDescription": {
+    "message": "Cloud só é usado quando provedor, plataforma, tarefa e campos exatos têm consentimento.",
+    "description": "Explicação da política de fallback cloud."
+  },
+  "settingsAllowHigherCostFallbackLabel": {
+    "message": "Permitir fallback de custo maior",
+    "description": "Rótulo da política de fallback de custo maior."
+  },
+  "settingsAllowHigherCostFallbackDescription": {
+    "message": "Um fallback com preço verificado maior por token pode rodar dentro do orçamento configurado.",
+    "description": "Explicação da política de fallback de custo maior."
+  },
+  "settingsCatalogRefreshAction": {
+    "message": "Atualizar catálogo de modelos",
+    "description": "Ação que atualiza explicitamente o catálogo de modelos do provedor selecionado."
+  },
+  "settingsCatalogRefreshedTitle": {
+    "message": "Catálogo de modelos atualizado",
+    "description": "Título de sucesso da atualização do catálogo de modelos do provedor."
+  },
+  "settingsCatalogRefreshedBody": {
+    "message": "Modelos encontrados: $COUNT$. As capacidades ainda precisam ser revisadas antes do roteamento.",
+    "description": "Mensagem de sucesso da atualização do catálogo de modelos do provedor.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "settingsModelCatalogStatusLabel": {
+    "message": "Estado no catálogo",
+    "description": "Model catalog status label."
+  },
+  "settingsModelCatalogStatusAvailable": {
+    "message": "Disponível",
+    "description": "Available model status."
+  },
+  "settingsModelCatalogStatusUnavailable": {
+    "message": "Indisponível",
+    "description": "Unavailable model status."
+  },
+  "settingsModelCatalogStatusInvalid": {
+    "message": "Inválido",
+    "description": "Invalid model status."
+  },
+  "settingsModelDeclaredVersionLabel": {
+    "message": "Versão declarada",
+    "description": "Model declared version label."
+  },
+  "settingsModelInputLimitLabel": {
+    "message": "Máximo de bytes de entrada",
+    "description": "Model input resource limit label."
+  },
+  "settingsModelLanguagesLabel": {
+    "message": "Idiomas",
+    "description": "Model languages label."
+  },
+  "settingsModelLastCheckedLabel": {
+    "message": "Última verificação",
+    "description": "Model last catalog check label."
+  },
+  "settingsModelModalitiesLabel": {
+    "message": "Modalidades",
+    "description": "Model modalities label."
+  },
+  "settingsModelModalityImage": {
+    "message": "Imagem",
+    "description": "Image model modality."
+  },
+  "settingsModelModalityText": {
+    "message": "Texto",
+    "description": "Text model modality."
+  },
+  "settingsModelOutputLimitLabel": {
+    "message": "Máximo de bytes de saída",
+    "description": "Model output resource limit label."
+  },
+  "settingsModelProviderNameLabel": {
+    "message": "Provedor",
+    "description": "Model provider label."
+  },
+  "settingsModelVerificationLabel": {
+    "message": "Evidência de capacidade",
+    "description": "Model verification evidence label."
+  },
+  "settingsModelVerificationDeclared": {
+    "message": "Declarada",
+    "description": "Declared model capability evidence."
+  },
+  "settingsModelVerificationProbe": {
+    "message": "Verificada por teste",
+    "description": "Probe verified model capability evidence."
+  },
+  "settingsModelVerificationBenchmark": {
+    "message": "Benchmark aceito",
+    "description": "Benchmark accepted model capability evidence."
+  },
+  "settingsModelVersionUnknown": {
+    "message": "Não informado",
+    "description": "Missing model metadata value."
+  },
+  "settingsModelSearchLabel": {
+    "message": "Buscar modelos disponíveis",
+    "description": "Search field label for a long model list."
+  },
+  "settingsEditProviderAction": {
+    "message": "Atualizar provedor",
+    "description": "Action that updates provider metadata."
+  },
+  "settingsProviderUpdatedTitle": {
+    "message": "Provedor atualizado",
+    "description": "Provider update success title."
+  },
+  "settingsProviderTypeLabel": {
+    "message": "Tipo de provedor",
+    "description": "Rótulo do tipo de provedor configurado."
+  },
+  "settingsProviderModelsLabel": {
+    "message": "Modelos",
+    "description": "Rótulo da quantidade de modelos do provedor."
+  },
+  "settingsProviderModelCount": {
+    "message": "Modelos no catálogo: $COUNT$",
+    "description": "Quantidade de modelos do provedor configurado.",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "settingsProviderLastVerificationLabel": {
+    "message": "Última verificação de conexão",
+    "description": "Rótulo da última verificação de conexão do provedor."
+  },
+  "settingsProviderUpdatedBody": {
+    "message": "Os dados do provedor estão atualizados. Alterar o endpoint limpa a credencial e o consentimento vinculados.",
+    "description": "Provider update success body."
+  },
+  "settingsProviderRemovedTitle": {
+    "message": "Provedor removido",
+    "description": "Provider removal success title."
+  },
+  "settingsProviderRemovedBody": {
+    "message": "O provedor, seus modelos, credenciais e registros de consentimento foram removidos localmente.",
+    "description": "Provider removal success body."
+  },
+  "settingsRemoveProviderReviewAction": {
+    "message": "Revisar remoção do provedor",
+    "description": "Action that previews provider removal impact."
+  },
+  "settingsRemoveProviderReviewTitle": {
+    "message": "Remover este provedor?",
+    "description": "Provider removal confirmation title."
+  },
+  "settingsRemoveProviderReviewBody": {
+    "message": "Isto remove o provedor e seus modelos, credenciais e registros de consentimento locais. A ação não pode ser desfeita.",
+    "description": "Provider removal confirmation body."
+  },
+  "settingsRemoveProviderBlockedTitle": {
+    "message": "O provedor ainda é usado por rotas de modelos",
+    "description": "Blocked provider removal title."
+  },
+  "settingsRemoveProviderBlockedBody": {
+    "message": "Altere ou desative todas as rotas afetadas antes de remover o provedor. Os ajustes atuais continuam ativos.",
+    "description": "Blocked provider removal body."
+  },
+  "settingsRemoveProviderConfirmAction": {
+    "message": "Remover provedor",
+    "description": "Provider removal confirmation action."
+  },
+  "settingsRemoveProviderCancelAction": {
+    "message": "Cancelar",
+    "description": "Provider removal cancellation action."
+  },
+  "settingsRemoveProviderModelsLabel": {
+    "message": "Modelos que serão removidos",
+    "description": "Provider removal model impact label."
+  },
+  "settingsRemoveProviderRoutesLabel": {
+    "message": "Rotas que precisam ser alteradas",
+    "description": "Provider removal route impact label."
+  },
+  "settingsRemoveProviderPrimaryRole": {
+    "message": "Modelo principal",
+    "description": "Primary model route role."
+  },
+  "settingsRemoveProviderFallbackRole": {
+    "message": "Modelo de contingência",
+    "description": "Fallback model route role."
+  },
+  "settingsRemoveProviderReviewRoutesAction": {
+    "message": "Revisar rotas de modelos",
+    "description": "Action that opens model routes after blocked removal."
+  },
+  "settingsNativeFeedbackTitle": {
+    "message": "Feedback da plataforma",
+    "description": "Native platform feedback settings title."
+  },
+  "settingsNativeFeedbackToggleLabel": {
+    "message": "Oferecer feedback revisado à plataforma após uma ação local",
+    "description": "Native platform feedback opt-in label."
+  },
+  "settingsNativeFeedbackAvailableTitle": {
+    "message": "Disponível com revisão individual",
+    "description": "Native feedback available state title."
+  },
+  "settingsNativeFeedbackAvailableBody": {
+    "message": "Cada ação da plataforma exige uma confirmação separada. O ContentLens revalida o alvo imediatamente antes de ativar o controle visível.",
+    "description": "Native feedback available state body."
+  },
+  "settingsNativeFeedbackUnavailableTitle": {
+    "message": "Indisponível nesta versão da plataforma",
+    "description": "Native feedback unavailable state title."
+  },
+  "settingsNativeFeedbackUnavailableBody": {
+    "message": "A ação local continua funcionando. O feedback da plataforma fica desligado até o controle visível e a confirmação positiva passarem por um teste live documentado.",
+    "description": "Native feedback unavailable state body."
+  },
+  "nativeFeedbackReviewTitle": {
+    "message": "Revisar feedback da plataforma",
+    "description": "Native feedback review title."
+  },
+  "nativeFeedbackReviewDescription": {
+    "message": "Confira o alvo, a ação e a consequência antes de continuar.",
+    "description": "Native feedback review description."
+  },
+  "nativeFeedbackPlatformLabel": {
+    "message": "Plataforma e superfície",
+    "description": "Native feedback platform label."
+  },
+  "nativeFeedbackActionLabel": {
+    "message": "Ação visível",
+    "description": "Native feedback action label."
+  },
+  "nativeFeedbackScopeLabel": {
+    "message": "Escopo",
+    "description": "Native feedback scope label."
+  },
+  "nativeFeedbackConsequenceLabel": {
+    "message": "Consequência",
+    "description": "Native feedback consequence label."
+  },
+  "nativeFeedbackIrreversible": {
+    "message": "A plataforma não oferece um caminho de desfazer verificado",
+    "description": "Native feedback irreversibility warning."
+  },
+  "nativeFeedbackConfirmAction": {
+    "message": "Confirmar ação na plataforma",
+    "description": "Native feedback confirmation action."
+  },
+  "nativeFeedbackCancelAction": {
+    "message": "Manter somente a ação local",
+    "description": "Native feedback cancellation action."
+  },
+  "nativeFeedbackStatePendingReview": {
+    "message": "Aguardando revisão",
+    "description": "Native feedback pending state."
+  },
+  "nativeFeedbackStateSubmitting": {
+    "message": "Enviando",
+    "description": "Native feedback submitting state."
+  },
+  "nativeFeedbackStateSubmitted": {
+    "message": "Confirmado",
+    "description": "Native feedback submitted state."
+  },
+  "nativeFeedbackStateRejected": {
+    "message": "Rejeitado",
+    "description": "Native feedback rejected state."
+  },
+  "nativeFeedbackStateUnavailable": {
+    "message": "Indisponível",
+    "description": "Native feedback unavailable state."
+  },
+  "nativeFeedbackStateUncertain": {
+    "message": "Exige verificação",
+    "description": "Native feedback uncertain state."
+  },
+  "nativeFeedbackStateCancelled": {
+    "message": "Cancelado",
+    "description": "Native feedback cancelled state."
+  },
+  "nativeFeedbackStateCooldown": {
+    "message": "Em pausa",
+    "description": "Native feedback cooldown state."
+  },
+  "nativeFeedbackMessagePendingReview": {
+    "message": "É necessária uma confirmação separada. O resultado local já foi salvo.",
+    "description": "Native feedback pending message."
+  },
+  "nativeFeedbackMessageSubmitting": {
+    "message": "O alvo está sendo revalidado antes de uma única ativação.",
+    "description": "Native feedback submitting message."
+  },
+  "nativeFeedbackMessageSubmitted": {
+    "message": "A plataforma mostrou uma confirmação positiva para este alvo.",
+    "description": "Native feedback submitted message."
+  },
+  "nativeFeedbackMessageRejected": {
+    "message": "A ação da plataforma não foi enviada. Não haverá nova tentativa automática.",
+    "description": "Native feedback rejected message."
+  },
+  "nativeFeedbackMessageUnavailable": {
+    "message": "A ação da plataforma está indisponível. O resultado local continua ativo.",
+    "description": "Native feedback unavailable message."
+  },
+  "nativeFeedbackMessageUncertain": {
+    "message": "O resultado não pôde ser confirmado. Verifique a plataforma antes de tentar novamente de forma manual.",
+    "description": "Native feedback uncertain message."
+  },
+  "nativeFeedbackMessageCancelled": {
+    "message": "A ação da plataforma foi cancelada. O resultado local continua ativo.",
+    "description": "Native feedback cancelled message."
+  },
+  "nativeFeedbackMessageCooldown": {
+    "message": "O feedback da plataforma está pausado para esta ação. Não haverá nova tentativa automática.",
+    "description": "Native feedback cooldown message."
+  }
+}

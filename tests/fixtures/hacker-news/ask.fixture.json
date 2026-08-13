@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-ask",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "b98eb6554baa1a406a59d1452849b864af2f65c540c171c3c25c216e4a75371f",
+  "pageInstanceId": "page-hn-ask",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "31004" },
+    "surface": "ask",
+    "title": "Ask HN: Synthetic question?",
+    "authorDisplayName": "synthetic_asker",
+    "durableItemActions": true
+  }
+}

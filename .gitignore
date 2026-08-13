@@ -1,0 +1,53 @@
+# Dependencies
+/node_modules/
+/.pnp
+.pnp.js
+
+# WXT
+/.output/
+/.wxt/
+/stats.html
+/stats-*.json
+/web-ext.config.ts
+
+# Tests
+/coverage/
+/playwright-report/
+/blob-report/
+/test-results/
+
+# Build and release artifacts
+/build/
+/artifacts/
+/.release/
+/.artifacts/
+
+# Local operating-system and editor state
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Local agent tooling
+/plans/
+.mcp.json
+.serena/
+
+# Environment variables
+.env*
+!.env.example
+
+# Sensitive key material
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Synthetic RSS 2.0 feed</title>
+    <item>
+      <guid>rss-guid-001</guid>
+      <title><![CDATA[<strong>Synthetic RSS title</strong>]]></title>
+      <description><![CDATA[<p>Useful body.</p><script>hostile()</script>]]></description>
+      <link>https://articles.example/rss-one</link>
+      <pubDate>Thu, 31 Jul 2026 09:00:00 GMT</pubDate>
+      <thumbnail
+        url="https://media.example/rss-one.png"
+        width="640"
+        height="360"
+      />
+    </item>
+    <item>
+      <title>Ephemeral synthetic entry</title>
+      <description>Visible local text.</description>
+    </item>
+  </channel>
+</rss>

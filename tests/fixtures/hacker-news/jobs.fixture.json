@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-jobs",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "ad1c215265f53cf0bfe0b4649c179eb9a44c21daa05d484fbb770c49c3a5c4d6",
+  "pageInstanceId": "page-hn-jobs",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "31006" },
+    "surface": "jobs",
+    "title": "Synthetic company is hiring",
+    "age": "3 hours ago",
+    "durableItemActions": true
+  }
+}

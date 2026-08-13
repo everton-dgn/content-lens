@@ -1,0 +1,17 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+JsVariableDeclarator(
+  id = r"render[A-Z]\w*",
+  initializer = JsInitializerClause(
+    expression = JsArrowFunctionExpression() as $arrow
+  )
+) as $declaration where {
+  $arrow <: contains JsxTagExpression(),
+  $declaration <: within or { JsArrowFunctionExpression(), JsFunctionDeclaration() },
+  register_diagnostic(
+    span = $declaration,
+    message = "Nested render functions are forbidden. Resolve the condition in JSX or extract a component (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

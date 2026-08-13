@@ -1,0 +1,19 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+JsxAttribute(
+  name = $attribute,
+  initializer = JsxAttributeInitializerClause(
+    value = JsxExpressionAttributeValue(
+      expression = JsArrowFunctionExpression(parameters = $parameters)
+    )
+  )
+) where {
+  $attribute <: r"on[A-Z]\w*",
+  $parameters <: contains TsTypeAnnotation() as $annotation,
+  register_diagnostic(
+    span = $annotation,
+    message = "Do not type an inline JSX event parameter. Let TypeScript infer it or extract a named handler (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

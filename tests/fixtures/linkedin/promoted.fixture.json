@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "linkedin-promoted-posts",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-linkedin-promoted",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic Company",
+    "authorIdentity": {
+      "status": "stable",
+      "authorId": "urn:li:member:503"
+    },
+    "authorProfileUrl": "https://www.linkedin.com/in/synthetic-company/",
+    "canonicalUrl": "https://www.linkedin.com/feed/update/urn:li:share:1003",
+    "domId": "linkedin-promoted-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": {
+      "status": "stable",
+      "platformContentId": "urn:li:share:1003"
+    },
+    "media": [
+      {
+        "kind": "image",
+        "url": "https://media.example/linkedin-promoted.png",
+        "width": 640,
+        "height": 360
+      }
+    ],
+    "pageInstanceId": "page-linkedin-promoted:linkedin-promoted-card",
+    "surface": "promoted-posts",
+    "text": "Synthetic promoted product announcement.",
+    "textPartial": false,
+    "traits": ["promoted"]
+  }
+}

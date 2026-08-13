@@ -1,0 +1,17 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+JsxAttribute(
+  name = `className`,
+  initializer = JsxAttributeInitializerClause(
+    value = JsxExpressionAttributeValue(
+      expression = JsTemplateExpression() as $template
+    )
+  )
+) where {
+  register_diagnostic(
+    span = $template,
+    message = "Template literals in className are forbidden. Use a static class or an explicit class composition helper (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

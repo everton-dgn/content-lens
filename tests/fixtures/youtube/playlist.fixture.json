@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-playlist",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-playlist-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "playlist-card-stable",
+      "surface": "playlist",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-playlist-synthetic:playlist-card-stable",
+      "title": "Synthetic playlist chapter",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "playlistA01"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCplaylistSyntheticAlpha1"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    }
+  ]
+}

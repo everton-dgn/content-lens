@@ -1,0 +1,10 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+TsReferenceType(name = TsQualifiedName(left = `React`)) as $type where {
+  register_diagnostic(
+    span = $type,
+    message = "Qualified React types are forbidden. Import the type directly from react (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

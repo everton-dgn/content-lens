@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "x-threads",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-x-threads",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic Five",
+    "authorIdentity": { "status": "stable", "authorId": "505" },
+    "authorProfileUrl": "https://x.com/synthetic_five",
+    "canonicalUrl": "https://x.com/synthetic_five/status/11005",
+    "domId": "x-thread-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": { "status": "stable", "platformContentId": "11005" },
+    "media": [],
+    "pageInstanceId": "page-x-threads:x-thread-card",
+    "promoted": false,
+    "relations": [
+      { "kind": "thread-parent", "targetId": "10004" },
+      { "kind": "thread-root", "targetId": "10003" }
+    ],
+    "surface": "threads",
+    "text": "Synthetic thread continuation.",
+    "textPartial": false
+  }
+}

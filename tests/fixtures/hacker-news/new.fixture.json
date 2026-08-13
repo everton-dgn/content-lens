@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-new",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "394ef35a30219103b8956ade4685931d5e07520e9af25af8fb4bdf4a4b955d86",
+  "pageInstanceId": "page-hn-new",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "31002" },
+    "surface": "new",
+    "title": "Synthetic new story",
+    "age": "1 minute ago",
+    "durableItemActions": true
+  }
+}

@@ -1,0 +1,20 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  `useRef<$type>($initial)` as $ref,
+  TsReferenceType(name = `RefObject`) as $ref where {
+    $ref <: contains TsTypeArguments() as $type
+  }
+} where {
+  $type <: contains or {
+    TsObjectType(),
+    TsFunctionType(),
+    TsIntersectionType()
+  },
+  register_diagnostic(
+    span = $ref,
+    message = "Inline structural ref types are forbidden. Extract a named colocated type (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-show",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "3baa0bbd9ba3993ad650c50f1f0a2afc354a754a779ed5a2f97c52b6b3d778ef",
+  "pageInstanceId": "page-hn-show",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "31005" },
+    "surface": "show",
+    "title": "Show HN: Synthetic project",
+    "points": 17,
+    "durableItemActions": true
+  }
+}

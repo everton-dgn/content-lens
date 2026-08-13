@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "x-for-you",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-x-for-you",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic Two",
+    "authorIdentity": { "status": "stable", "authorId": "502" },
+    "authorProfileUrl": "https://x.com/synthetic_two",
+    "canonicalUrl": "https://x.com/synthetic_two/status/11002",
+    "domId": "x-for-you-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": { "status": "stable", "platformContentId": "11002" },
+    "media": [
+      { "kind": "image", "url": "https://media.example/x-for-you.png" }
+    ],
+    "pageInstanceId": "page-x-for-you:x-for-you-card",
+    "promoted": true,
+    "relations": [],
+    "surface": "for-you",
+    "text": "Synthetic promoted post in the For You timeline.",
+    "textPartial": true
+  }
+}

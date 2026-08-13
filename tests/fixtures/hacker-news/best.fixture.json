@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-best",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "60281d83a245abb8b55113d737c900d995fadc903d3b498f8c61988f8efbbc7b",
+  "pageInstanceId": "page-hn-best",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "31003" },
+    "surface": "best",
+    "title": "Synthetic best story",
+    "points": 99,
+    "durableItemActions": true
+  }
+}

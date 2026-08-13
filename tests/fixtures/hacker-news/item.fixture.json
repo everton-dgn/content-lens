@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-item",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "43d5c306b6b4d4a0a516e8c947271c8e7c59c3a2d9d80dbb68345d0046b6f5fd",
+  "pageInstanceId": "page-hn-item",
+  "expectedCandidateCount": 0
+}

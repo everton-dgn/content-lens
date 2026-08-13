@@ -1,0 +1,82 @@
+name: Visual baselines
+
+# Regenerates the visual regression baselines for the CI platform.
+#
+# Baselines are platform specific: font rasterization differs between macOS and
+# the Linux runner image, so a macOS baseline never matches here. The Linux set
+# is committed and CI enforces the lane on every push and pull request. Run this
+# workflow when a change to the visual contract is intended, download the
+# artifact and commit the files under `tests/visual/__screenshots__/linux/`.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-baselines-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    name: Generate baselines for the CI platform
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: 11.17.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build the Chrome bundle the lane renders
+        run: pnpm build:chrome
+
+      # Playwright reports a snapshot it had to create as a failed test, by
+      # design, so the very first run always exits non-zero even though the
+      # files were written. The two steps below are the real check: every
+      # committed baseline must have a Linux counterpart, and the lane must
+      # pass when run again against what this step produced.
+      - name: Write the baselines
+        run: pnpm exec playwright test --config playwright.visual.config.ts --update-snapshots=missing || true
+
+      - name: Confirm every committed baseline got a Linux counterpart
+        run: |
+          missing=0
+          for committed in tests/visual/__screenshots__/darwin/*.png; do
+            name=$(basename "${committed}")
+            if [ ! -f "tests/visual/__screenshots__/linux/${name}" ]; then
+              echo "No Linux baseline was written for ${name}."
+              missing=1
+            fi
+          done
+          exit "${missing}"
+
+      - name: Confirm the lane passes against its own baselines
+        run: pnpm test:visual
+
+      - name: Upload the baselines for review
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: visual-baselines-linux
+          path: tests/visual/__screenshots__/
+          if-no-files-found: error

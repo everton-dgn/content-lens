@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <item>
+    <title>Synthetic RDF title</title>
+    <description>Synthetic RDF body.</description>
+    <link>https://articles.example/rdf-one</link>
+  </item>
+</rdf:RDF>

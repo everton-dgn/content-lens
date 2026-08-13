@@ -1,0 +1,17 @@
+{
+  "entry": [
+    "src/entrypoints/**/*.{ts,tsx}!",
+    "scripts/**/*.{ts,mjs}",
+    "tests/**/*.{ts,tsx,mjs}",
+    "wxt.adapter-e2e.config.ts"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx,css}!",
+    "scripts/**/*.{ts,mjs}",
+    "tests/**/*.{ts,tsx,mjs}",
+    "*.{ts,mjs}"
+  ],
+  "ignoreBinaries": ["kingfisher", "trash"],
+  "ignoreDependencies": ["wxt!"],
+  "treatConfigHintsAsErrors": true
+}

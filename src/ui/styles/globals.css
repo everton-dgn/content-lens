@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './tokens/primitives.css';
+@import './tokens/semantic.css';
+@import './components.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--cl-color-canvas);
+  --color-foreground: var(--cl-color-text);
+  --color-card: var(--cl-color-surface);
+  --color-card-foreground: var(--cl-color-text);
+  --color-popover: var(--cl-color-surface);
+  --color-popover-foreground: var(--cl-color-text);
+  --color-primary: var(--cl-color-action);
+  --color-primary-foreground: var(--cl-color-action-text);
+  --color-secondary: var(--cl-color-surface-subtle);
+  --color-secondary-foreground: var(--cl-color-text);
+  --color-muted: var(--cl-color-surface-subtle);
+  --color-muted-foreground: var(--cl-color-text-muted);
+  --color-accent: var(--cl-color-surface-hover);
+  --color-accent-foreground: var(--cl-color-text);
+  --color-destructive: var(--cl-color-error);
+  --color-border: var(--cl-color-border);
+  --color-input: var(--cl-color-control-border);
+  --color-ring: var(--cl-color-focus);
+  --color-success: var(--cl-color-ready);
+  --color-warning: var(--cl-color-degraded);
+  --radius-sm: var(--cl-radius-sm);
+  --radius-md: var(--cl-radius-md);
+  --radius-lg: var(--cl-radius-lg);
+  --radius-xl: calc(var(--cl-radius-lg) + var(--cl-space-1));
+  --font-sans: var(--cl-font-ui);
+  --font-mono: var(--cl-font-mono);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--cl-color-canvas);
+  color: var(--cl-color-text);
+  font-family: var(--cl-font-ui);
+  scrollbar-color: var(--cl-color-control-border) var(--cl-color-canvas);
+}
+
+body {
+  min-block-size: 100vh;
+  margin: var(--cl-space-0);
+  background: var(--cl-color-canvas);
+  color: var(--cl-color-text);
+  font-family: var(--cl-font-ui);
+  line-height: var(--cl-line-height-normal);
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+code {
+  font-family: var(--cl-font-mono);
+  font-size: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+small {
+  font-size: var(--cl-font-size-xs);
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: var(--cl-focus-width) solid var(--cl-color-focus);
+  outline-offset: var(--cl-focus-offset);
+}
+
+::selection {
+  background: var(--cl-color-action);
+  color: var(--cl-color-action-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  .cl-button {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}

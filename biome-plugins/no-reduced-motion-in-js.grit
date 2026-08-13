@@ -1,0 +1,14 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  JsStringLiteralExpression() as $query,
+  JsTemplateExpression() as $query
+} where {
+  $query <: r".*prefers-reduced-motion.*",
+  register_diagnostic(
+    span = $query,
+    message = "Reduced-motion queries in JavaScript are forbidden. Keep motion policy in the shared CSS system (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

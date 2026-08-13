@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "reddit-search",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-reddit-search",
+  "expectedCandidate": {
+    "identity": {
+      "status": "ephemeral",
+      "pageInstanceId": "page-reddit-search:reddit-search-card",
+      "reason": "not-exposed"
+    },
+    "authorIdentity": { "status": "ephemeral", "reason": "not-exposed" },
+    "subredditIdentity": { "status": "ephemeral", "reason": "not-exposed" },
+    "surface": "search",
+    "title": "Synthetic result without a stable ID",
+    "body": "Synthetic partial search result.",
+    "bodyPartial": true,
+    "relations": [],
+    "promoted": false
+  }
+}

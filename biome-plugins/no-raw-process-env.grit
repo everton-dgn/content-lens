@@ -1,0 +1,10 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+`process.env` as $environment where {
+  register_diagnostic(
+    span = $environment,
+    message = "Node process.env is forbidden in extension source. Use WXT's typed import.meta.env surface (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 3,
+  "surface": "youtube-related",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-related-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "related-card-stable",
+      "surface": "recommendations",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-related-synthetic:related-card-stable",
+      "title": "Synthetic browser lifecycle analysis",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "relatedA01"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCrelatedSyntheticAlpha01"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    },
+    {
+      "domId": "related-card-no-video",
+      "surface": "recommendations",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-related-synthetic:related-card-no-video",
+      "title": "Synthetic case with an unavailable identity",
+      "videoIdentity": {
+        "status": "ephemeral",
+        "pageInstanceId": "page-related-synthetic:related-card-no-video",
+        "reason": "not-exposed"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCrelatedSyntheticBeta002"
+      },
+      "durableVideoActions": false,
+      "durableChannelActions": true,
+      "diagnosticReason": "video-id-not-exposed"
+    },
+    {
+      "domId": "related-card-lockup",
+      "surface": "recommendations",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-related-synthetic:related-card-lockup",
+      "title": "Synthetic current related-video markup",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "relatedC03"
+      },
+      "channelIdentity": {
+        "status": "ephemeral",
+        "reason": "not-exposed"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": false,
+      "diagnosticReason": "channel-id-not-exposed"
+    }
+  ]
+}

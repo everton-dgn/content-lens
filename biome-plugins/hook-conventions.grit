@@ -1,0 +1,26 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+or {
+  JsVariableDeclarator(
+    id = r"use[A-Z]\w*",
+    initializer = JsInitializerClause(
+      expression = JsArrowFunctionExpression(
+        return_type_annotation = TsReturnTypeAnnotation() as $ret
+      )
+    )
+  ) where {
+    register_diagnostic(
+      span = $ret,
+      message = "Do not annotate an arrow hook return. Let TypeScript infer it and use ReturnType<typeof useHook> at consumers (see docs/lint-plugins.md).",
+      severity = "error"
+    )
+  },
+  TsTypeAliasDeclaration(binding_identifier = r"Use\w+Return") as $alias where {
+    register_diagnostic(
+      span = $alias,
+      message = "Use<Name>Return aliases are forbidden. Infer the hook return and use ReturnType<typeof useHook> at consumers (see docs/lint-plugins.md).",
+      severity = "error"
+    )
+  }
+}

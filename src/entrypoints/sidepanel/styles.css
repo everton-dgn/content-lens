@@ -1,0 +1,46 @@
+html,
+body,
+#root {
+  block-size: 100%;
+  overflow: hidden;
+}
+
+.panel-view {
+  display: grid;
+  gap: var(--cl-space-4);
+}
+
+.cl-shell {
+  block-size: 100vh;
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+.cl-shell--with-navigation {
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+}
+
+.cl-shell__content {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block-end: var(--cl-space-5);
+}
+
+.cl-shell__navigation {
+  background: var(--cl-color-canvas);
+  padding: var(--cl-space-2) var(--cl-space-4) var(--cl-space-3);
+  z-index: 40;
+}
+
+.cl-shell--with-navigation .settings-overview {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cl-shell--with-navigation .cl-surface[data-tone='subtle'] {
+  border: var(--cl-border-width) solid var(--cl-color-border);
+  border-radius: var(--cl-radius-lg);
+}
+
+.cl-shell--with-navigation .cl-section-nav[data-variant='primary'] {
+  box-shadow: var(--cl-shadow-raised);
+}

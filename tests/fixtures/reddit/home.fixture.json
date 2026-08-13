@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "reddit-home",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-reddit-home",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "t3_home01" },
+    "authorIdentity": { "status": "stable", "value": "t2_author01" },
+    "subredditIdentity": { "status": "stable", "value": "t5_sub001" },
+    "surface": "home",
+    "title": "Synthetic home post",
+    "body": "Synthetic body from the home feed.",
+    "postFlair": "Discussion",
+    "userFlair": "Contributor",
+    "relations": [],
+    "promoted": false
+  }
+}

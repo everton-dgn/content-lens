@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "x-following",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "pageInstanceId": "page-x-following",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic One",
+    "authorIdentity": { "status": "stable", "authorId": "501" },
+    "authorProfileUrl": "https://x.com/synthetic_one",
+    "canonicalUrl": "https://x.com/synthetic_one/status/11001",
+    "domId": "x-following-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": { "status": "stable", "platformContentId": "11001" },
+    "media": [],
+    "pageInstanceId": "page-x-following:x-following-card",
+    "promoted": false,
+    "relations": [],
+    "surface": "following",
+    "text": "Synthetic post from the Following timeline.",
+    "textPartial": false
+  }
+}

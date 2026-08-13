@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-search",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-search-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "search-card-alpha",
+      "surface": "search",
+      "policyScope": "explicit-search",
+      "pageInstanceId": "page-search-synthetic:search-card-alpha",
+      "title": "Synthetic local-first storage tutorial",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "searchA0001"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCsearchSyntheticAlpha001"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    },
+    {
+      "domId": "search-card-beta",
+      "surface": "search",
+      "policyScope": "explicit-search",
+      "pageInstanceId": "page-search-synthetic:search-card-beta",
+      "title": "Synthetic extension testing guide",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "searchB0002"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCsearchSyntheticBeta0002"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    }
+  ]
+}

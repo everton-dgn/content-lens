@@ -1,0 +1,32 @@
+colors: true
+
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: pnpm commitlint --edit {1}
+
+pre-commit:
+  parallel: false
+  jobs:
+    - name: docs
+      run: pnpm docs:check
+    - name: lint
+      run: pnpm lint
+    - name: typecheck
+      run: pnpm typecheck
+    - name: secret-scan
+      run: |
+        if ! command -v kingfisher > /dev/null 2>&1; then
+          echo "kingfisher not installed; skipping the staged secret scan."
+          echo "Install it with: brew install kingfisher"
+          exit 0
+        fi
+        pnpm scan:secrets --staged
+
+pre-push:
+  parallel: false
+  jobs:
+    - name: tests
+      run: pnpm test
+    - name: public-repository-guard
+      run: pnpm guard:public

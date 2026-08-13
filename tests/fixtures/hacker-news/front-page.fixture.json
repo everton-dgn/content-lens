@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "hacker-news-front-page",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "sha256": "729bf75176a968e0f78e74498eec2fe427154a4b379a8da062c5563bdfb099a1",
+  "pageInstanceId": "page-hn-front",
+  "expectedCandidate": {
+    "identity": { "status": "stable", "platformContentId": "31001" },
+    "surface": "front-page",
+    "title": "Synthetic front story",
+    "authorDisplayName": "synthetic_front",
+    "points": 42,
+    "commentCount": 12,
+    "age": "2 hours ago",
+    "destinationHost": "articles.example",
+    "destinationUrl": "https://articles.example/front",
+    "durableItemActions": true
+  }
+}

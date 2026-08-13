@@ -1,0 +1,92 @@
+{
+  "format": "content-lens-portability",
+  "version": 1,
+  "encryption": "none",
+  "syncProfileId": "sync:manual-a11y-conflict",
+  "generation": 1,
+  "manifest": {
+    "createdAt": "2026-07-30T12:00:00.000Z",
+    "categories": [
+      "portableProviders",
+      "modelCatalog",
+      "modelBindings",
+      "rules",
+      "exclusions",
+      "identities",
+      "platformPreferences"
+    ],
+    "counts": {
+      "portableProviders": 0,
+      "modelCatalog": 0,
+      "modelBindings": 0,
+      "rules": 2,
+      "exclusions": 0,
+      "identities": 0,
+      "platformPreferences": 0
+    },
+    "excludedCategories": [
+      "cache",
+      "consentReceipts",
+      "contentHistory",
+      "credentials",
+      "diagnostics",
+      "embeddings",
+      "journal",
+      "media",
+      "recoverySnapshots",
+      "remoteTokens",
+      "thumbnails",
+      "transcripts"
+    ],
+    "digest": "c4e241b8db76276fb661a8cc426d7a896724bf2f5ba8725f534689d821568205"
+  },
+  "envelope": {
+    "schemaVersion": 1,
+    "syncProfileId": "sync:manual-a11y-conflict",
+    "generation": 1,
+    "profile": {
+      "portableProviders": [],
+      "modelCatalog": [],
+      "modelBindings": [],
+      "rules": [
+        {
+          "id": "rule:fixture-channel:block",
+          "enabled": true,
+          "scope": {
+            "platforms": ["youtube"],
+            "surfaces": ["youtube:home"]
+          },
+          "createdAt": "2026-07-30T12:00:00.000Z",
+          "updatedAt": "2026-07-30T12:00:00.000Z",
+          "kind": "identity",
+          "effect": "block",
+          "platform": "youtube",
+          "identityType": "channel",
+          "identityId": "UC_RENDER_KEEP",
+          "displayName": "Visible Channel"
+        },
+        {
+          "id": "rule:fixture-channel:promote",
+          "enabled": true,
+          "scope": {
+            "platforms": ["youtube"],
+            "surfaces": ["youtube:home"]
+          },
+          "createdAt": "2026-07-30T12:00:00.000Z",
+          "updatedAt": "2026-07-30T12:00:00.000Z",
+          "kind": "identity",
+          "effect": "promote",
+          "platform": "youtube",
+          "identityType": "channel",
+          "identityId": "UC_RENDER_KEEP",
+          "displayName": "Visible Channel"
+        }
+      ],
+      "exclusions": [],
+      "identities": [],
+      "platformPreferences": []
+    },
+    "tombstones": [],
+    "digest": "c4e241b8db76276fb661a8cc426d7a896724bf2f5ba8725f534689d821568205"
+  }
+}

@@ -1,0 +1,36 @@
+.native-feedback-review {
+  display: grid;
+  gap: var(--cl-space-3);
+}
+
+.native-feedback-review__heading {
+  align-items: start;
+  display: flex;
+  gap: var(--cl-space-3);
+  justify-content: space-between;
+}
+
+.native-feedback-review__heading h3,
+.native-feedback-review__heading p {
+  margin: var(--cl-space-0);
+}
+
+.native-feedback-review__heading p {
+  color: var(--cl-color-text-muted);
+  font-size: var(--cl-font-size-sm);
+  margin-block-start: var(--cl-space-1);
+}
+
+.native-feedback-review__actions {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cl-space-2);
+}
+
+@media (width > 24rem) {
+  .native-feedback-review__actions {
+    align-items: center;
+    flex-direction: row;
+  }
+}

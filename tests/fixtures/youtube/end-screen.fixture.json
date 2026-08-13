@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-end-screen",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-end-screen-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "end-screen-card-stable",
+      "surface": "end-screen",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-end-screen-synthetic:end-screen-card-stable",
+      "title": "Synthetic next video",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "endscrA001"
+      },
+      "channelIdentity": {
+        "status": "stable",
+        "channelId": "UCendScreenSyntheticAlpha1"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": true
+    }
+  ]
+}

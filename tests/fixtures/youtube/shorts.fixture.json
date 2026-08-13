@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "youtube-shorts",
+  "language": "en",
+  "license": "CC0-1.0",
+  "consentBasis": "not-applicable-synthetic",
+  "permittedUse": ["adapter-contract", "browser-feasibility"],
+  "retention": "repository-lifetime",
+  "redaction": "fully-synthetic-no-redaction-required",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-shorts-synthetic",
+  "expectedCandidates": [
+    {
+      "domId": "shorts-card-ephemeral-channel",
+      "surface": "shorts",
+      "policyScope": "passive-recommendation",
+      "pageInstanceId": "page-shorts-synthetic:shorts-card-ephemeral-channel",
+      "title": "Synthetic concise browser tip",
+      "videoIdentity": {
+        "status": "stable",
+        "platformContentId": "shortsA001"
+      },
+      "channelIdentity": {
+        "status": "ephemeral",
+        "reason": "not-exposed"
+      },
+      "durableVideoActions": true,
+      "durableChannelActions": false,
+      "diagnosticReason": "channel-id-not-exposed"
+    }
+  ]
+}

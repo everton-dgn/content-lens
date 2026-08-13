@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "linkedin-feed",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-linkedin-feed",
+  "expectedCandidate": {
+    "authorDisplayName": "Synthetic Engineer",
+    "authorIdentity": {
+      "status": "stable",
+      "authorId": "urn:li:member:501"
+    },
+    "authorProfileUrl": "https://www.linkedin.com/in/synthetic-engineer/",
+    "canonicalUrl": "https://www.linkedin.com/feed/update/urn:li:activity:1001",
+    "domId": "linkedin-feed-card",
+    "durableAuthorActions": true,
+    "durablePostActions": true,
+    "identity": {
+      "status": "stable",
+      "platformContentId": "urn:li:activity:1001"
+    },
+    "media": [],
+    "pageInstanceId": "page-linkedin-feed:linkedin-feed-card",
+    "surface": "feed",
+    "text": "Synthetic note about a deterministic browser pipeline.",
+    "textPartial": false,
+    "traits": []
+  }
+}

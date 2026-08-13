@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "surface": "linkedin-comment-preview",
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": {
+    "kind": "synthetic"
+  },
+  "synthetic": true,
+  "pageInstanceId": "page-linkedin-comment",
+  "expectedCandidate": {
+    "authorIdentity": {
+      "status": "ephemeral",
+      "reason": "not-exposed"
+    },
+    "canonicalUrl": "https://www.linkedin.com/feed/update/urn:li:activity:1004",
+    "domId": "linkedin-comment-preview",
+    "durableAuthorActions": false,
+    "durablePostActions": true,
+    "identity": {
+      "status": "stable",
+      "platformContentId": "urn:li:activity:1004"
+    },
+    "media": [],
+    "pageInstanceId": "page-linkedin-comment:linkedin-comment-preview",
+    "surface": "comment-preview",
+    "text": "Synthetic comment preview with no stable author identity.",
+    "textPartial": false,
+    "traits": []
+  }
+}

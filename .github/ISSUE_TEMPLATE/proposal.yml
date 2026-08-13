@@ -1,0 +1,53 @@
+name: Product or contract proposal
+description: Propose a scoped requirement, contract or architecture change.
+title: "[Proposal]: "
+labels:
+  - proposal
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user or engineering problem without prescribing a solution.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Provide examples, measurements or references that show the problem exists.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Observable outcome
+      description: State how a user or test would know the problem is solved.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and tradeoffs
+      description: List considered options and important costs.
+    validations:
+      required: true
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Expected decision artifact
+      options:
+        - Existing contract update
+        - New product contract
+        - ADR
+        - Research question
+        - Unsure
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues, contracts and ADRs.
+          required: true

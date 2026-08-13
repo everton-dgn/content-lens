@@ -1,0 +1,10 @@
+language css;
+
+CssMediaAtRule() as $media where {
+  $media <: r"(?s).*prefers-reduced-motion.*",
+  register_diagnostic(
+    span = $media,
+    message = "Feature CSS must not implement reduced motion locally. Keep the shared policy in src/ui/styles/globals.css or components.css (see docs/lint-plugins.md).",
+    severity = "error"
+  )
+}

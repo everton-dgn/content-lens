@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "fixtureVersion": 1,
+  "language": "en",
+  "license": "CC0-1.0",
+  "source": { "kind": "synthetic" },
+  "synthetic": true,
+  "files": {
+    "rss2.xml": {
+      "format": "rss",
+      "entries": 2,
+      "sha256": "f0aaaff0f121d046e50e1f8108de4558e5768f14c6ec7120a1fd681f1a828d4c"
+    },
+    "atom.xml": {
+      "format": "atom",
+      "entries": 1,
+      "sha256": "c91d4144b75ca750ed93717239a50f058f88733d33a2a5f4de7eb4ac404e4119"
+    },
+    "rdf.xml": {
+      "format": "rdf",
+      "entries": 1,
+      "sha256": "c2400365fa6184e701f44dc0e99297edb1209f3d1316aee171c75bbd9ea3e574"
+    }
+  }
+}

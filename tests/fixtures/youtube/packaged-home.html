@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-contentlens-feasibility="rendering">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ContentLens rendering feasibility fixture</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+      }
+
+      ytd-rich-item-renderer {
+        display: block;
+        min-height: 120px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ytd-rich-grid-renderer>
+        <ytd-rich-item-renderer
+          id="render-card-hide"
+          aria-hidden="false"
+          data-contentlens-feasibility-hide="true"
+          data-contentlens-feasibility-reason="Blocked source"
+          style="border: 1px solid transparent"
+        >
+          <a id="thumbnail" href="/watch?v=renderHide01">
+            <h3>
+              <span id="video-title-link">Hide-and-restore fixture</span>
+            </h3>
+          </a>
+          <ytd-channel-name>
+            <a href="/channel/UC_RENDER_HIDE">Fixture Channel</a>
+          </ytd-channel-name>
+          <button type="button">Native action</button>
+        </ytd-rich-item-renderer>
+
+        <ytd-rich-item-renderer id="render-card-visible">
+          <a id="thumbnail" href="/watch?v=renderKeep02">
+            <h3><span id="video-title-link">Always-visible fixture</span></h3>
+          </a>
+          <ytd-channel-name>
+            <a href="/channel/UC_RENDER_KEEP">Visible Channel</a>
+          </ytd-channel-name>
+        </ytd-rich-item-renderer>
+
+        <ytd-rich-item-renderer
+          id="render-card-stale"
+          data-contentlens-feasibility-delay-ms="150"
+          data-contentlens-feasibility-hide="true"
+        >
+          <a id="thumbnail" href="/watch?v=renderStale03">
+            <h3><span id="video-title-link">Recycled fixture</span></h3>
+          </a>
+          <ytd-channel-name>
+            <a href="/channel/UC_RENDER_STALE">Stale Channel</a>
+          </ytd-channel-name>
+        </ytd-rich-item-renderer>
+      </ytd-rich-grid-renderer>
+    </main>
+  </body>
+</html>

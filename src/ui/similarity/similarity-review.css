@@ -1,0 +1,75 @@
+.similarity-review,
+.similarity-review__heading,
+.similarity-review__summary,
+.similarity-cluster,
+.similarity-cluster__relations,
+.similarity-relation {
+  display: grid;
+}
+
+.similarity-review {
+  gap: var(--cl-space-4);
+}
+
+.similarity-review__heading,
+.similarity-review__summary,
+.similarity-cluster,
+.similarity-cluster__relations,
+.similarity-relation {
+  gap: var(--cl-space-3);
+}
+
+.similarity-review__heading h2,
+.similarity-review__heading p,
+.similarity-review__summary h3 {
+  margin: var(--cl-space-0);
+}
+
+.similarity-review__heading p {
+  color: var(--cl-color-text-muted);
+  font-size: var(--cl-font-size-sm);
+}
+
+.similarity-review__heading h2 {
+  font-size: var(--cl-font-size-page);
+  line-height: var(--cl-line-height-tight);
+}
+
+.similarity-relation {
+  border-block-start: var(--cl-border-width) solid var(--cl-color-border);
+  border-inline-start: var(--cl-gate-width) solid var(--cl-color-text-muted);
+  padding-inline-start: var(--cl-space-3);
+  padding-block-start: var(--cl-space-3);
+}
+
+.similarity-relation:first-child {
+  border-block-start: 0;
+  padding-block-start: var(--cl-space-0);
+}
+
+.similarity-relation__heading,
+.similarity-review__dialog-actions {
+  align-items: center;
+  display: flex;
+  gap: var(--cl-space-2);
+}
+
+.similarity-relation__heading {
+  flex-wrap: wrap;
+}
+
+.similarity-review__dialog-actions {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.similarity-review__dialog-actions .cl-button {
+  flex: 1 1 var(--cl-choice-min-inline);
+}
+
+@media (width > 24rem) {
+  .similarity-review__dialog-actions {
+    align-items: center;
+    flex-direction: row;
+  }
+}

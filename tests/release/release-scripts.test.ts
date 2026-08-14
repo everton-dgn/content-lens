@@ -46,6 +46,10 @@ describe('release evidence contracts', () => {
       'content-lens-1.2.3-sources.zip'
     ])
     expect(() => validateVersion('1.2')).toThrow('Invalid package version')
+    expect(() => validateVersion('1.2.3-rc.1')).toThrow(
+      'Invalid package version'
+    )
+    expect(() => validateVersion('01.2.3')).toThrow('Invalid package version')
   })
 
   it('deduplicates the production dependency graph into SPDX packages', () => {
@@ -72,7 +76,7 @@ describe('release evidence contracts', () => {
 
   it('binds every package digest to an in-toto SLSA v1 subject', () => {
     const manifest = {
-      channel: 'beta',
+      channel: 'stable',
       source: { commit: 'a'.repeat(40), tag: 'v1.2.3' },
       toolchain: { node: 'v24' },
       inputs: { lockfile: { sha256: 'b'.repeat(64) } },

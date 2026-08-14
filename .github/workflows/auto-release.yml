@@ -1,0 +1,315 @@
+name: Automatic release
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+permissions: {}
+
+concurrency:
+  group: automatic-release
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Create and merge stable version
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      (github.event.workflow_run.event == 'push' ||
+       (github.event.workflow_run.event == 'workflow_dispatch' &&
+        github.event.workflow_run.actor.login == 'github-actions[bot]')) &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: write
+      pull-requests: write
+    outputs:
+      commit: ${{ steps.release.outputs.commit }}
+      continue_release: ${{ steps.release.outputs.continue_release }}
+      publish: ${{ steps.release.outputs.publish }}
+      status: ${{ steps.release.outputs.status }}
+      tag: ${{ steps.release.outputs.tag }}
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - name: Check out trusted release automation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+
+      - name: Create, merge and tag the stable version
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SOURCE_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RELEASE_SOURCE_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RELEASE_SOURCE_EVENT: ${{ github.event.workflow_run.event }}
+          RELEASE_SOURCE_REPOSITORY: ${{ github.event.workflow_run.head_repository.full_name }}
+          RELEASE_SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+          RELEASE_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: node scripts/release/automatic-release.ts
+
+  build:
+    name: Build immutable stable release
+    needs: version
+    if: needs.version.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out exact stable tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ needs.version.outputs.commit }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 11.17.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run stable release quality gate
+        run: pnpm ci:local
+
+      - name: Package stable release once
+        run: pnpm release:package -- --channel stable --output release
+
+      - name: Guard stable release contents and evidence
+        run: pnpm release:guard -- --directory release
+
+      - name: Attest build provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.0.0
+        with:
+          subject-path: release/*.zip
+
+      - name: Attest SPDX SBOM
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.0.0
+        with:
+          subject-path: release/*.zip
+          sbom-path: release/sbom.spdx.json
+
+      - name: Upload immutable stable release
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.0
+        with:
+          name: content-lens-stable-release
+          path: release/
+          if-no-files-found: error
+          retention-days: 90
+
+  reproducibility:
+    name: Compare independent stable rebuild
+    needs:
+      - version
+      - build
+    if: needs.version.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Check out exact stable tag independently
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ needs.version.outputs.commit }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 11.17.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download stable release by exact name
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.0
+        with:
+          name: content-lens-stable-release
+          path: reference
+
+      - name: Rebuild stable release in a separate job
+        run: pnpm release:package -- --channel stable --output rebuild
+
+      - name: Compare exact distributable bytes
+        env:
+          RELEASE_VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          for target in chrome firefox sources; do
+            cmp \
+              "reference/content-lens-$RELEASE_VERSION-$target.zip" \
+              "rebuild/content-lens-$RELEASE_VERSION-$target.zip"
+          done
+
+  verify:
+    name: Independently verify stable release
+    needs:
+      - version
+      - build
+      - reproducibility
+    if: needs.version.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      attestations: read
+      contents: read
+    steps:
+      - name: Check out exact stable tag for verification
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ needs.version.outputs.commit }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 11.17.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download stable release for independent verification
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.0
+        with:
+          name: content-lens-stable-release
+          path: release
+
+      - name: Recompute every digest and verify attestations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: pnpm release:verify -- --directory release --repository "$GITHUB_REPOSITORY" --require-attestation
+
+  publish:
+    name: Publish stable GitHub Release
+    needs:
+      - version
+      - verify
+    if: needs.version.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Check out exact stable tag for release notes
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ needs.version.outputs.commit }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+
+      - name: Download verified stable release
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.0
+        with:
+          name: content-lens-stable-release
+          path: release
+
+      - name: Extract exact release notes from the changelog
+        env:
+          RELEASE_VERSION: ${{ needs.version.outputs.version }}
+        run: node scripts/release/versioning.ts --version "$RELEASE_VERSION" --notes-output release-notes.md
+
+      - name: Create or repair the stable GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ needs.version.outputs.tag }}
+          RELEASE_VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            release_id="$(gh api \
+              "repos/$GITHUB_REPOSITORY/releases/tags/$RELEASE_TAG" \
+              --jq '.id')"
+            gh api --paginate \
+              "repos/$GITHUB_REPOSITORY/releases/$release_id/assets?per_page=100" \
+              --jq '.[].name' |
+              while IFS= read -r asset; do
+                case "$asset" in
+                  checksums.sha256|content-lens-"$RELEASE_VERSION"-chrome.zip|content-lens-"$RELEASE_VERSION"-firefox.zip|content-lens-"$RELEASE_VERSION"-sources.zip|provenance.intoto.json|release-manifest.json|sbom.spdx.json) ;;
+                  *) gh release delete-asset "$RELEASE_TAG" "$asset" --yes ;;
+                esac
+              done
+            gh release upload "$RELEASE_TAG" release/* --clobber
+            gh release edit "$RELEASE_TAG" \
+              --draft=false \
+              --prerelease=false \
+              --title "ContentLens $RELEASE_TAG" \
+              --notes-file release-notes.md
+          else
+            gh release create "$RELEASE_TAG" release/* \
+              --verify-tag \
+              --title "ContentLens $RELEASE_TAG" \
+              --notes-file release-notes.md
+          fi
+
+  continuation:
+    name: Continue queued stable releases
+    needs:
+      - version
+      - publish
+    if: >-
+      always() &&
+      !cancelled() &&
+      needs.version.result == 'success' &&
+      ((needs.version.outputs.continue_release == 'true' &&
+        (needs.version.outputs.publish == 'false' ||
+         needs.publish.result == 'success')) ||
+       (github.event.workflow_run.event == 'push' &&
+        needs.version.outputs.publish == 'true' &&
+        needs.publish.result != 'success'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Run trusted CI on the current main branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref main

@@ -47,13 +47,15 @@ Significant user-facing and contributor-facing changes are recorded here.
   catalogs.
 - Release tooling: deterministic three-package build, checksums, SPDX 2.3 SBOM,
   in-toto and SLSA v1 provenance, release manifest with version domains, and
-  separate candidate, verification and publication workflows.
+  independent verification before publication.
 - Packaged Chrome MV3 and Firefox MV2 journeys covering first run, rule editor,
   preview, save, undo, diagnostics export review, 200% zoom, reduced motion,
   keyboard focus and axe checks without serious or critical findings.
 
 ### Changed
 
+- Automated stable-only Semantic Versioning, normal-merge version pull requests,
+  annotated tags and verified GitHub Releases after successful `main` CI.
 - Updated the interface to Ember Gate 0.5.0, with dark-first charcoal surfaces,
   red primary actions, rounded task cards and one shared bottom navigation
   across the side panel.

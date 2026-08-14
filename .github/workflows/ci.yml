@@ -83,11 +83,11 @@ jobs:
       - name: Run complete browser matrix
         run: pnpm test:browser
 
-      - name: Package development release candidate once
-        run: pnpm release:package -- --channel dev --output .release/ci-candidate
+      - name: Package development build once
+        run: pnpm release:package -- --channel dev --output .release/ci-build
 
       - name: Inspect release archives
-        run: pnpm release:guard -- --directory .release/ci-candidate
+        run: pnpm release:guard -- --directory .release/ci-build
 
       - name: Run narrow production-package journey
         run: pnpm test:browser:packaged

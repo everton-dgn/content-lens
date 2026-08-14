@@ -78,12 +78,24 @@ Before public release:
 - Build provenance identifies source and workflow.
 - A reproducibility check compares two independent builds where the toolchain permits.
 
-The implementation uses `.github/workflows/release-candidate.yml` to build the
-Chrome, Firefox and sources ZIPs once, attest their digests and SBOM with GitHub
-OIDC, and compare an independent rebuild byte for byte. A separate verification
-job recalculates every digest. `.github/workflows/publish-extension.yml`
-downloads that exact candidate, verifies its attestation again and submits each
+The implementation uses `.github/workflows/auto-release.yml` after a successful
+`main` CI run to calculate a stable version, normal-merge the bot version pull
+request, create the annotated tag, build the Chrome, Firefox and sources ZIPs,
+attest their digests and SBOM with GitHub OIDC, and compare an independent
+rebuild byte for byte. A separate verification job recalculates every digest
+before publishing the stable GitHub Release. `.github/workflows/publish-extension.yml`
+downloads the permanent assets from that exact stable GitHub Release, verifies
+the complete set, freezes it inside the submission run and submits each
 browser-specific package from a protected store environment without rebuilding.
+
+Recovery loads the release orchestrator from protected `main`, verifies the
+exact source CI run, and then checks out that source. Pending version merges are
+tagged from oldest to newest, and existing tags with incomplete GitHub Releases
+are repaired before another version is calculated. Each annotated tag targets
+the version commit already reachable through its verified normal merge, so a
+concurrent `main` advance is released only after its own version calculation.
+The bot starts a full continuation CI on `main` after each recovered
+publication, so recovery never requires a manual merge or tag.
 
 The local packaging command refuses a dirty checkout by default. Its
 `--allow-dirty` option is restricted to unsupported `dev` experiments and does

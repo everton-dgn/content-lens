@@ -4,6 +4,8 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.0 - 2026-08-13
+
 ### Added
 
 - Deterministic rule engine with stable precedence, exact term matching and

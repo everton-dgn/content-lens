@@ -2,7 +2,14 @@
 
 ## Maturity
 
-YouTube Home, search and related-video contracts are Accepted for Phase 0 and v0.1. Other YouTube surfaces and every other platform section are Planned. Planned sections guide adapter boundaries but do not authorize implementation or release claims.
+The current stable runtime ships adapters for YouTube, LinkedIn, X, Reddit and
+Hacker News. Each adapter stays inactive until the user enables its platform
+and grants its exact origin. Supported surfaces follow the shared registry in
+`src/core/content/surfaces.ts`; platform extraction, selectors and rendering
+remain isolated inside each adapter package.
+
+RSS ships as a local content-source adapter. Parsing and portable subscription
+data are available, while browser network acquisition remains disabled.
 
 ## Boundary
 
@@ -161,6 +168,16 @@ Political content is a user-configured topic, not a fixed global block.
 The adapter should distinguish repeated questions, crossposts and links to primary technical artifacts.
 
 ## Hacker News
+
+### Surfaces
+
+- Front page.
+- New.
+- Best.
+- Ask.
+- Show.
+- Jobs.
+- Item pages.
 
 The simpler markup makes deterministic extraction easier. Classification focuses on source quality, novelty, technical depth and repeated coverage. Comment filtering remains optional because conversational context is easy to damage.
 

@@ -102,16 +102,19 @@ Examples:
 
 ## Platform scope
 
-| Platform | Planned surfaces | Main signals |
+| Platform | Shipped surfaces | Main signals |
 | --- | --- | --- |
-| YouTube | Home, search, related videos, subscriptions, Shorts | Title, channel ID, thumbnail, duration, section |
-| LinkedIn | Feed, reposts, promoted posts | Text, author ID, media, repost metadata |
-| X | Following and For You timelines, replies, quoted posts | Text, author ID, thread context, links |
-| Reddit | Home, Popular, All, subreddit feeds, comments | Title, body, subreddit, author, flair |
-| Hacker News | Front page, new, best, item pages | Title, domain, author, thread metadata |
+| YouTube | Home, search, recommendations, subscriptions, Shorts, channels, playlists and end screens | Title, channel ID, thumbnail, duration, section |
+| LinkedIn | Feed, reposts, promoted posts and comment previews | Text, author ID, media, repost metadata |
+| X | Following, For You, replies, quoted posts and threads | Text, author ID, thread context, links |
+| Reddit | Home, Popular, All, subreddit feeds, search and comments | Title, body, subreddit, author, flair |
+| Hacker News | Front page, New, Best, Ask, Show, Jobs and item pages | Title, domain, author, thread metadata |
 | RSS | Feed entries | Title, body, author, source, publication date |
 
-YouTube is the first implementation target. Later adapters reuse the core model and classification pipeline.
+The current stable runtime ships all five DOM adapters. They reuse the same core
+content model and decision pipeline while keeping extraction, selectors and
+rendering inside their platform boundaries. RSS remains a local content-source
+adapter with browser network acquisition disabled.
 
 ## YouTube scope
 
@@ -173,11 +176,13 @@ Promote:
 - RFCs, issue analysis and experiments.
 - Benchmarks and detailed project reports.
 
-## MVP
+## Stable baseline
 
-The first usable release is a Manifest V3 browser extension with:
+The stable release line includes:
 
-- A YouTube adapter for Home, search and related videos.
+- Chrome Manifest V3 and Firefox Manifest V2 packages.
+- YouTube, LinkedIn, X, Reddit and Hacker News adapters for the surfaces listed
+  above.
 - Deterministic channel, term and allow rules.
 - Reversible hidden-item placeholders with reasons.
 - Explicit correction actions.
@@ -190,7 +195,7 @@ Text classification, thumbnail analysis and similarity may join a later release 
 
 ## Deferred work
 
-- Additional platform adapters.
+- Platform adapters beyond the five shipped integrations.
 - Automatic native platform feedback.
 - Full transcript analysis.
 - Network synchronization and cross-device conflict resolution.

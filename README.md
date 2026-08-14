@@ -75,7 +75,7 @@ Removing every optional capability leaves the deterministic path unchanged.
 ContentLens requires Node.js 24.x and pnpm 11.17.0.
 
 ```sh
-corepack enable
+npm install --global pnpm@11.17.0
 pnpm install --frozen-lockfile
 pnpm dev
 ```

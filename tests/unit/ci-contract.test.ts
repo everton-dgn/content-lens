@@ -49,6 +49,14 @@ describe('pull-request CI contract', () => {
     expect(workflow).toContain('pnpm test:browser:packaged')
     expect(workflow).not.toContain('pnpm test:browser panel-open-smoke')
     expect(workflow).not.toContain('pnpm test:browser --')
+    expect(workflow).toContain('  static-and-unit:')
+    expect(workflow).toContain('  browser-and-visual:')
+    expect(workflow).toContain('  package:')
+    expect(workflow).toContain('  ci:')
+    expect(workflow).toContain('Require every CI lane')
+    expect(workflow.match(/pnpm ci:local/gu)).toHaveLength(1)
+    expect(workflow.match(/pnpm test:browser$/gmu)).toHaveLength(1)
+    expect(workflow.match(/pnpm test:browser:packaged/gu)).toHaveLength(1)
   })
 
   it('keeps dependency graph and toolchain integrity in the local gate', async () => {
@@ -70,6 +78,25 @@ describe('pull-request CI contract', () => {
     expect(packageJson.packageManager).toBe(
       'pnpm@11.17.0+sha512.cca3cea332ad254bb84145f966d19f4879615210346fc92c79a047f23a0d7b3cca3c3792f0076ba1f1831d277efbcf0a9119b31a9a60eca7fb3d6231f331ef72'
     )
+  })
+
+  it('installs exact pnpm directly and blocks operational Corepack commands', async () => {
+    const [readme, sourceReview, gettingStarted, docsCheck] = await Promise.all(
+      [
+        readFile(resolve('README.md'), 'utf8'),
+        readFile(resolve('SOURCE_CODE_REVIEW.md'), 'utf8'),
+        readFile(resolve('docs/getting-started.md'), 'utf8'),
+        readFile(resolve('scripts/check-docs.mjs'), 'utf8')
+      ]
+    )
+
+    for (const guide of [readme, sourceReview, gettingStarted]) {
+      expect(guide).toContain('npm install --global pnpm@11.17.0')
+      expect(guide).not.toMatch(/\bcorepack\s+(?:enable|pnpm)\b/iu)
+    }
+    expect(docsCheck).toContain('forbiddenCorepackCommand')
+    expect(docsCheck).toContain("'.github', 'workflows'")
+    expect(docsCheck).toContain("'docs/adr/0013-extension-toolchain-layout.md'")
   })
 
   it('keeps focused test commands mapped to their owned suites', async () => {

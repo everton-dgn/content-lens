@@ -57,7 +57,8 @@ used Node 24.18.0 and pnpm 11.17.0 with this exact core set:
 | WXT | 0.21.1 |
 | `@wxt-dev/module-react` | 1.2.2 |
 
-The probe completed:
+The probe completed with the following historical transcript. These commands
+record the accepted investigation and are not current bootstrap instructions:
 
 ```text
 corepack pnpm install --ignore-scripts

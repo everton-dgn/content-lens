@@ -6,13 +6,13 @@ browser-store release exists yet.
 ## Requirements
 
 - Node.js 24.x
-- pnpm 11.17.0 through Corepack
+- pnpm 11.17.0, installed directly
 - Chrome 149 or newer, or Firefox 151 or newer
 
 ## Install the project
 
 ```sh
-corepack enable
+npm install --global pnpm@11.17.0
 pnpm install --frozen-lockfile
 ```
 

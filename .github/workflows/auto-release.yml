@@ -6,6 +6,20 @@ on:
       - CI
     types:
       - completed
+  workflow_dispatch:
+    inputs:
+      continuation_count:
+        description: Number of direct release continuations already requested
+        required: true
+        type: number
+      source_run_id:
+        description: Approved source CI run ID
+        required: true
+        type: string
+      source_sha:
+        description: Approved source CI SHA
+        required: true
+        type: string
 
 permissions: {}
 
@@ -17,12 +31,18 @@ jobs:
   version:
     name: Create and merge stable version
     if: >-
-      github.event.workflow_run.conclusion == 'success' &&
-      (github.event.workflow_run.event == 'push' ||
-       (github.event.workflow_run.event == 'workflow_dispatch' &&
-        github.event.workflow_run.actor.login == 'github-actions[bot]')) &&
-      github.event.workflow_run.head_branch == 'main' &&
-      github.event.workflow_run.head_repository.full_name == github.repository
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       (github.event.workflow_run.event == 'push' ||
+        (github.event.workflow_run.event == 'workflow_dispatch' &&
+         github.event.workflow_run.actor.login == 'github-actions[bot]')) &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.head_repository.full_name == github.repository) ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.actor == 'github-actions[bot]' &&
+       github.ref == 'refs/heads/main' &&
+       inputs.continuation_count >= 1 &&
+       inputs.continuation_count <= 3)
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -53,12 +73,12 @@ jobs:
         id: release
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_SOURCE_BRANCH: ${{ github.event.workflow_run.head_branch }}
-          RELEASE_SOURCE_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
-          RELEASE_SOURCE_EVENT: ${{ github.event.workflow_run.event }}
-          RELEASE_SOURCE_REPOSITORY: ${{ github.event.workflow_run.head_repository.full_name }}
-          RELEASE_SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
-          RELEASE_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_SOURCE_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || 'main' }}
+          RELEASE_SOURCE_CONCLUSION: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion || 'success' }}
+          RELEASE_SOURCE_EVENT: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event || 'push' }}
+          RELEASE_SOURCE_REPOSITORY: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_repository.full_name || github.repository }}
+          RELEASE_SOURCE_RUN_ID: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || inputs.source_run_id }}
+          RELEASE_SOURCE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || inputs.source_sha }}
         run: node scripts/release/automatic-release.ts
 
   build:
@@ -94,9 +114,6 @@ jobs:
 
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Run stable release quality gate
-        run: pnpm ci:local
 
       - name: Package stable release once
         run: pnpm release:package -- --channel stable --output release
@@ -298,10 +315,12 @@ jobs:
       always() &&
       !cancelled() &&
       needs.version.result == 'success' &&
+      (github.event_name == 'workflow_run' || inputs.continuation_count < 3) &&
       ((needs.version.outputs.continue_release == 'true' &&
         (needs.version.outputs.publish == 'false' ||
          needs.publish.result == 'success')) ||
-       (github.event.workflow_run.event == 'push' &&
+       (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.event == 'push' &&
         needs.version.outputs.publish == 'true' &&
         needs.publish.result != 'success'))
     runs-on: ubuntu-24.04
@@ -309,7 +328,18 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Run trusted CI on the current main branch
+      - name: Continue from the approved CI source
         env:
+          CURRENT_CONTINUATION_COUNT: ${{ github.event_name == 'workflow_dispatch' && inputs.continuation_count || 0 }}
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref main
+          SOURCE_RUN_ID: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || inputs.source_run_id }}
+          SOURCE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || inputs.source_sha }}
+        run: |
+          next_continuation_count=$((CURRENT_CONTINUATION_COUNT + 1))
+          test "$next_continuation_count" -le 3
+          gh workflow run auto-release.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            --field continuation_count="$next_continuation_count" \
+            --field source_run_id="$SOURCE_RUN_ID" \
+            --field source_sha="$SOURCE_SHA"

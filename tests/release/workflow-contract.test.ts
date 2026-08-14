@@ -65,10 +65,29 @@ describe('release workflow contracts', () => {
 
   it('publishes one stable build, compares a rebuild and verifies independently', async () => {
     const source = await workflow('auto-release.yml')
+    const reproducibilityJob = source.slice(
+      source.indexOf('  reproducibility:'),
+      source.indexOf('  verify:')
+    )
+    const rebuildStep = reproducibilityJob.indexOf(
+      '- name: Rebuild stable release in a separate job'
+    )
+    const downloadStep = reproducibilityJob.indexOf(
+      '- name: Download stable release by exact name'
+    )
+    const compareStep = reproducibilityJob.indexOf(
+      '- name: Compare exact distributable bytes'
+    )
+
     expect(source.match(/actions\/setup-node@/gu)).toHaveLength(5)
     expect(source).toContain('pnpm release:package')
     expect(source.match(/pnpm release:package/gu)).toHaveLength(2)
     expect(source).toContain('Compare independent stable rebuild')
+    expect(rebuildStep).toBeGreaterThan(-1)
+    expect(downloadStep).toBeGreaterThan(-1)
+    expect(compareStep).toBeGreaterThan(-1)
+    expect(rebuildStep).toBeLessThan(downloadStep)
+    expect(downloadStep).toBeLessThan(compareStep)
     expect(source).toContain('cmp \\')
     expect(source).toContain('actions/attest@')
     expect(source).toContain('id-token: write')

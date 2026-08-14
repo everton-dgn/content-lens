@@ -8,6 +8,7 @@ import {
   createReleaseMessageRanges,
   parseAutomaticReleaseContext,
   releaseBaseCoversSource,
+  selectOldestIncompleteStableTag,
   selectOldestPendingRelease,
   stableReleaseAssetNames,
   stableReleaseAssetSetIsExact
@@ -102,6 +103,64 @@ describe('automatic stable release orchestration', () => {
     expect(
       stableReleaseAssetSetIsExact('1.2.3', [...expected, 'unexpected.txt'])
     ).toBe(false)
+    expect(
+      stableReleaseAssetSetIsExact('1.2.3', [
+        ...expected.slice(0, -1),
+        'checksums.sha256'
+      ])
+    ).toBe(false)
+  })
+
+  it('finds an incomplete stable release beyond a recent-tag window', () => {
+    const tags = Array.from({ length: 30 }, (_, index) => `v1.0.${29 - index}`)
+    const releases = tags.slice(0, -1).map((tag, index) => ({
+      assets: stableReleaseAssetNames(tag.slice(1)),
+      draft: false,
+      id: index + 1,
+      prerelease: false,
+      tag
+    }))
+
+    expect(selectOldestIncompleteStableTag({ releases, tags })).toBe('v1.0.0')
+    expect(
+      selectOldestIncompleteStableTag({
+        releases: [
+          ...releases,
+          {
+            assets: stableReleaseAssetNames('1.0.0'),
+            draft: false,
+            id: 30,
+            prerelease: false,
+            tag: 'v1.0.0'
+          }
+        ],
+        tags
+      })
+    ).toBeNull()
+  })
+
+  it('treats drafts as unpublished without colliding with a stable release', () => {
+    const stable = {
+      assets: stableReleaseAssetNames('1.0.0'),
+      draft: false,
+      id: 1,
+      prerelease: false,
+      tag: 'v1.0.0'
+    }
+    const draft = { ...stable, assets: [], draft: true, id: 2 }
+
+    expect(
+      selectOldestIncompleteStableTag({
+        releases: [stable, draft],
+        tags: ['v1.0.0']
+      })
+    ).toBeNull()
+    expect(
+      selectOldestIncompleteStableTag({
+        releases: [draft],
+        tags: ['v1.0.0']
+      })
+    ).toBe('v1.0.0')
   })
 
   it('continues after recovering a release older than the verified source', () => {

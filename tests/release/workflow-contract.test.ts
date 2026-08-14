@@ -32,14 +32,18 @@ describe('release workflow contracts', () => {
       /ref:\s*\$\{\{[^\n]*client_payload\.source_sha/iu
     )
     expect(source).not.toContain('repository_dispatch:')
-    expect(script).toContain("'merge_method=merge'")
-    expect(script).toContain("'checkout', '--detach', context.sourceSha")
+    expect(script).toMatch(/'checkout',\s*'--detach',\s*context\.sourceSha/u)
     expect(script).toContain('targetSha: release.releaseSha')
     expect(script).toContain('findOldestIncompleteStableRelease')
     expect(script).not.toContain('waitForSuccessfulBaseCi')
     expect(source).toContain('pnpm release:package -- --channel stable')
     expect(source).toContain('gh release create')
     expect(source).toContain('gh release delete-asset')
+    const publishStep = source.slice(
+      source.indexOf('- name: Create or repair the stable GitHub Release'),
+      source.indexOf('  continuation:')
+    )
+    expect(publishStep).toContain('set -euo pipefail')
     for (const contract of [source, script]) {
       expect(contract).not.toMatch(/\b(?:alpha|beta)\b|release.?candidate/iu)
       expect(contract).not.toContain('pull_request_target')

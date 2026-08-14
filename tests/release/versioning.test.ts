@@ -5,7 +5,10 @@ import {
   createStableReleasePlan,
   deriveNextStableVersion,
   deriveReleaseBump,
-  extractReleaseNotes
+  extractReleaseNotes,
+  normalizeStableTag,
+  ReleaseNotesOutputExistsError,
+  writeReleaseNotesOutput
 } from '../../scripts/release/versioning'
 
 const emptyChangelog = `# Changelog
@@ -189,6 +192,19 @@ describe('automatic stable release versioning', () => {
     )
   })
 
+  it('ignores a release heading with a leading zero', () => {
+    const changelog = `${emptyChangelog}
+## 01.2.3 - 2026-08-13
+
+### Fixed
+
+- Invalid heading.
+`
+    expect(() => extractReleaseNotes(changelog, '1.2.3')).toThrow(
+      'does not contain release 1.2.3'
+    )
+  })
+
   it.each([
     ['# Rewrite storage', '\\# Rewrite storage'],
     ['> Rewrite storage', '&gt; Rewrite storage'],
@@ -290,6 +306,51 @@ Significant changes are recorded here.
         messages: ['fix: repair versioning']
       })
     ).toThrow('does not match latest tag')
+  })
+
+  it('accepts only normalized stable tags', () => {
+    expect(normalizeStableTag(' v1.2.3 ')).toBe('v1.2.3')
+    expect(() => normalizeStableTag('1.2.3')).toThrow('Unsupported stable tag')
+    expect(() => normalizeStableTag('v1.2.3-beta.1')).toThrow(
+      'Unsupported stable version'
+    )
+  })
+
+  it('names an existing release-notes output without hiding other errors', () => {
+    const existsError = Object.assign(new Error('already exists'), {
+      code: 'EEXIST'
+    })
+    const failWithExists = () => {
+      throw existsError
+    }
+    expect(() =>
+      writeReleaseNotesOutput('release-notes.md', 'notes', failWithExists)
+    ).toThrow(ReleaseNotesOutputExistsError)
+    expect(() =>
+      writeReleaseNotesOutput('release-notes.md', 'notes', failWithExists)
+    ).toThrow('Release notes output already exists: release-notes.md.')
+
+    const unrelatedError = Object.assign(new Error('permission denied'), {
+      code: 'EACCES'
+    })
+    let thrown: unknown
+    try {
+      writeReleaseNotesOutput('release-notes.md', 'notes', () => {
+        throw unrelatedError
+      })
+    } catch (error) {
+      thrown = error
+    }
+    expect(thrown).toBe(unrelatedError)
+  })
+
+  it('creates release notes exclusively with one trailing newline', () => {
+    const writes: unknown[] = []
+    writeReleaseNotesOutput('release-notes.md', 'notes', (...args) => {
+      writes.push(args)
+    })
+
+    expect(writes).toEqual([['release-notes.md', 'notes\n', { flag: 'wx' }]])
   })
 
   it('accepts only one supported stable version transition', () => {

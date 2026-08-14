@@ -93,6 +93,7 @@ type WorkflowRun = {
 }
 
 type GitHubRelease = {
+  readonly assets?: ReadonlyArray<{ readonly name?: string }>
   readonly draft?: boolean
   readonly id?: number
   readonly prerelease?: boolean
@@ -106,6 +107,7 @@ const repositoryPattern =
   /^(?<owner>[A-Za-z0-9_.-]+)\/(?<repo>[A-Za-z0-9_.-]+)$/u
 const releaseBranchPattern = /^release\/v\d+\.\d+\.\d+-[0-9a-f]{12}$/u
 const releaseSubjectPattern = /^chore\(release\): cut (?<tag>v\d+\.\d+\.\d+)$/u
+const stableTagPattern = /^v\d+\.\d+\.\d+$/u
 const botLogins = new Set(['github-actions', 'github-actions[bot]'])
 const releaseFiles = ['CHANGELOG.md', 'package.json'] as const
 export const stableReleaseAssetNames = (version: string) => {
@@ -128,10 +130,61 @@ export const stableReleaseAssetSetIsExact = (
   const expected = stableReleaseAssetNames(version)
   const actual = new Set(names)
   return (
-    names.length === expected.length &&
-    actual.size === expected.length &&
-    expected.every(name => actual.has(name))
+    names.length === expected.length && expected.every(name => actual.has(name))
   )
+}
+
+type StableReleaseSnapshot = {
+  readonly assets: readonly string[]
+  readonly draft: boolean
+  readonly id: number
+  readonly prerelease: boolean
+  readonly tag: string
+}
+
+const stableReleaseSnapshotIsComplete = (
+  tag: string,
+  release: StableReleaseSnapshot | undefined
+) => {
+  const normalizedTag = normalizeStableTag(tag)
+  return Boolean(
+    release &&
+      release.tag === normalizedTag &&
+      Number.isSafeInteger(release.id) &&
+      release.id > 0 &&
+      !release.draft &&
+      !release.prerelease &&
+      stableReleaseAssetSetIsExact(normalizedTag.slice(1), release.assets)
+  )
+}
+
+export const selectOldestIncompleteStableTag = ({
+  releases,
+  tags
+}: {
+  readonly releases: readonly StableReleaseSnapshot[]
+  readonly tags: readonly string[]
+}) => {
+  const releasesByTag = new Map<string, StableReleaseSnapshot>()
+  for (const release of releases) {
+    if (!stableTagPattern.test(release.tag) || release.draft) continue
+    if (releasesByTag.has(release.tag)) {
+      throw new Error(`Multiple GitHub Releases use tag ${release.tag}.`)
+    }
+    releasesByTag.set(release.tag, release)
+  }
+  for (const tag of [...tags].reverse()) {
+    const normalizedTag = normalizeStableTag(tag)
+    if (
+      !stableReleaseSnapshotIsComplete(
+        normalizedTag,
+        releasesByTag.get(normalizedTag)
+      )
+    ) {
+      return normalizedTag
+    }
+  }
+  return null
 }
 
 const execute = (
@@ -563,10 +616,12 @@ const verifySourceWorkflowRun = (context: ReleaseContext) => {
 const sleep = (milliseconds: number) =>
   new Promise(resolvePromise => setTimeout(resolvePromise, milliseconds))
 
-const latestStableTag = (ref: string) =>
+const listStableTags = (ref: string) =>
   splitLines(
     readGit(['tag', '--merged', ref, '--list', 'v*', '--sort=-version:refname'])
-  ).find(tag => /^v\d+\.\d+\.\d+$/u.test(tag)) ?? ''
+  ).filter(tag => stableTagPattern.test(tag))
+
+const latestStableTag = (ref: string) => listStableTags(ref)[0] ?? ''
 
 const getRemoteTagState = (tag: string) => {
   const normalizedTag = normalizeStableTag(tag)
@@ -616,10 +671,11 @@ const assertRemoteTag = ({
 }
 
 const createAndPushTag = (release: ReleaseMerge) => {
-  let target = ''
-  try {
+  const tagRef = `refs/tags/${release.tag}`
+  let target: string
+  if (commandSucceeds('git', ['show-ref', '--verify', '--quiet', tagRef])) {
     target = readGit(['rev-list', '-n', '1', release.tag])
-  } catch {
+  } else {
     const timestamp = readGit(['show', '-s', '--format=%cI', release.sourceSha])
     writeGit(
       [
@@ -729,33 +785,19 @@ const verifyPublishedTag = (
   return release
 }
 
-const listStableTags = () =>
-  splitLines(
-    readGit([
-      'tag',
-      '--merged',
-      'origin/main',
-      '--list',
-      'v*',
-      '--sort=-version:refname'
-    ])
-  ).filter(tag => /^v\d+\.\d+\.\d+$/u.test(tag))
-
 const findReleaseCoveringSource = (
-  context: ReleaseContext
+  context: ReleaseContext,
+  stableTags: readonly string[]
 ): ReleaseMerge | null => {
-  for (const tag of listStableTags()) {
-    const release = verifyPublishedTag(context, tag)
-    if (
-      releaseBaseCoversSource({
-        baseSha: release.baseSha,
-        sourceSha: context.sourceSha
-      })
-    ) {
-      return release
-    }
-  }
-  return null
+  const latestTag = stableTags[0]
+  if (!latestTag) return null
+  const release = verifyPublishedTag(context, latestTag)
+  return releaseBaseCoversSource({
+    baseSha: release.baseSha,
+    sourceSha: context.sourceSha
+  })
+    ? release
+    : null
 }
 
 const findPendingReleaseMerge = (): ReleaseMerge | null => {
@@ -790,19 +832,43 @@ const findPendingReleaseMerge = (): ReleaseMerge | null => {
 export const selectOldestPendingRelease = <Value>(pending: readonly Value[]) =>
   pending.at(-1) ?? null
 
-const stableReleaseIsComplete = (
-  context: ReleaseContext,
-  release: ReleaseMerge
-) => {
+const toStableReleaseSnapshot = (
+  release: GitHubRelease,
+  assets: readonly string[] = release.assets?.map(asset =>
+    String(asset.name ?? '')
+  ) ?? []
+): StableReleaseSnapshot => ({
+  assets,
+  draft: Boolean(release.draft),
+  id: Number(release.id ?? 0),
+  prerelease: Boolean(release.prerelease),
+  tag: String(release.tag_name ?? '')
+})
+
+const listStableReleaseSnapshots = (context: ReleaseContext) =>
+  readGhJson<ReadonlyArray<ReadonlyArray<GitHubRelease>>>([
+    'api',
+    '--paginate',
+    '--slurp',
+    '--method',
+    'GET',
+    `repos/${context.repository}/releases`,
+    '-f',
+    'per_page=100'
+  ])
+    .flat()
+    .map(release => toStableReleaseSnapshot(release))
+
+const readStableReleaseSnapshot = (context: ReleaseContext, tag: string) => {
   const published = tryReadGhJson<GitHubRelease>(
     createReleaseByTagArguments({
       repository: context.repository,
-      tag: release.tag
+      tag
     })
   )
-  if (!published || published.draft || published.prerelease) return false
+  if (!published) return null
   if (!Number.isSafeInteger(published.id) || Number(published.id) < 1) {
-    throw new Error(`Stable release ${release.tag} has an invalid API ID.`)
+    throw new Error(`Stable release ${tag} has an invalid API ID.`)
   }
   const pages = readGhJson<ReadonlyArray<ReadonlyArray<{ name?: string }>>>([
     'api',
@@ -814,20 +880,38 @@ const stableReleaseIsComplete = (
     '-f',
     'per_page=100'
   ])
-  return stableReleaseAssetSetIsExact(
-    release.version,
+  return toStableReleaseSnapshot(
+    published,
     pages.flat().map(asset => String(asset.name ?? ''))
   )
 }
 
+const stableReleaseIsComplete = (
+  context: ReleaseContext,
+  release: ReleaseMerge
+) =>
+  stableReleaseSnapshotIsComplete(
+    release.tag,
+    readStableReleaseSnapshot(context, release.tag) ?? undefined
+  )
+
 const findOldestIncompleteStableRelease = (
-  context: ReleaseContext
+  context: ReleaseContext,
+  stableTags: readonly string[]
 ): ReleaseMerge | null => {
-  for (const tag of [...listStableTags()].reverse()) {
+  const releases = listStableReleaseSnapshots(context)
+  while (true) {
+    const tag = selectOldestIncompleteStableTag({ releases, tags: stableTags })
+    if (!tag) return null
     const release = verifyPublishedTag(context, tag)
-    if (!stableReleaseIsComplete(context, release)) return release
+    const current = readStableReleaseSnapshot(context, tag)
+    if (!current || !stableReleaseSnapshotIsComplete(tag, current)) {
+      return release
+    }
+    const index = releases.findIndex(candidate => candidate.tag === tag)
+    if (index === -1) releases.push(current)
+    else releases[index] = current
   }
-  return null
 }
 
 const remoteBranchCommit = (branch: string) => {
@@ -1218,11 +1302,15 @@ export const runAutomaticRelease = async () => {
     throw new Error('Automatic release requires a clean checkout.')
   }
   cleanupOrphanedReleasePullRequests(context)
-  const incompleteRelease = findOldestIncompleteStableRelease(context)
+  const stableTags = listStableTags('origin/main')
+  const incompleteRelease = findOldestIncompleteStableRelease(
+    context,
+    stableTags
+  )
   if (incompleteRelease) {
     return releaseResult(context, incompleteRelease, 'recovered', true, false)
   }
-  const coveringRelease = findReleaseCoveringSource(context)
+  const coveringRelease = findReleaseCoveringSource(context, stableTags)
   if (coveringRelease) {
     const releaseComplete = stableReleaseIsComplete(context, coveringRelease)
     return releaseResult(

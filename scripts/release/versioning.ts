@@ -267,8 +267,7 @@ const findReleaseHeadings = (changelog: string): ReleaseHeading[] => {
   const headings: ReleaseHeading[] = []
   for (const match of changelog.matchAll(releaseHeadingPattern)) {
     if (match.index === undefined || !match.groups) continue
-    const versionPrefix = match[0].match(/^## (?<version>\d+\.\d+\.\d+)/u)
-    const version = versionPrefix?.groups?.version
+    const version = match.groups.version
     if (!version) continue
     headings.push({
       end: match.index + match[0].length,
@@ -411,6 +410,39 @@ export const assertStableReleaseTransition = ({
   return current
 }
 
+export class ReleaseNotesOutputExistsError extends Error {
+  constructor(output: string, cause: unknown) {
+    super(`Release notes output already exists: ${output}.`, { cause })
+    this.name = 'ReleaseNotesOutputExistsError'
+  }
+}
+
+type WriteReleaseNotesFile = (
+  output: string,
+  contents: string,
+  options: { readonly flag: 'wx' }
+) => void
+
+export const writeReleaseNotesOutput = (
+  output: string,
+  notes: string,
+  writeFile: WriteReleaseNotesFile = writeFileSync
+) => {
+  try {
+    writeFile(output, `${notes}\n`, { flag: 'wx' })
+  } catch (error) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'code' in error &&
+      error.code === 'EEXIST'
+    ) {
+      throw new ReleaseNotesOutputExistsError(output, error)
+    }
+    throw error
+  }
+}
+
 const runNotesCommand = (argv: readonly string[]) => {
   if (
     argv.length !== 4 ||
@@ -431,9 +463,7 @@ const runNotesCommand = (argv: readonly string[]) => {
   const version = parseStableVersion(versionValue)
   const output = resolve(outputValue)
   const changelog = readFileSync(resolve('CHANGELOG.md'), 'utf8')
-  writeFileSync(output, `${extractReleaseNotes(changelog, version)}\n`, {
-    flag: 'wx'
-  })
+  writeReleaseNotesOutput(output, extractReleaseNotes(changelog, version))
 }
 
 const isMainModule = process.argv[1]

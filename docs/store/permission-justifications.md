@@ -46,6 +46,9 @@ can check rather than take the statement on trust.
 
 ## Before submitting
 
-- Rebuild both packages and confirm the manifests match this file.
+- Download the exact stable GitHub Release assets and submit only those
+  packages. Do not run `wxt build` or `wxt zip` during publication.
+- Use a local rebuild only as an independent comparison and confirm its
+  manifests match this file.
 - Confirm `pnpm ci:local` and the packaged browser journeys pass.
 - Confirm the stable release package carries checksums, an SBOM and provenance.

@@ -9,17 +9,62 @@ const releaseScript = (name: string) =>
   readFile(resolve('scripts/release', name), 'utf8')
 
 describe('release workflow contracts', () => {
+  it('creates and publishes only stable releases after verified main CI', async () => {
+    const source = await workflow('auto-release.yml')
+    const script = await releaseScript('automatic-release.ts')
+
+    expect(source).toContain('workflow_run:')
+    expect(source).toContain('- CI')
+    expect(source).toContain("github.event.workflow_run.event == 'push'")
+    expect(source).toContain(
+      "github.event.workflow_run.event == 'workflow_dispatch'"
+    )
+    expect(source).toContain(
+      "github.event.workflow_run.actor.login == 'github-actions[bot]'"
+    )
+    expect(source).toContain(
+      "github.event.workflow_run.conclusion == 'success'"
+    )
+    expect(source).toContain("github.event.workflow_run.head_branch == 'main'")
+    expect(source).toContain('node scripts/release/automatic-release.ts')
+    expect(source).toContain('ref: main')
+    expect(source).not.toMatch(
+      /ref:\s*\$\{\{[^\n]*client_payload\.source_sha/iu
+    )
+    expect(source).not.toContain('repository_dispatch:')
+    expect(script).toContain("'merge_method=merge'")
+    expect(script).toContain("'checkout', '--detach', context.sourceSha")
+    expect(script).toContain('targetSha: release.releaseSha')
+    expect(script).toContain('findOldestIncompleteStableRelease')
+    expect(script).not.toContain('waitForSuccessfulBaseCi')
+    expect(source).toContain('pnpm release:package -- --channel stable')
+    expect(source).toContain('gh release create')
+    expect(source).toContain('gh release delete-asset')
+    for (const contract of [source, script]) {
+      expect(contract).not.toMatch(/\b(?:alpha|beta)\b|release.?candidate/iu)
+      expect(contract).not.toContain('pull_request_target')
+    }
+    expect(source).not.toContain('workflow_dispatch:')
+    expect(source).toContain(
+      'gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref main'
+    )
+    expect(source).toContain("needs.version.outputs.publish == 'false'")
+    expect(source).toContain("needs.publish.result == 'success'")
+    expect(source).toContain("needs.publish.result != 'success'")
+  })
+
   it('applies the bundle limit to both release outputs', async () => {
     const source = await releaseScript('package.mjs')
     expect(source).toContain('guardBundleDirectory')
     expect(source).toContain("['chrome-mv3', 'firefox-mv2']")
   })
 
-  it('publishes one candidate, compares a rebuild and verifies independently', async () => {
-    const source = await workflow('release-candidate.yml')
+  it('publishes one stable build, compares a rebuild and verifies independently', async () => {
+    const source = await workflow('auto-release.yml')
+    expect(source.match(/actions\/setup-node@/gu)).toHaveLength(5)
     expect(source).toContain('pnpm release:package')
     expect(source.match(/pnpm release:package/gu)).toHaveLength(2)
-    expect(source).toContain('Compare independent rebuild')
+    expect(source).toContain('Compare independent stable rebuild')
     expect(source).toContain('cmp \\')
     expect(source).toContain('actions/attest@')
     expect(source).toContain('id-token: write')
@@ -36,6 +81,9 @@ describe('release workflow contracts', () => {
     expect(source).toContain('pnpm release:status -- --store chrome')
     expect(source).toContain('pnpm release:status -- --store amo')
     expect(source).toContain('gh attestation verify')
+    expect(source).toContain('gh release download "v$RELEASE_VERSION"')
+    expect(source).not.toContain('release_run_id')
+    expect(source).not.toContain('run-id:')
     expect(source).not.toMatch(/\bwxt (?:build|zip)\b/u)
     expect(source).not.toContain('--chrome-cancel-pending')
   })
@@ -60,7 +108,7 @@ describe('release workflow contracts', () => {
     }
   })
 
-  it.each(['release-candidate.yml', 'publish-extension.yml'])(
+  it.each(['auto-release.yml', 'publish-extension.yml'])(
     'pins every action in %s',
     async name => {
       const source = await workflow(name)

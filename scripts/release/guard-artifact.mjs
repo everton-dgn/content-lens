@@ -158,13 +158,14 @@ export const parseChecksums = content =>
 export const guardReleaseDirectory = async ({ root, directory }) => {
   const product = await getPackage(root)
   const expectedArchives = artifactNames(product.version)
+  const expectedFiles = [
+    ...expectedArchives,
+    ...Object.values(RELEASE_FILES)
+  ].sort()
   const files = (await readdir(directory)).sort()
-  const archives = files.filter(name => name.endsWith('.zip'))
-  if (
-    JSON.stringify(archives) !== JSON.stringify([...expectedArchives].sort())
-  ) {
+  if (JSON.stringify(files) !== JSON.stringify(expectedFiles)) {
     throw new Error(
-      `Release must contain exactly: ${expectedArchives.join(', ')}.`
+      `Release must contain exactly: ${expectedFiles.join(', ')}.`
     )
   }
   for (const evidence of Object.values(RELEASE_FILES)) {

@@ -24,7 +24,7 @@ import {
   RELEASE_FILES,
   run,
   sha256File,
-  validateCandidate
+  validateRelease
 } from './lib.mjs'
 
 export const writeChecksums = async directory => {
@@ -83,7 +83,7 @@ export const packageRelease = async ({
   skipBuild = false
 }) => {
   const product = await getPackage(root)
-  const gitState = validateCandidate({
+  const gitState = validateRelease({
     root,
     channel,
     version: product.version,
@@ -144,6 +144,6 @@ if (
     skipBuild: args['skip-build'] === true
   })
   console.log(
-    `Release candidate ${result.version} created at ${result.directory}.`
+    `Release package ${result.version} created at ${result.directory}.`
   )
 }

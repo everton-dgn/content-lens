@@ -48,4 +48,4 @@ can check rather than take the statement on trust.
 
 - Rebuild both packages and confirm the manifests match this file.
 - Confirm `pnpm ci:local` and the packaged browser journeys pass.
-- Confirm the release candidate carries checksums, an SBOM and provenance.
+- Confirm the stable release package carries checksums, an SBOM and provenance.

@@ -31,11 +31,11 @@
         "name": { "const": "content-lens" },
         "version": {
           "type": "string",
-          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
         }
       }
     },
-    "channel": { "enum": ["dev", "alpha", "beta", "stable"] },
+    "channel": { "enum": ["dev", "stable"] },
     "source": { "$ref": "#/$defs/source" },
     "toolchain": { "type": "object" },
     "versionDomains": { "type": "object" },
@@ -74,7 +74,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "pattern": "^content-lens-[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?-(chrome|firefox|sources)\\.zip$"
+          "pattern": "^content-lens-(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)-(chrome|firefox|sources)\\.zip$"
         },
         "browser": { "enum": ["chrome", "firefox", "sources"] },
         "sha256": { "$ref": "#/$defs/digest" }

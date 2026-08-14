@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto'
 import { readFile, stat } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
-export const PUBLIC_CHANNELS = new Set(['alpha', 'beta', 'stable'])
+export const PUBLIC_CHANNELS = new Set(['stable'])
 export const RELEASE_FILES = Object.freeze({
   manifest: 'release-manifest.json',
   provenance: 'provenance.intoto.json',
@@ -92,40 +92,30 @@ export const getGitState = (root = process.cwd()) => ({
 })
 
 export const validateVersion = version => {
-  if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u.test(version)) {
+  if (!/^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/u.test(version)) {
     throw new Error(`Invalid package version: ${version}`)
   }
 }
 
-export const validateCandidate = ({
+export const validateRelease = ({
   root = process.cwd(),
   channel,
   version,
   allowDirty = false
 }) => {
-  if (!['dev', 'alpha', 'beta', 'stable'].includes(channel)) {
+  if (!['dev', 'stable'].includes(channel)) {
     throw new Error(`Invalid release channel: ${channel}`)
   }
   validateVersion(version)
   const state = getGitState(root)
   if (state.dirty && !allowDirty) {
-    throw new Error('Release candidates require a clean worktree.')
+    throw new Error('Release packages require a clean worktree.')
   }
   if (PUBLIC_CHANNELS.has(channel)) {
     if (allowDirty) {
       throw new Error('--allow-dirty is restricted to the dev channel.')
     }
     const expectedTag = `v${version}`
-    if (channel === 'stable' && version.includes('-')) {
-      throw new Error(
-        'Stable releases require a version without a prerelease suffix.'
-      )
-    }
-    if (channel !== 'stable' && !version.includes(`-${channel}`)) {
-      throw new Error(
-        `${channel} releases require a -${channel} prerelease suffix.`
-      )
-    }
     if (state.tag !== expectedTag) {
       throw new Error(`Public release requires the exact tag ${expectedTag}.`)
     }

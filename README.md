@@ -122,10 +122,10 @@ remain available from the local review history.
 <table>
   <tr>
     <td align="center">
-      <img src="docs/assets/readme/rule-preview.png" width="360" alt="ContentLens preview showing a matching item and a protected exception">
+      <img src="docs/assets/readme/rule-preview.webp" width="360" alt="ContentLens preview showing a matching item and a protected exception">
     </td>
     <td align="center">
-      <img src="docs/assets/readme/privacy-controls.png" width="390" alt="ContentLens privacy and local data settings">
+      <img src="docs/assets/readme/privacy-controls.webp" width="390" alt="ContentLens privacy and local data settings">
     </td>
   </tr>
   <tr>

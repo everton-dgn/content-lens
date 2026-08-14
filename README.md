@@ -44,14 +44,11 @@ inactive until you enable it and approve its origin.
 
 ![ContentLens filtering a Reddit home feed in dark mode with a reversible placeholder and the rule preview open](docs/assets/readme/reddit-dark.webp)
 
-<details>
-<summary><strong>Open the LinkedIn and X gallery</strong></summary>
+### LinkedIn and X
 
 ![ContentLens filtering a LinkedIn feed in light mode with a reversible placeholder and the rule preview open](docs/assets/readme/linkedin-light.webp)
 
 ![ContentLens filtering the X For You feed in dark mode with a reversible placeholder and the rule preview open](docs/assets/readme/x-dark.webp)
-
-</details>
 
 ## Install
 
@@ -125,7 +122,7 @@ remain available from the local review history.
       <img src="docs/assets/readme/rule-preview.webp" width="360" alt="ContentLens preview showing a matching item and a protected exception">
     </td>
     <td align="center">
-      <img src="docs/assets/readme/privacy-controls.webp" width="390" alt="ContentLens privacy and local data settings">
+      <img src="docs/assets/readme/privacy-controls.webp" width="360" alt="ContentLens privacy and local data settings">
     </td>
   </tr>
   <tr>
@@ -134,12 +131,9 @@ remain available from the local review history.
   </tr>
 </table>
 
-<details>
-<summary><strong>Open the complete desktop workflow</strong></summary>
+### Complete desktop workflow
 
 ![ContentLens rule creation, dry run, local overview and privacy screens shown as four equal desktop browser states](docs/assets/readme/extension-workflow-3d.webp)
-
-</details>
 
 ## One extension, every control
 
@@ -147,12 +141,9 @@ Everyday actions stay in the browser panel. The wider extension settings expose
 platform access, optional providers, privacy, diagnostics, exports and portable
 sources without hiding the underlying state.
 
-<details>
-<summary><strong>Open the desktop control center</strong></summary>
+### Desktop control center
 
 ![ContentLens desktop extension settings with platform, privacy, export and RSS controls shown as layered interface cards](docs/assets/readme/extension-control-center-3d.webp)
-
-</details>
 
 ## How it works
 

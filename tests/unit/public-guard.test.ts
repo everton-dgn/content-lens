@@ -90,6 +90,34 @@ describe('public repository guard', () => {
     ).toContain('unapproved-public-url')
   })
 
+  it('scopes README public exceptions to their exact path and values', () => {
+    const stableReleaseBadge = [
+      'https',
+      '://img.shields.io/github/v/release/everton-dgn/content-lens?label=stable'
+    ].join('')
+    const licenseBadge = [
+      'https',
+      '://img.shields.io/github/license/everton-dgn/content-lens'
+    ].join('')
+    const readmeContent = [
+      `[![Latest release](${stableReleaseBadge})](https://github.com/everton-dgn/content-lens/releases/latest)`,
+      `[![License](${licenseBadge})](LICENSE)`,
+      ['https', '://', '*', '/*'].join(''),
+      ['http', '://', '*', '/*'].join(''),
+      ['local', 'host'].join('')
+    ].join('\n')
+
+    expect(scanText('README.md', readmeContent)).toEqual([])
+    expect(
+      findingCodes(scanText('docs/unreviewed-readme-copy.md', readmeContent))
+    ).toEqual(
+      expect.arrayContaining([
+        'private-network-reference',
+        'unapproved-public-url'
+      ])
+    )
+  })
+
   it('keeps network acquisition forbidden across every RSS runtime boundary', () => {
     const networkCall = 'export const acquire = () => fetch(feedUrl);'
     const paths = [

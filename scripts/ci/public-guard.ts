@@ -125,6 +125,14 @@ const forbiddenFontCssUrl = ['https', '://fonts.example.test/ui.css'].join('')
 const forbiddenFontWoffUrl = ['https', '://fonts.example.test/ui.woff2'].join(
   ''
 )
+const readmeStableReleaseBadgeUrl = [
+  'https',
+  '://img.shields.io/github/v/release/everton-dgn/content-lens?label=stable'
+].join('')
+const readmeLicenseBadgeUrl = [
+  'https',
+  '://img.shields.io/github/license/everton-dgn/content-lens'
+].join('')
 const syncCredentialUrl = [
   'https',
   '://user:',
@@ -132,6 +140,15 @@ const syncCredentialUrl = [
   '@sync.example/contentlens.json'
 ].join('')
 const approvedUrlIdentifiersByPath = new Map<string, ReadonlySet<string>>([
+  [
+    'README.md',
+    new Set([
+      optionalHttpsPattern,
+      optionalHttpPattern,
+      readmeStableReleaseBadgeUrl,
+      readmeLicenseBadgeUrl
+    ])
+  ],
   [
     'scripts/ci/public-guard.ts',
     new Set([
@@ -278,6 +295,7 @@ const approvedPrivateNetworkReferencesByPath = new Map<
   string,
   ReadonlySet<string>
 >([
+  ['README.md', new Set([['local', 'host'].join('')])],
   ['src/ai/providers/templates.ts', new Set([['127', '.0.0.1'].join('')])],
   [
     'tests/contract/provider-connection.test.ts',
@@ -623,7 +641,7 @@ export const scanText = (path: string, content: string): GuardFinding[] => {
     /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/giu
   )
 
-  const urlPattern = /https?:\/\/[^\s<>"'`]+/gu
+  const urlPattern = /https?:\/\/(?:(?!\]\()[^\s<>"'`])+/gu
   for (const match of content.matchAll(urlPattern)) {
     const rawUrl = trimUrlPunctuation(match[0])
     if (

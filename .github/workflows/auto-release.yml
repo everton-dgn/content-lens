@@ -157,14 +157,14 @@ jobs:
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Rebuild stable release in a separate job
+        run: pnpm release:package -- --channel stable --output rebuild
+
       - name: Download stable release by exact name
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.0
         with:
           name: content-lens-stable-release
           path: reference
-
-      - name: Rebuild stable release in a separate job
-        run: pnpm release:package -- --channel stable --output rebuild
 
       - name: Compare exact distributable bytes
         env:

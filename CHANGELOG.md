@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.2 - 2026-08-14
+
+### Fixed
+
+- allow reviewed readme references
+
 ## 1.0.1 - 2026-08-14
 
 ### Fixed

@@ -48,10 +48,15 @@ describe('release workflow contracts', () => {
       expect(contract).not.toMatch(/\b(?:alpha|beta)\b|release.?candidate/iu)
       expect(contract).not.toContain('pull_request_target')
     }
-    expect(source).not.toContain('workflow_dispatch:')
-    expect(source).toContain(
-      'gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref main'
-    )
+    expect(source).toContain('workflow_dispatch:')
+    expect(source).toContain('gh workflow run auto-release.yml \\')
+    expect(source).not.toContain('gh workflow run ci.yml')
+    expect(source).toContain('source_run_id="$SOURCE_RUN_ID"')
+    expect(source).toContain('source_sha="$SOURCE_SHA"')
+    expect(source).toContain('test "$next_continuation_count" -le 3')
+    expect(source).toContain('inputs.continuation_count < 3')
+    expect(source).toContain("github.actor == 'github-actions[bot]'")
+    expect(source).not.toContain('pnpm ci:local')
     expect(source).toContain("needs.version.outputs.publish == 'false'")
     expect(source).toContain("needs.publish.result == 'success'")
     expect(source).toContain("needs.publish.result != 'success'")

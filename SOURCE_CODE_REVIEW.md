@@ -16,7 +16,7 @@ tag recorded in `release-manifest.json`. Compare their SHA-256 values with
 ## Build commands
 
 ```sh
-corepack enable
+npm install --global pnpm@11.17.0
 pnpm install --frozen-lockfile
 pnpm typecheck
 pnpm exec wxt zip -b firefox

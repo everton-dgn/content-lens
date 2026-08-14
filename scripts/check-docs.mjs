@@ -11,6 +11,10 @@ const ignoredDirectories = new Set([
   'test-results'
 ])
 const errors = []
+const historicalCorepackEvidence = new Set([
+  'docs/adr/0013-extension-toolchain-layout.md'
+])
+const forbiddenCorepackCommand = /\bcorepack\s+(?:enable|pnpm)\b/i
 
 function collectMarkdown(directory) {
   return readdirSync(directory)
@@ -64,6 +68,17 @@ function checkAdr(file, content) {
   }
 }
 
+function checkOperationalCorepack(file, content) {
+  if (
+    !historicalCorepackEvidence.has(file) &&
+    forbiddenCorepackCommand.test(content)
+  ) {
+    errors.push(
+      `${file}: Corepack commands are forbidden in operational guidance`
+    )
+  }
+}
+
 const markdownFiles = collectMarkdown(root)
 
 for (const file of markdownFiles) {
@@ -86,6 +101,16 @@ for (const file of markdownFiles) {
 
   checkLocalLinks(file, content)
   checkAdr(file, content)
+  checkOperationalCorepack(file, content)
+}
+
+const workflowDirectory = resolve(root, '.github', 'workflows')
+if (existsSync(workflowDirectory)) {
+  for (const entry of readdirSync(workflowDirectory).sort()) {
+    if (!/\.ya?ml$/i.test(entry)) continue
+    const file = `.github/workflows/${entry}`
+    checkOperationalCorepack(file, readFileSync(resolve(root, file), 'utf8'))
+  }
 }
 
 if (errors.length > 0) {

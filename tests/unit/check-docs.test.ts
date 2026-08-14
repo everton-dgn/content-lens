@@ -13,12 +13,16 @@ const runChecker = async ({
   adr,
   docsIndex = '# Documentation\n',
   generatedReport = false,
-  readme = '# Repository\n\n[Documentation](docs/README.md)\n'
+  historicalAdr,
+  readme = '# Repository\n\n[Documentation](docs/README.md)\n',
+  workflow
 }: {
   adr?: string
   docsIndex?: string
   generatedReport?: boolean
+  historicalAdr?: string
   readme?: string
+  workflow?: string
 } = {}) => {
   const root = await mkdtemp(join(tmpdir(), 'content-lens-check-docs-'))
   const scriptsDirectory = join(root, 'scripts')
@@ -35,6 +39,21 @@ const runChecker = async ({
     const adrDirectory = join(docsDirectory, 'adr')
     await mkdir(adrDirectory, { recursive: true })
     await writeFile(join(adrDirectory, '0001-decision.md'), adr)
+  }
+
+  if (historicalAdr !== undefined) {
+    const adrDirectory = join(docsDirectory, 'adr')
+    await mkdir(adrDirectory, { recursive: true })
+    await writeFile(
+      join(adrDirectory, '0013-extension-toolchain-layout.md'),
+      historicalAdr
+    )
+  }
+
+  if (workflow !== undefined) {
+    const workflowDirectory = join(root, '.github', 'workflows')
+    await mkdir(workflowDirectory, { recursive: true })
+    await writeFile(join(workflowDirectory, 'ci.yml'), workflow)
   }
 
   if (generatedReport) {
@@ -95,5 +114,46 @@ describe('documentation checker', () => {
     expect(result.stderr).toContain('missing required ADR field: Status:')
     expect(result.stderr).toContain('missing required ADR field: ## Context')
     expect(result.stderr).toContain('missing required ADR field: ## Decision')
+  })
+
+  it('rejects operational Corepack commands in guides and workflows', async () => {
+    const guide = await runChecker({
+      readme: '# Repository\n\n```sh\ncorepack enable\n```\n'
+    })
+    const workflow = await runChecker({
+      workflow:
+        'jobs:\n  validate:\n    steps:\n      - run: corepack pnpm install\n'
+    })
+
+    expect(guide.status).toBe(1)
+    expect(guide.stderr).toContain(
+      'README.md: Corepack commands are forbidden in operational guidance'
+    )
+    expect(workflow.status).toBe(1)
+    expect(workflow.stderr).toContain(
+      '.github/workflows/ci.yml: Corepack commands are forbidden in operational guidance'
+    )
+  })
+
+  it('allows the accepted ADR 0013 historical transcript', async () => {
+    const result = await runChecker({
+      historicalAdr: [
+        '# ADR 0013: Toolchain',
+        '',
+        'Status: Accepted',
+        '',
+        '## Context',
+        '',
+        'Historical probe: `corepack pnpm install`.',
+        '',
+        '## Decision',
+        '',
+        'pnpm is the package manager.',
+        ''
+      ].join('\n')
+    })
+
+    expect(result.status).toBe(0)
+    expect(result.stderr).toBe('')
   })
 })

@@ -105,6 +105,11 @@ describe('release workflow contracts', () => {
   it('uses protected, separate store environments and never rebuilds', async () => {
     const source = await workflow('publish-extension.yml')
     const automaticRelease = await workflow('auto-release.yml')
+    const chromeJob = source.slice(
+      source.indexOf('  chrome:'),
+      source.indexOf('  amo:')
+    )
+    const amoJob = source.slice(source.indexOf('  amo:'))
     expect(source).toContain('workflow_call:')
     expect(source).toContain('environment: chrome-web-store')
     expect(source).toContain('environment: amo')
@@ -127,8 +132,22 @@ describe('release workflow contracts', () => {
       'uses: ./.github/workflows/publish-extension.yml'
     )
     expect(automaticRelease).toContain(
+      "vars.CHROME_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(automaticRelease).toContain(
+      "vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(automaticRelease).not.toContain(
       "vars.STORE_PUBLISHING_ENABLED == 'true'"
     )
+    expect(chromeJob).toContain(
+      "if: vars.CHROME_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(chromeJob).not.toContain('FIREFOX_STORE_PUBLISHING_ENABLED')
+    expect(amoJob).toContain(
+      "if: vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(amoJob).not.toContain('CHROME_STORE_PUBLISHING_ENABLED')
     expect(automaticRelease).toContain(
       `version: \${{ needs.version.outputs.version }}`
     )

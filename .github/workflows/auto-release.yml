@@ -314,7 +314,8 @@ jobs:
     if: >-
       needs.version.outputs.publish == 'true' &&
       needs.publish.result == 'success' &&
-      vars.STORE_PUBLISHING_ENABLED == 'true'
+      (vars.CHROME_STORE_PUBLISHING_ENABLED == 'true' ||
+       vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true')
     uses: ./.github/workflows/publish-extension.yml
     with:
       version: ${{ needs.version.outputs.version }}

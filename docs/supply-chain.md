@@ -83,12 +83,14 @@ The implementation uses `.github/workflows/auto-release.yml` after a successful
 request, create the annotated tag, build the Chrome, Firefox and sources ZIPs,
 attest their digests and SBOM with GitHub OIDC, and compare an independent
 rebuild byte for byte. A separate verification job recalculates every digest
-before publishing the stable GitHub Release. When
-`STORE_PUBLISHING_ENABLED=true`, `.github/workflows/auto-release.yml` calls
-`.github/workflows/publish-extension.yml` with the released version. The store
-workflow remains manually dispatchable for recovery. It downloads the permanent
-assets from that exact stable GitHub Release, verifies the complete set, freezes
-it inside the submission run and submits each browser-specific package from a
+before publishing the stable GitHub Release. When either
+`CHROME_STORE_PUBLISHING_ENABLED=true` or
+`FIREFOX_STORE_PUBLISHING_ENABLED=true`, `.github/workflows/auto-release.yml`
+calls `.github/workflows/publish-extension.yml` with the released version. Each
+variable gates only its matching store job. The store workflow remains manually
+dispatchable for recovery. It downloads the permanent assets from that exact
+stable GitHub Release, verifies the complete set, freezes it inside the
+submission run and submits each enabled browser-specific package from a
 protected store environment without rebuilding.
 
 Chrome Web Store access has no stored service-account private key. GitHub OIDC

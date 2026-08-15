@@ -238,6 +238,22 @@ describe('release evidence contracts', () => {
     ])
   })
 
+  it.each(['REJECTED', 'CANCELLED'] as const)(
+    'rejects a Chrome publication reported as %s',
+    async state => {
+      const { fetchImpl, submit } = chromeSubmission([
+        { itemState: 'OK' },
+        { uploadState: 'SUCCEEDED' },
+        { state }
+      ])
+
+      await expect(submit()).rejects.toThrow(
+        `Chrome Web Store publication ended in terminal state ${state}.`
+      )
+      expect(fetchImpl).toHaveBeenCalledTimes(3)
+    }
+  )
+
   it.each([
     ['FAILED', 'Chrome Web Store rejected the uploaded package.'],
     [

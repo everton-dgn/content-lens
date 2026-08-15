@@ -112,6 +112,10 @@ export const submitChromePackage = async ({
       })
     }
   )
+  if (publish?.state === 'REJECTED' || publish?.state === 'CANCELLED')
+    throw new Error(
+      `Chrome Web Store publication ended in terminal state ${publish.state}.`
+    )
   const warningCount = publish?.warningInfo?.warnings?.length ?? 0
   if (warningCount > 0)
     throw new Error(

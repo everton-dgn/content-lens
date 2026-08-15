@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "generator": "scripts/brand/generate-icons.mjs",
+  "source": "src/ui/brand/mark.ts",
+  "sourceSha256": "4e0eb76052a5b6d1eaee9be3f0d34b32079293ae8a119518e3df940f7854e05b",
+  "icons": {
+    "16": {
+      "path": "public/icon/16.png",
+      "sha256": "deb4380007b0477a13c404c83fe3cb647796e26d0b2dc17a5874af89c84b1e56"
+    },
+    "20": {
+      "path": "public/icon/20.png",
+      "sha256": "47cda563058de87a39f21937650bd2a6c981c2824cc5afbb5336f666fff4fd04"
+    },
+    "24": {
+      "path": "public/icon/24.png",
+      "sha256": "54908d4e92fed1d0e2423964d3f13c19d4dea8e8f7feaa58e809a3ba23ab50c6"
+    },
+    "32": {
+      "path": "public/icon/32.png",
+      "sha256": "fb8f8154bb7a12ccb024e92d4a83d16542bcb3129eaf7706196bfe5f17c31cdf"
+    },
+    "48": {
+      "path": "public/icon/48.png",
+      "sha256": "d1e7fcd07016600a22d8ed0422056ec4d7c4518d7bc7aea8d9bfcc2e1fb8c858"
+    },
+    "64": {
+      "path": "public/icon/64.png",
+      "sha256": "bdf697bd691c3fcac135655c6cbd8d199c6fc5036edc0cba82ef55411f4d09c5"
+    },
+    "128": {
+      "path": "public/icon/128.png",
+      "sha256": "fa85f3de04ef03e90acafa82cdc052671e366f86d20b64abd28a773e5330570e"
+    }
+  }
+}

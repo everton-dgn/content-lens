@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import { createBrandIconSvg } from '@/ui/brand/mark'
+import { brandIconPalette, createBrandIconSvg } from '@/ui/brand/mark'
 import { Brand } from '@/ui/components/Brand'
 
 describe('Brand', () => {
@@ -25,6 +25,9 @@ describe('Brand', () => {
     expect(icon).toContain('viewBox="0 0 32 32"')
     expect(icon).toContain('aria-label="ContentLens"')
     expect(icon).toContain('stroke="#FFFFFF"')
+    expect(brandIconPalette.signal).toBe('#FF7A80')
+    expect(icon).toContain('fill="#FF7A80"')
+    expect(icon).not.toContain('#9FBCFF')
     expect(icon.match(/<circle/g)).toHaveLength(2)
     expect(icon.match(/<rect/g)).toHaveLength(4)
   })

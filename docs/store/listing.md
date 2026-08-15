@@ -109,6 +109,20 @@ exception, and the wide settings page. Do not retouch them.
 Each store has its own required dimensions; check them at submission time
 rather than trusting a number recorded here.
 
+## Store icons
+
+Store icons come from the same canonical mark as the runtime lockup. Generate
+them with `pnpm brand:icons`, then verify the tracked outputs with
+`pnpm brand:icons:check`.
+
+- Chrome Web Store: upload `public/icon/128.png` when the dashboard requests a
+  listing icon. The same file ships in the Chrome package.
+- Firefox Add-ons: upload `public/icon/64.png` when the listing uses a custom
+  icon. The same size now ships in the Firefox package.
+
+Do not recolor either store icon or export it from a screenshot. A palette or
+geometry change starts in `src/ui/brand/mark.ts` and regenerates every size.
+
 ## What not to claim
 
 - No accuracy or effectiveness number. No held-out corpus exists yet, so any

@@ -10,6 +10,18 @@ import {
 } from './manifest'
 
 describe('createManifest', () => {
+  it('publishes every approved browser and store icon size', () => {
+    expect(brandIconPaths).toEqual({
+      16: 'icon/16.png',
+      20: 'icon/20.png',
+      24: 'icon/24.png',
+      32: 'icon/32.png',
+      48: 'icon/48.png',
+      64: 'icon/64.png',
+      128: 'icon/128.png'
+    })
+  })
+
   it('declares only the Chrome side panel permission', () => {
     const manifest = createManifest('chrome')
 

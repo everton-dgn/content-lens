@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { readdir, readFile } from 'node:fs/promises'
 import { basename, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -16,6 +17,15 @@ import {
 const unzipEntry = (archive, entry) => {
   const result = spawnSync('unzip', ['-p', archive, entry], {
     encoding: 'utf8',
+    maxBuffer: 20 * 1024 * 1024
+  })
+  if (result.status !== 0)
+    throw new Error(`Cannot read ${entry} from ${archive}.`)
+  return result.stdout
+}
+
+const unzipEntryBuffer = (archive, entry) => {
+  const result = spawnSync('unzip', ['-p', archive, entry], {
     maxBuffer: 20 * 1024 * 1024
   })
   if (result.status !== 0)
@@ -105,7 +115,12 @@ const validateBundleNetworkLiterals = archive => {
   }
 }
 
-const validateBrowserManifest = (archive, browser, version) => {
+const validateBrowserManifest = (
+  archive,
+  browser,
+  version,
+  generatedIconManifest
+) => {
   const manifest = JSON.parse(unzipEntry(archive, 'manifest.json'))
   if (manifest.version !== version)
     throw new Error(`${browser} manifest version does not match ${version}.`)
@@ -136,9 +151,19 @@ const validateBrowserManifest = (archive, browser, version) => {
     if (!entries.includes(`_locales/${locale}/messages.json`))
       throw new Error(`${browser} is missing locale ${locale}.`)
   }
-  for (const size of [16, 20, 24, 32, 48, 128]) {
-    if (!entries.includes(`icon/${size}.png`))
+  for (const size of [16, 20, 24, 32, 48, 64, 128]) {
+    const entry = `icon/${size}.png`
+    if (!entries.includes(entry))
       throw new Error(`${browser} is missing icon ${size}.`)
+    const expectedSha256 = generatedIconManifest.icons?.[size]?.sha256
+    const actualSha256 = createHash('sha256')
+      .update(unzipEntryBuffer(archive, entry))
+      .digest('hex')
+    if (actualSha256 !== expectedSha256) {
+      throw new Error(
+        `${browser} icon ${size} differs from the canonical generated asset.`
+      )
+    }
   }
 }
 
@@ -157,6 +182,9 @@ export const parseChecksums = content =>
 
 export const guardReleaseDirectory = async ({ root, directory }) => {
   const product = await getPackage(root)
+  const generatedIconManifest = await readJson(
+    resolve(root, 'scripts/brand/icons.generated.json')
+  )
   const expectedArchives = artifactNames(product.version)
   const expectedFiles = [
     ...expectedArchives,
@@ -232,14 +260,16 @@ export const guardReleaseDirectory = async ({ root, directory }) => {
   validateBrowserManifest(
     resolve(directory, expectedArchives[0]),
     'chrome',
-    product.version
+    product.version,
+    generatedIconManifest
   )
   validateBundleNetworkLiterals(resolve(directory, expectedArchives[0]))
   validateBundleNetworkLiterals(resolve(directory, expectedArchives[1]))
   validateBrowserManifest(
     resolve(directory, expectedArchives[1]),
     'firefox',
-    product.version
+    product.version,
+    generatedIconManifest
   )
   const sourceEntries = listArchive(resolve(directory, expectedArchives[2]))
   for (const required of [

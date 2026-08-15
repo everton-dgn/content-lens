@@ -41,7 +41,7 @@ export const brandIconPalette: BrandMarkPalette = {
   background: '#0B1220',
   decision: '#FFFFFF',
   frame: '#FFFFFF',
-  signal: '#9FBCFF'
+  signal: '#FF7A80'
 }
 
 const createBrandMarkMarkup = (palette: BrandMarkPalette): string => {

@@ -291,8 +291,10 @@ The public CI runs the same design-system guard through `pnpm ci:local`.
 
 The approved Convergent control geometry lives in `src/ui/brand/mark.ts`.
 `Brand`, the lockup and every PNG under `public/icon/` derive from that 32 by 32
-source. Use the mark at 16, 20, 24, 32, 48 or 128 CSS px. Preserve its aspect
-ratio, shape order and clear space. Do not rotate it, recolor individual
+source. Use the mark at 16, 20, 24, 32, 48, 64 or 128 CSS px. Preserve its
+aspect ratio, shape order and clear space. Do not rotate it, recolor individual
 signals, place copy inside the frame or use it as a status/action glyph.
 
-`mark.ts` is the runtime source for component lockups and packaged icons.
+`mark.ts` is the runtime source for component lockups and packaged icons. Run
+`pnpm brand:icons` after an approved palette or geometry change. The public
+guard runs `pnpm brand:icons:check` to reject stale generated PNGs.

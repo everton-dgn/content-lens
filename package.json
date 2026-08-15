@@ -8,6 +8,8 @@
   "scripts": {
     "benchmark": "vitest run --disableConsoleIntercept --config vitest.benchmark.config.ts",
     "benchmark:phase0": "node tests/performance/run-phase0-benchmark.mjs",
+    "brand:icons": "node scripts/brand/generate-icons.mjs",
+    "brand:icons:check": "node scripts/brand/generate-icons.mjs --check",
     "build:adapter-e2e:chrome": "wxt build -b chrome --config wxt.adapter-e2e.config.ts",
     "build:adapter-e2e:firefox": "wxt build -b firefox --config wxt.adapter-e2e.config.ts",
     "build:chrome": "wxt build -b chrome && pnpm bundle:check:chrome",
@@ -22,7 +24,7 @@
     "dev:firefox": "wxt -b firefox",
     "docs:check": "node scripts/check-docs.mjs",
     "format": "biome check --write --no-errors-on-unmatched .",
-    "guard:public": "pnpm docs:check && pnpm design-system:check && pnpm lint && node scripts/ci/public-guard.ts",
+    "guard:public": "pnpm docs:check && pnpm design-system:check && pnpm brand:icons:check && pnpm lint && node scripts/ci/public-guard.ts",
     "i18n:check": "node src/i18n/generate-message-keys.ts --check",
     "i18n:generate": "node src/i18n/generate-message-keys.ts",
     "lint": "biome check --no-errors-on-unmatched .",

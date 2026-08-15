@@ -62,7 +62,8 @@ Visual preference alone does not justify a variant or component.
 The accepted visual direction is Ember Gate. Generated layouts preserve one
 clear reading rail, use a gate bar only for a real decision or operational
 boundary, keep one primary action visible and reserve monospace text for data.
-The logo geometry and its two approved colors remain frozen.
+The logo geometry and approved palette remain frozen: a white frame and
+decision bar, a red signal and the dark packaged-icon background.
 
 `Surface elevation="raised"` isolates one focal group without encoding status.
 `ToggleField` remains a shared component row when capabilities or content

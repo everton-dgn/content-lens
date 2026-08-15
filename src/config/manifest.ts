@@ -16,6 +16,7 @@ export const brandIconPaths = {
   24: 'icon/24.png',
   32: 'icon/32.png',
   48: 'icon/48.png',
+  64: 'icon/64.png',
   128: 'icon/128.png'
 } as const
 

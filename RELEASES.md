@@ -24,10 +24,14 @@ tag targets the version commit after its normal merge has been verified. A
 concurrent `main` advance therefore stays outside that release and enters the
 next Semantic Versioning calculation.
 
-Browser-store submission remains a separate operation because it uses protected
-store environments and external publisher credentials. It downloads the exact
-assets from the stable GitHub Release, verifies them and freezes them for the
-store jobs without rebuilding.
+Browser-store submission runs after the stable GitHub Release when either
+`CHROME_STORE_PUBLISHING_ENABLED` or `FIREFOX_STORE_PUBLISHING_ENABLED` is
+`true`. Each repository variable controls only its matching store job. The same
+protected workflow remains manually dispatchable for recovery. It downloads the
+exact release assets, verifies them and freezes them for the enabled store jobs
+without rebuilding. Chrome authentication uses a short-lived Google token
+issued from the protected `main` GitHub OIDC identity; AMO credentials stay in
+its protected environment.
 
 ## Versioning
 

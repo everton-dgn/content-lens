@@ -1,4 +1,4 @@
-import { createHmac, createSign, randomUUID } from 'node:crypto'
+import { createHmac, randomUUID } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -6,6 +6,12 @@ import { pathToFileURL } from 'node:url'
 import { parseArgs, stableJson } from './lib.mjs'
 
 const encode = value => Buffer.from(value).toString('base64url')
+
+const requireText = (value, name) => {
+  if (typeof value !== 'string' || value.trim() === '')
+    throw new Error(`${name} is required.`)
+  return value
+}
 
 export const createAmoJwt = ({
   issuer,
@@ -25,49 +31,12 @@ export const createAmoJwt = ({
   return `${input}.${createHmac('sha256', keyMaterial).update(input).digest('base64url')}`
 }
 
-export const createGoogleAssertion = ({
-  email,
-  privateKey,
-  now = Math.floor(Date.now() / 1000)
-}) => {
-  const header = encode(JSON.stringify({ alg: 'RS256', typ: 'JWT' }))
-  const payload = encode(
-    JSON.stringify({
-      iss: email,
-      scope: 'https://www.googleapis.com/auth/chromewebstore',
-      aud: 'https://oauth2.googleapis.com/token',
-      iat: now,
-      exp: now + 3600
-    })
-  )
-  const input = `${header}.${payload}`
-  const signer = createSign('RSA-SHA256')
-  signer.update(input)
-  signer.end()
-  return `${input}.${signer.sign(privateKey, 'base64url')}`
-}
-
 const fetchJson = async (url, options) => {
   const response = await fetch(url, options)
   const body = await response.json().catch(() => null)
   if (!response.ok)
     throw new Error(`Store status request failed with HTTP ${response.status}.`)
   return body
-}
-
-const googleAccessToken = async ({ email, privateKey }) => {
-  const assertion = createGoogleAssertion({ email, privateKey })
-  const response = await fetchJson('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion
-    })
-  })
-  if (typeof response?.access_token !== 'string')
-    throw new Error('Google token response omitted access_token.')
-  return response.access_token
 }
 
 const collectState = (
@@ -131,20 +100,24 @@ export const decideStoreStatus = ({ store, version, response }) => {
   }
 }
 
-const fetchChromeStatus = async ({
-  publisherId,
-  itemId,
-  email,
-  privateKey
-}) => {
-  const accessToken = await googleAccessToken({ email, privateKey })
+const fetchChromeStatus = async ({ publisherId, itemId, accessToken }) => {
+  requireText(publisherId, 'Chrome publisher ID')
+  requireText(itemId, 'Chrome extension ID')
+  requireText(accessToken, 'Chrome access token')
   return fetchJson(
     `https://chromewebstore.googleapis.com/v2/publishers/${encodeURIComponent(publisherId)}/items/${encodeURIComponent(itemId)}:fetchStatus`,
-    { headers: { authorization: `Bearer ${accessToken}` } }
+    {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+        'x-goog-api-version': '2'
+      }
+    }
   )
 }
 
 const fetchAmoStatus = async ({ extensionId, jwt }) => {
+  requireText(extensionId, 'AMO extension ID')
+  requireText(jwt, 'AMO JWT')
   const pages = []
   const initial = new URL(
     `https://addons.mozilla.org/api/v5/addons/addon/${encodeURIComponent(extensionId)}/versions/`
@@ -176,19 +149,15 @@ export const queryStoreStatus = async ({
       ? await fetchChromeStatus({
           publisherId: env.CWS_PUBLISHER_ID,
           itemId: env.CWS_EXTENSION_ID,
-          email: env.CWS_SERVICE_ACCOUNT_EMAIL,
-          privateKey: env.CWS_SERVICE_ACCOUNT_PRIVATE_KEY?.replaceAll(
-            '\\n',
-            '\n'
-          )
+          accessToken: env.CWS_ACCESS_TOKEN
         })
       : await fetchAmoStatus({
           extensionId: env.AMO_EXTENSION_ID,
           jwt:
             env.AMO_JWT ||
             createAmoJwt({
-              issuer: env.AMO_JWT_ISSUER,
-              keyMaterial: env.AMO_JWT_SECRET
+              issuer: requireText(env.AMO_JWT_ISSUER, 'AMO JWT issuer'),
+              keyMaterial: requireText(env.AMO_JWT_SECRET, 'AMO JWT secret')
             })
         })
   return decideStoreStatus({ store, version, response })

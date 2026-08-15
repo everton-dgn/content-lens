@@ -13,6 +13,7 @@ This model covers the browser extension, supported platform pages, local profile
 - Extension permissions.
 - Profile integrity and availability.
 - Model, dataset and extension-package integrity.
+- Browser-store publisher authority.
 - User trust in hide, allow and native-feedback decisions.
 - Integrity of reviewable drafts and operation status.
 
@@ -152,6 +153,12 @@ Controls:
 - Minimal dependencies and permissions.
 - SBOM and release integrity checks.
 - Model manifest and digest verification.
+- Store jobs accept only verified assets from the exact stable GitHub Release.
+- Chrome uses short-lived GitHub OIDC credentials restricted to this repository
+  and protected `main`, with no service-account private key.
+- AMO publisher credentials stay inside the protected store environment.
+- Automatic store submission stays disabled until the first manually submitted
+  versions have completed store review.
 
 ### Resource exhaustion
 

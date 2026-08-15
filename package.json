@@ -30,6 +30,7 @@
     "release:guard": "node scripts/release/guard-artifact.mjs",
     "release:package": "node scripts/release/package.mjs",
     "release:status": "node scripts/release/store-status.mjs",
+    "release:submit:chrome": "node scripts/release/submit-chrome.mjs",
     "release:verify": "node scripts/release/verify-provenance.mjs",
     "scan:secrets": "kingfisher scan . --git-history none --no-validate --redact --exclude node_modules --exclude test-results --exclude playwright-report --exclude coverage --exclude .output --exclude .release",
     "smoke:youtube-live": "node scripts/evidence/youtube-live-smoke.mjs",

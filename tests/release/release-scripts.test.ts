@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   DEFAULT_CHUNK_LIMIT_BYTES,
@@ -15,6 +15,39 @@ import {
 import { findUnreviewedNetworkLiterals } from '../../scripts/release/guard-artifact.mjs'
 import { artifactNames, validateVersion } from '../../scripts/release/lib.mjs'
 import { decideStoreStatus } from '../../scripts/release/store-status.mjs'
+import { submitChromePackage } from '../../scripts/release/submit-chrome.mjs'
+
+const chromeItemUrl =
+  'https://chromewebstore.googleapis.com/v2/publishers/publisher-id/items/extension-id'
+const chromeStatusUrl = `${chromeItemUrl}:fetchStatus`
+const chromeUploadUrl =
+  'https://chromewebstore.googleapis.com/upload/v2/publishers/publisher-id/items/extension-id:upload'
+
+const chromeSubmission = (
+  responses: readonly unknown[],
+  options: { pollAttempts?: number; pollIntervalMs?: number } = {}
+) => {
+  const queue = [...responses]
+  const fetchImpl = vi.fn(
+    async (_url: string | URL, _options?: RequestInit) =>
+      new Response(JSON.stringify(queue.shift()), {
+        headers: { 'content-type': 'application/json' },
+        status: 200
+      })
+  )
+  const waitImpl = vi.fn(async (_milliseconds: number) => undefined)
+  const submit = () =>
+    submitChromePackage({
+      publisherId: 'publisher-id',
+      extensionId: 'extension-id',
+      zipPath: resolve('tests/fixtures/profiles/rule-conflict.json'),
+      accessToken: 'short-lived-token',
+      fetchImpl,
+      waitImpl,
+      ...options
+    })
+  return { fetchImpl, submit, waitImpl }
+}
 
 describe('release evidence contracts', () => {
   it('rejects JavaScript chunks above the production bundle limit', () => {
@@ -129,6 +162,147 @@ describe('release evidence contracts', () => {
       decideStoreStatus({ store: 'chrome', version: '1.2.3', response })
         .decision
     ).toBe(decision)
+  })
+
+  it('submits the verified Chrome ZIP with a short-lived access token', async () => {
+    const responses = [
+      { itemState: 'OK' },
+      { uploadState: 'SUCCEEDED' },
+      { submittedItemRevisionStatus: { state: 'PENDING_REVIEW' } }
+    ]
+    const fetchImpl = vi.fn(
+      async (_url: string | URL, _options?: RequestInit) =>
+        new Response(JSON.stringify(responses.shift()), {
+          headers: { 'content-type': 'application/json' },
+          status: 200
+        })
+    )
+
+    await expect(
+      submitChromePackage({
+        publisherId: 'publisher-id',
+        extensionId: 'extension-id',
+        zipPath: resolve('tests/fixtures/profiles/rule-conflict.json'),
+        accessToken: 'short-lived-token',
+        fetchImpl
+      })
+    ).resolves.toEqual({
+      extensionId: 'extension-id',
+      publisherId: 'publisher-id',
+      publishType: 'STAGED_PUBLISH',
+      status: 'submitted'
+    })
+
+    expect(fetchImpl).toHaveBeenCalledTimes(3)
+    expect(fetchImpl.mock.calls.map(([url]) => url)).toEqual([
+      'https://chromewebstore.googleapis.com/v2/publishers/publisher-id/items/extension-id:fetchStatus',
+      'https://chromewebstore.googleapis.com/upload/v2/publishers/publisher-id/items/extension-id:upload',
+      'https://chromewebstore.googleapis.com/v2/publishers/publisher-id/items/extension-id:publish'
+    ])
+    expect(fetchImpl.mock.calls[0]?.[1]?.headers).toEqual({
+      authorization: 'Bearer short-lived-token',
+      'x-goog-api-version': '2'
+    })
+    expect(JSON.parse(String(fetchImpl.mock.calls[2]?.[1]?.body))).toEqual({
+      blockOnWarnings: true,
+      publishType: 'STAGED_PUBLISH'
+    })
+  })
+
+  it('publishes only after an asynchronous Chrome upload succeeds', async () => {
+    const { fetchImpl, submit, waitImpl } = chromeSubmission(
+      [
+        { itemState: 'OK' },
+        { uploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'SUCCEEDED' },
+        { submittedItemRevisionStatus: { state: 'PENDING_REVIEW' } }
+      ],
+      { pollIntervalMs: 10 }
+    )
+
+    await expect(submit()).resolves.toEqual({
+      extensionId: 'extension-id',
+      publisherId: 'publisher-id',
+      publishType: 'STAGED_PUBLISH',
+      status: 'submitted'
+    })
+
+    expect(waitImpl.mock.calls).toEqual([[10], [10]])
+    expect(fetchImpl.mock.calls.map(([url]) => url)).toEqual([
+      chromeStatusUrl,
+      chromeUploadUrl,
+      chromeStatusUrl,
+      chromeStatusUrl,
+      `${chromeItemUrl}:publish`
+    ])
+  })
+
+  it.each(['REJECTED', 'CANCELLED'] as const)(
+    'rejects a Chrome publication reported as %s',
+    async state => {
+      const { fetchImpl, submit } = chromeSubmission([
+        { itemState: 'OK' },
+        { uploadState: 'SUCCEEDED' },
+        { state }
+      ])
+
+      await expect(submit()).rejects.toThrow(
+        `Chrome Web Store publication ended in terminal state ${state}.`
+      )
+      expect(fetchImpl).toHaveBeenCalledTimes(3)
+    }
+  )
+
+  it.each([
+    ['FAILED', 'Chrome Web Store rejected the uploaded package.'],
+    [
+      'NOT_FOUND',
+      'Chrome Web Store returned the unexpected upload state NOT_FOUND.'
+    ]
+  ] as const)(
+    'never publishes an asynchronous Chrome upload reported as %s',
+    async (state, message) => {
+      const { fetchImpl, submit } = chromeSubmission([
+        { itemState: 'OK' },
+        { uploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: state }
+      ])
+
+      await expect(submit()).rejects.toThrow(message)
+      expect(fetchImpl).toHaveBeenCalledTimes(3)
+    }
+  )
+
+  it('stops an asynchronous Chrome upload that never completes', async () => {
+    const { fetchImpl, submit, waitImpl } = chromeSubmission(
+      [
+        { itemState: 'OK' },
+        { uploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'IN_PROGRESS' }
+      ],
+      { pollAttempts: 2 }
+    )
+
+    await expect(submit()).rejects.toThrow(
+      'Chrome Web Store upload was still in progress after 2 status checks.'
+    )
+    expect(waitImpl).toHaveBeenCalledTimes(2)
+    expect(fetchImpl).toHaveBeenCalledTimes(4)
+  })
+
+  it('rejects a refused Chrome upload without polling', async () => {
+    const { fetchImpl, submit, waitImpl } = chromeSubmission([
+      { itemState: 'OK' },
+      { uploadState: 'FAILED' }
+    ])
+
+    await expect(submit()).rejects.toThrow(
+      'Chrome Web Store did not accept the uploaded package.'
+    )
+    expect(waitImpl).not.toHaveBeenCalled()
+    expect(fetchImpl).toHaveBeenCalledTimes(2)
   })
 
   it('keeps the release-manifest schema strict and versioned', async () => {

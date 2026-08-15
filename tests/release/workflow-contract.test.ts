@@ -104,6 +104,13 @@ describe('release workflow contracts', () => {
 
   it('uses protected, separate store environments and never rebuilds', async () => {
     const source = await workflow('publish-extension.yml')
+    const automaticRelease = await workflow('auto-release.yml')
+    const chromeJob = source.slice(
+      source.indexOf('  chrome:'),
+      source.indexOf('  amo:')
+    )
+    const amoJob = source.slice(source.indexOf('  amo:'))
+    expect(source).toContain('workflow_call:')
     expect(source).toContain('environment: chrome-web-store')
     expect(source).toContain('environment: amo')
     expect(source).toContain('pnpm release:status -- --store chrome')
@@ -114,6 +121,55 @@ describe('release workflow contracts', () => {
     expect(source).not.toContain('run-id:')
     expect(source).not.toMatch(/\bwxt (?:build|zip)\b/u)
     expect(source).not.toContain('--chrome-cancel-pending')
+    expect(source).toContain('google-github-actions/auth@')
+    expect(source).toContain('id-token: write')
+    expect(source).toContain(`\${{ vars.CWS_WORKLOAD_IDENTITY_PROVIDER }}`)
+    expect(source).toContain(`\${{ vars.CWS_SERVICE_ACCOUNT_EMAIL }}`)
+    expect(source).toContain(`\${{ steps.google-auth.outputs.access_token }}`)
+    expect(source).toContain('pnpm release:submit:chrome')
+    expect(source).not.toContain('CWS_SERVICE_ACCOUNT_PRIVATE_KEY')
+    expect(automaticRelease).toContain(
+      'uses: ./.github/workflows/publish-extension.yml'
+    )
+    expect(automaticRelease).toContain(
+      "vars.CHROME_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(automaticRelease).toContain(
+      "vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(automaticRelease).not.toContain(
+      "vars.STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(chromeJob).toContain(
+      "if: vars.CHROME_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(chromeJob).not.toContain('FIREFOX_STORE_PUBLISHING_ENABLED')
+    expect(amoJob).toContain(
+      "if: vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(amoJob).not.toContain('CHROME_STORE_PUBLISHING_ENABLED')
+    expect(automaticRelease).toContain(
+      `version: \${{ needs.version.outputs.version }}`
+    )
+    expect(automaticRelease).not.toContain('secrets: inherit')
+  })
+
+  it('validates every store decision before it reaches the job output', async () => {
+    const source = await workflow('publish-extension.yml')
+    const chromeJob = source.slice(
+      source.indexOf('  chrome:'),
+      source.indexOf('  amo:')
+    )
+    const amoJob = source.slice(source.indexOf('  amo:'))
+
+    for (const job of [chromeJob, amoJob]) {
+      expect(job).toContain('set -euo pipefail')
+      expect(job).toContain('decision="$(jq')
+      expect(job).toContain("jq -r '.decision' store-status.json")
+      expect(job).toContain('already-present|blocked|eligible) ;;')
+      expect(job).toContain('echo "decision=$decision" >> "$GITHUB_OUTPUT"')
+      expect(job).not.toContain('echo "decision=$(jq')
+    }
   })
 
   it('audits egress before store credentials enter either publishing job', async () => {

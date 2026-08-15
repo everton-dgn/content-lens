@@ -1,6 +1,6 @@
 {
   "name": "content-lens",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "A local-first browser extension for intentional content filtering.",
   "license": "MIT",

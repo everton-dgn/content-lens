@@ -4,6 +4,15 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.3 - 2026-08-15
+
+### Fixed
+
+- grant store permissions
+- reject terminal publish states
+- harden store publishing
+- split store publishing gates
+
 ## 1.0.2 - 2026-08-14
 
 ### Fixed

@@ -316,6 +316,10 @@ jobs:
       needs.publish.result == 'success' &&
       (vars.CHROME_STORE_PUBLISHING_ENABLED == 'true' ||
        vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true')
+    permissions:
+      attestations: read
+      contents: read
+      id-token: write
     uses: ./.github/workflows/publish-extension.yml
     with:
       version: ${{ needs.version.outputs.version }}

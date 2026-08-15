@@ -4,6 +4,9 @@ export interface ChromeSubmissionOptions {
   zipPath: string
   accessToken: string
   fetchImpl?: (url: string | URL, options?: RequestInit) => Promise<Response>
+  waitImpl?: (milliseconds: number) => Promise<unknown>
+  pollAttempts?: number
+  pollIntervalMs?: number
 }
 
 export interface ChromeSubmissionResult {

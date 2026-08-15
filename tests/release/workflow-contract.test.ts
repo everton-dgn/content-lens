@@ -151,6 +151,25 @@ describe('release workflow contracts', () => {
     expect(automaticRelease).toContain(
       `version: \${{ needs.version.outputs.version }}`
     )
+    expect(automaticRelease).not.toContain('secrets: inherit')
+  })
+
+  it('validates every store decision before it reaches the job output', async () => {
+    const source = await workflow('publish-extension.yml')
+    const chromeJob = source.slice(
+      source.indexOf('  chrome:'),
+      source.indexOf('  amo:')
+    )
+    const amoJob = source.slice(source.indexOf('  amo:'))
+
+    for (const job of [chromeJob, amoJob]) {
+      expect(job).toContain('set -euo pipefail')
+      expect(job).toContain('decision="$(jq')
+      expect(job).toContain("jq -r '.decision' store-status.json")
+      expect(job).toContain('already-present|blocked|eligible) ;;')
+      expect(job).toContain('echo "decision=$decision" >> "$GITHUB_OUTPUT"')
+      expect(job).not.toContain('echo "decision=$(jq')
+    }
   })
 
   it('audits egress before store credentials enter either publishing job', async () => {

@@ -319,7 +319,6 @@ jobs:
     uses: ./.github/workflows/publish-extension.yml
     with:
       version: ${{ needs.version.outputs.version }}
-    secrets: inherit
 
   continuation:
     name: Continue queued stable releases

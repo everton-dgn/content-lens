@@ -143,8 +143,17 @@ jobs:
           CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
           CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
         run: |
+          set -euo pipefail
           pnpm release:status -- --store chrome --version "$RELEASE_VERSION" > store-status.json
-          echo "decision=$(jq -r '.decision' store-status.json)" >> "$GITHUB_OUTPUT"
+          decision="$(jq -r '.decision' store-status.json)"
+          case "$decision" in
+            already-present|blocked|eligible) ;;
+            *)
+              echo "Unexpected Chrome store decision: $decision" >&2
+              exit 1
+              ;;
+          esac
+          echo "decision=$decision" >> "$GITHUB_OUTPUT"
 
       - name: Submit staged Chrome package
         if: steps.status.outputs.decision == 'eligible'
@@ -220,8 +229,17 @@ jobs:
           AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
           AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |
+          set -euo pipefail
           pnpm release:status -- --store amo --version "$RELEASE_VERSION" > store-status.json
-          echo "decision=$(jq -r '.decision' store-status.json)" >> "$GITHUB_OUTPUT"
+          decision="$(jq -r '.decision' store-status.json)"
+          case "$decision" in
+            already-present|blocked|eligible) ;;
+            *)
+              echo "Unexpected AMO decision: $decision" >&2
+              exit 1
+              ;;
+          esac
+          echo "decision=$decision" >> "$GITHUB_OUTPUT"
 
       - name: Submit listed Firefox package
         if: steps.status.outputs.decision == 'eligible'

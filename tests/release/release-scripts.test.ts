@@ -17,6 +17,38 @@ import { artifactNames, validateVersion } from '../../scripts/release/lib.mjs'
 import { decideStoreStatus } from '../../scripts/release/store-status.mjs'
 import { submitChromePackage } from '../../scripts/release/submit-chrome.mjs'
 
+const chromeItemUrl =
+  'https://chromewebstore.googleapis.com/v2/publishers/publisher-id/items/extension-id'
+const chromeStatusUrl = `${chromeItemUrl}:fetchStatus`
+const chromeUploadUrl =
+  'https://chromewebstore.googleapis.com/upload/v2/publishers/publisher-id/items/extension-id:upload'
+
+const chromeSubmission = (
+  responses: readonly unknown[],
+  options: { pollAttempts?: number; pollIntervalMs?: number } = {}
+) => {
+  const queue = [...responses]
+  const fetchImpl = vi.fn(
+    async (_url: string | URL, _options?: RequestInit) =>
+      new Response(JSON.stringify(queue.shift()), {
+        headers: { 'content-type': 'application/json' },
+        status: 200
+      })
+  )
+  const waitImpl = vi.fn(async (_milliseconds: number) => undefined)
+  const submit = () =>
+    submitChromePackage({
+      publisherId: 'publisher-id',
+      extensionId: 'extension-id',
+      zipPath: resolve('tests/fixtures/profiles/rule-conflict.json'),
+      accessToken: 'short-lived-token',
+      fetchImpl,
+      waitImpl,
+      ...options
+    })
+  return { fetchImpl, submit, waitImpl }
+}
+
 describe('release evidence contracts', () => {
   it('rejects JavaScript chunks above the production bundle limit', () => {
     const chunks = [
@@ -175,6 +207,86 @@ describe('release evidence contracts', () => {
       blockOnWarnings: true,
       publishType: 'STAGED_PUBLISH'
     })
+  })
+
+  it('publishes only after an asynchronous Chrome upload succeeds', async () => {
+    const { fetchImpl, submit, waitImpl } = chromeSubmission(
+      [
+        { itemState: 'OK' },
+        { uploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'SUCCEEDED' },
+        { submittedItemRevisionStatus: { state: 'PENDING_REVIEW' } }
+      ],
+      { pollIntervalMs: 10 }
+    )
+
+    await expect(submit()).resolves.toEqual({
+      extensionId: 'extension-id',
+      publisherId: 'publisher-id',
+      publishType: 'STAGED_PUBLISH',
+      status: 'submitted'
+    })
+
+    expect(waitImpl.mock.calls).toEqual([[10], [10]])
+    expect(fetchImpl.mock.calls.map(([url]) => url)).toEqual([
+      chromeStatusUrl,
+      chromeUploadUrl,
+      chromeStatusUrl,
+      chromeStatusUrl,
+      `${chromeItemUrl}:publish`
+    ])
+  })
+
+  it.each([
+    ['FAILED', 'Chrome Web Store rejected the uploaded package.'],
+    [
+      'NOT_FOUND',
+      'Chrome Web Store returned the unexpected upload state NOT_FOUND.'
+    ]
+  ] as const)(
+    'never publishes an asynchronous Chrome upload reported as %s',
+    async (state, message) => {
+      const { fetchImpl, submit } = chromeSubmission([
+        { itemState: 'OK' },
+        { uploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: state }
+      ])
+
+      await expect(submit()).rejects.toThrow(message)
+      expect(fetchImpl).toHaveBeenCalledTimes(3)
+    }
+  )
+
+  it('stops an asynchronous Chrome upload that never completes', async () => {
+    const { fetchImpl, submit, waitImpl } = chromeSubmission(
+      [
+        { itemState: 'OK' },
+        { uploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'IN_PROGRESS' },
+        { lastAsyncUploadState: 'IN_PROGRESS' }
+      ],
+      { pollAttempts: 2 }
+    )
+
+    await expect(submit()).rejects.toThrow(
+      'Chrome Web Store upload was still in progress after 2 status checks.'
+    )
+    expect(waitImpl).toHaveBeenCalledTimes(2)
+    expect(fetchImpl).toHaveBeenCalledTimes(4)
+  })
+
+  it('rejects a refused Chrome upload without polling', async () => {
+    const { fetchImpl, submit, waitImpl } = chromeSubmission([
+      { itemState: 'OK' },
+      { uploadState: 'FAILED' }
+    ])
+
+    await expect(submit()).rejects.toThrow(
+      'Chrome Web Store did not accept the uploaded package.'
+    )
+    expect(waitImpl).not.toHaveBeenCalled()
+    expect(fetchImpl).toHaveBeenCalledTimes(2)
   })
 
   it('keeps the release-manifest schema strict and versioned', async () => {

@@ -4,11 +4,19 @@ import { pathToFileURL } from 'node:url'
 
 import { assertRegularFile, parseArgs, stableJson } from './lib.mjs'
 
+const UPLOAD_POLL_ATTEMPTS = 30
+const UPLOAD_POLL_INTERVAL_MS = 10_000
+
 const requireText = (value, name) => {
   if (typeof value !== 'string' || value.trim() === '')
     throw new Error(`${name} is required.`)
   return value
 }
+
+const waitFor = milliseconds =>
+  new Promise(done => {
+    setTimeout(done, milliseconds)
+  })
 
 const requestJson = async (fetchImpl, url, options) => {
   const response = await fetchImpl(url, options)
@@ -20,12 +28,40 @@ const requestJson = async (fetchImpl, url, options) => {
   return body
 }
 
+const awaitAsyncUpload = async ({
+  fetchImpl,
+  statusUrl,
+  headers,
+  waitImpl,
+  pollAttempts,
+  pollIntervalMs
+}) => {
+  for (let attempt = 0; attempt < pollAttempts; attempt += 1) {
+    await waitImpl(pollIntervalMs)
+    const status = await requestJson(fetchImpl, statusUrl, { headers })
+    const state = status?.lastAsyncUploadState
+    if (state === 'SUCCEEDED') return
+    if (state === 'FAILED')
+      throw new Error('Chrome Web Store rejected the uploaded package.')
+    if (state !== 'IN_PROGRESS')
+      throw new Error(
+        `Chrome Web Store returned the unexpected upload state ${state ?? 'UNKNOWN'}.`
+      )
+  }
+  throw new Error(
+    `Chrome Web Store upload was still in progress after ${pollAttempts} status checks.`
+  )
+}
+
 export const submitChromePackage = async ({
   publisherId,
   extensionId,
   zipPath,
   accessToken,
-  fetchImpl = fetch
+  fetchImpl = fetch,
+  waitImpl = waitFor,
+  pollAttempts = UPLOAD_POLL_ATTEMPTS,
+  pollIntervalMs = UPLOAD_POLL_INTERVAL_MS
 }) => {
   requireText(publisherId, 'Chrome publisher ID')
   requireText(extensionId, 'Chrome extension ID')
@@ -39,11 +75,9 @@ export const submitChromePackage = async ({
     'x-goog-api-version': '2'
   }
 
-  await requestJson(
-    fetchImpl,
-    `https://chromewebstore.googleapis.com/v2/${name}:fetchStatus`,
-    { headers }
-  )
+  const statusUrl = `https://chromewebstore.googleapis.com/v2/${name}:fetchStatus`
+
+  await requestJson(fetchImpl, statusUrl, { headers })
 
   const upload = await requestJson(
     fetchImpl,
@@ -54,7 +88,16 @@ export const submitChromePackage = async ({
       body: await readFile(zipPath)
     }
   )
-  if (upload?.uploadState !== 'SUCCEEDED')
+  if (upload?.uploadState === 'IN_PROGRESS')
+    await awaitAsyncUpload({
+      fetchImpl,
+      statusUrl,
+      headers,
+      waitImpl,
+      pollAttempts,
+      pollIntervalMs
+    })
+  else if (upload?.uploadState !== 'SUCCEEDED')
     throw new Error('Chrome Web Store did not accept the uploaded package.')
 
   const publish = await requestJson(

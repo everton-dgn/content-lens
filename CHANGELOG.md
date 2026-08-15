@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.4 - 2026-08-15
+
+### Fixed
+
+- align store icons with theme
+
 ## 1.0.3 - 2026-08-15
 
 ### Fixed

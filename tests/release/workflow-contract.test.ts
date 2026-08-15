@@ -154,6 +154,21 @@ describe('release workflow contracts', () => {
     expect(automaticRelease).not.toContain('secrets: inherit')
   })
 
+  it('grants the reusable store workflow only its required permissions', async () => {
+    const source = await workflow('auto-release.yml')
+    const storesJob = source.slice(
+      source.indexOf('  stores:'),
+      source.indexOf('  continuation:')
+    )
+
+    expect(storesJob).toContain('permissions:')
+    expect(storesJob).toContain('attestations: read')
+    expect(storesJob).toContain('contents: read')
+    expect(storesJob).toContain('id-token: write')
+    expect(storesJob).not.toContain('attestations: write')
+    expect(storesJob).not.toContain('contents: write')
+  })
+
   it('validates every store decision before it reaches the job output', async () => {
     const source = await workflow('publish-extension.yml')
     const chromeJob = source.slice(

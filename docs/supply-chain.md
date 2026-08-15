@@ -83,10 +83,21 @@ The implementation uses `.github/workflows/auto-release.yml` after a successful
 request, create the annotated tag, build the Chrome, Firefox and sources ZIPs,
 attest their digests and SBOM with GitHub OIDC, and compare an independent
 rebuild byte for byte. A separate verification job recalculates every digest
-before publishing the stable GitHub Release. `.github/workflows/publish-extension.yml`
-downloads the permanent assets from that exact stable GitHub Release, verifies
-the complete set, freezes it inside the submission run and submits each
-browser-specific package from a protected store environment without rebuilding.
+before publishing the stable GitHub Release. When
+`STORE_PUBLISHING_ENABLED=true`, `.github/workflows/auto-release.yml` calls
+`.github/workflows/publish-extension.yml` with the released version. The store
+workflow remains manually dispatchable for recovery. It downloads the permanent
+assets from that exact stable GitHub Release, verifies the complete set, freezes
+it inside the submission run and submits each browser-specific package from a
+protected store environment without rebuilding.
+
+Chrome Web Store access has no stored service-account private key. GitHub OIDC
+may impersonate the publisher service account only for
+`everton-dgn/content-lens` on `refs/heads/main`; the job requests a short-lived
+token with only the `chromewebstore` scope. AMO issuer and secret values remain
+limited to the protected `amo` environment. Public extension, publisher,
+service-account and provider identifiers are environment variables rather than
+secrets.
 
 Recovery loads the release orchestrator from protected `main`, verifies the
 exact source CI run, and then checks out that source. Pending version merges are

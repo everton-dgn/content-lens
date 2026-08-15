@@ -1,6 +1,12 @@
 name: Publish extension
 
 on:
+  workflow_call:
+    inputs:
+      version:
+        description: Exact package version without v prefix
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       version:
@@ -77,6 +83,7 @@ jobs:
     permissions:
       attestations: read
       contents: read
+      id-token: write
     env:
       RELEASE_VERSION: ${{ inputs.version }}
     steps:
@@ -90,6 +97,16 @@ jobs:
         with:
           persist-credentials: false
           ref: v${{ inputs.version }}
+
+      - name: Authenticate to Google Cloud without a private key
+        id: google-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          access_token_scopes: https://www.googleapis.com/auth/chromewebstore
+          create_credentials_file: false
+          service_account: ${{ vars.CWS_SERVICE_ACCOUNT_EMAIL }}
+          token_format: access_token
+          workload_identity_provider: ${{ vars.CWS_WORKLOAD_IDENTITY_PROVIDER }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -121,10 +138,9 @@ jobs:
       - name: Query Chrome Web Store before upload
         id: status
         env:
-          CWS_EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
-          CWS_PUBLISHER_ID: ${{ secrets.CWS_PUBLISHER_ID }}
-          CWS_SERVICE_ACCOUNT_EMAIL: ${{ secrets.CWS_SERVICE_ACCOUNT_EMAIL }}
-          CWS_SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.CWS_SERVICE_ACCOUNT_PRIVATE_KEY }}
+          CWS_ACCESS_TOKEN: ${{ steps.google-auth.outputs.access_token }}
+          CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+          CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
         run: |
           pnpm release:status -- --store chrome --version "$RELEASE_VERSION" > store-status.json
           echo "decision=$(jq -r '.decision' store-status.json)" >> "$GITHUB_OUTPUT"
@@ -132,19 +148,14 @@ jobs:
       - name: Submit staged Chrome package
         if: steps.status.outputs.decision == 'eligible'
         env:
-          CWS_EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
-          CWS_PUBLISHER_ID: ${{ secrets.CWS_PUBLISHER_ID }}
-          CWS_SERVICE_ACCOUNT_EMAIL: ${{ secrets.CWS_SERVICE_ACCOUNT_EMAIL }}
-          CWS_SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.CWS_SERVICE_ACCOUNT_PRIVATE_KEY }}
+          CWS_ACCESS_TOKEN: ${{ steps.google-auth.outputs.access_token }}
+          CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+          CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
         run: |
-          pnpm exec wxt submit \
-            --chrome-api-version v2 \
-            --chrome-extension-id "$CWS_EXTENSION_ID" \
-            --chrome-publisher-id "$CWS_PUBLISHER_ID" \
-            --chrome-service-account-client-email "$CWS_SERVICE_ACCOUNT_EMAIL" \
-            --chrome-service-account-private-key "$CWS_SERVICE_ACCOUNT_PRIVATE_KEY" \
-            --chrome-publish-type STAGED_PUBLISH \
-            --chrome-zip "release/content-lens-$RELEASE_VERSION-chrome.zip"
+          pnpm release:submit:chrome -- \
+            --extension-id "$CWS_EXTENSION_ID" \
+            --publisher-id "$CWS_PUBLISHER_ID" \
+            --zip "release/content-lens-$RELEASE_VERSION-chrome.zip"
 
       - name: Record idempotent Chrome completion
         if: steps.status.outputs.decision == 'already-present'
@@ -203,7 +214,7 @@ jobs:
       - name: Query AMO before upload
         id: status
         env:
-          AMO_EXTENSION_ID: ${{ secrets.AMO_EXTENSION_ID }}
+          AMO_EXTENSION_ID: ${{ vars.AMO_EXTENSION_ID }}
           AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
           AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |
@@ -213,7 +224,7 @@ jobs:
       - name: Submit listed Firefox package
         if: steps.status.outputs.decision == 'eligible'
         env:
-          AMO_EXTENSION_ID: ${{ secrets.AMO_EXTENSION_ID }}
+          AMO_EXTENSION_ID: ${{ vars.AMO_EXTENSION_ID }}
           AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
           AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |

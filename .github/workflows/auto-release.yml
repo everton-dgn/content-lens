@@ -306,6 +306,20 @@ jobs:
               --notes-file release-notes.md
           fi
 
+  stores:
+    name: Submit stable release to browser stores
+    needs:
+      - version
+      - publish
+    if: >-
+      needs.version.outputs.publish == 'true' &&
+      needs.publish.result == 'success' &&
+      vars.STORE_PUBLISHING_ENABLED == 'true'
+    uses: ./.github/workflows/publish-extension.yml
+    with:
+      version: ${{ needs.version.outputs.version }}
+    secrets: inherit
+
   continuation:
     name: Continue queued stable releases
     needs:

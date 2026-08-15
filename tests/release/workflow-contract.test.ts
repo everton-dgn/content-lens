@@ -104,6 +104,8 @@ describe('release workflow contracts', () => {
 
   it('uses protected, separate store environments and never rebuilds', async () => {
     const source = await workflow('publish-extension.yml')
+    const automaticRelease = await workflow('auto-release.yml')
+    expect(source).toContain('workflow_call:')
     expect(source).toContain('environment: chrome-web-store')
     expect(source).toContain('environment: amo')
     expect(source).toContain('pnpm release:status -- --store chrome')
@@ -114,6 +116,22 @@ describe('release workflow contracts', () => {
     expect(source).not.toContain('run-id:')
     expect(source).not.toMatch(/\bwxt (?:build|zip)\b/u)
     expect(source).not.toContain('--chrome-cancel-pending')
+    expect(source).toContain('google-github-actions/auth@')
+    expect(source).toContain('id-token: write')
+    expect(source).toContain(`\${{ vars.CWS_WORKLOAD_IDENTITY_PROVIDER }}`)
+    expect(source).toContain(`\${{ vars.CWS_SERVICE_ACCOUNT_EMAIL }}`)
+    expect(source).toContain(`\${{ steps.google-auth.outputs.access_token }}`)
+    expect(source).toContain('pnpm release:submit:chrome')
+    expect(source).not.toContain('CWS_SERVICE_ACCOUNT_PRIVATE_KEY')
+    expect(automaticRelease).toContain(
+      'uses: ./.github/workflows/publish-extension.yml'
+    )
+    expect(automaticRelease).toContain(
+      "vars.STORE_PUBLISHING_ENABLED == 'true'"
+    )
+    expect(automaticRelease).toContain(
+      `version: \${{ needs.version.outputs.version }}`
+    )
   })
 
   it('audits egress before store credentials enter either publishing job', async () => {

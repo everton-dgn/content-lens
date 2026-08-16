@@ -154,6 +154,30 @@ describe('release workflow contracts', () => {
     expect(automaticRelease).not.toContain('secrets: inherit')
   })
 
+  it('installs locked dependencies before verifying store release assets', async () => {
+    const source = await workflow('publish-extension.yml')
+    const verifyJob = source.slice(
+      source.indexOf('  verify:'),
+      source.indexOf('  chrome:')
+    )
+    const setupPnpm = verifyJob.indexOf('- name: Set up pnpm')
+    const installDependencies = verifyJob.indexOf(
+      'run: pnpm install --frozen-lockfile'
+    )
+    const verifyRelease = verifyJob.indexOf(
+      'node scripts/release/verify-provenance.mjs'
+    )
+
+    expect(verifyJob).toContain(
+      'uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86'
+    )
+    expect(verifyJob).toContain('cache: pnpm')
+    expect(verifyJob).toContain('cache-dependency-path: pnpm-lock.yaml')
+    expect(setupPnpm).toBeGreaterThan(-1)
+    expect(installDependencies).toBeGreaterThan(setupPnpm)
+    expect(verifyRelease).toBeGreaterThan(installDependencies)
+  })
+
   it('grants the reusable store workflow only its required permissions', async () => {
     const source = await workflow('auto-release.yml')
     const storesJob = source.slice(

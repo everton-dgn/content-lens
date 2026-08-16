@@ -166,7 +166,7 @@ jobs:
           esac
           echo "decision=$decision" >> "$GITHUB_OUTPUT"
 
-      - name: Submit staged Chrome package
+      - name: Submit Chrome package for automatic publication
         if: steps.status.outputs.decision == 'eligible'
         env:
           CWS_ACCESS_TOKEN: ${{ steps.google-auth.outputs.access_token }}

@@ -189,7 +189,7 @@ describe('release evidence contracts', () => {
     ).resolves.toEqual({
       extensionId: 'extension-id',
       publisherId: 'publisher-id',
-      publishType: 'STAGED_PUBLISH',
+      publishType: 'DEFAULT_PUBLISH',
       status: 'submitted'
     })
 
@@ -205,7 +205,7 @@ describe('release evidence contracts', () => {
     })
     expect(JSON.parse(String(fetchImpl.mock.calls[2]?.[1]?.body))).toEqual({
       blockOnWarnings: true,
-      publishType: 'STAGED_PUBLISH'
+      publishType: 'DEFAULT_PUBLISH'
     })
   })
 
@@ -224,7 +224,7 @@ describe('release evidence contracts', () => {
     await expect(submit()).resolves.toEqual({
       extensionId: 'extension-id',
       publisherId: 'publisher-id',
-      publishType: 'STAGED_PUBLISH',
+      publishType: 'DEFAULT_PUBLISH',
       status: 'submitted'
     })
 

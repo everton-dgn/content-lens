@@ -12,7 +12,7 @@ export interface ChromeSubmissionOptions {
 export interface ChromeSubmissionResult {
   extensionId: string
   publisherId: string
-  publishType: 'STAGED_PUBLISH'
+  publishType: 'DEFAULT_PUBLISH'
   status: 'submitted'
 }
 

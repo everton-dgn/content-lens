@@ -91,7 +91,10 @@ variable gates only its matching store job. The store workflow remains manually
 dispatchable for recovery. It downloads the permanent assets from that exact
 stable GitHub Release, verifies the complete set, freezes it inside the
 submission run and submits each enabled browser-specific package from a
-protected store environment without rebuilding.
+protected store environment without rebuilding. Chrome submissions use
+`DEFAULT_PUBLISH`, so an approved revision becomes public automatically. The
+workflow does not leave an approved Chrome revision waiting for a manual
+dashboard publication.
 
 Chrome Web Store access has no stored service-account private key. GitHub OIDC
 may impersonate the publisher service account only for

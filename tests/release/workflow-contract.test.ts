@@ -127,6 +127,8 @@ describe('release workflow contracts', () => {
     expect(source).toContain(`\${{ vars.CWS_SERVICE_ACCOUNT_EMAIL }}`)
     expect(source).toContain(`\${{ steps.google-auth.outputs.access_token }}`)
     expect(source).toContain('pnpm release:submit:chrome')
+    expect(source).toContain('Submit Chrome package for automatic publication')
+    expect(source).not.toContain('Submit staged Chrome package')
     expect(source).not.toContain('CWS_SERVICE_ACCOUNT_PRIVATE_KEY')
     expect(automaticRelease).toContain(
       'uses: ./.github/workflows/publish-extension.yml'

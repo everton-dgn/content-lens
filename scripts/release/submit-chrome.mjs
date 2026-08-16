@@ -108,7 +108,7 @@ export const submitChromePackage = async ({
       headers: { ...headers, 'content-type': 'application/json' },
       body: JSON.stringify({
         blockOnWarnings: true,
-        publishType: 'STAGED_PUBLISH'
+        publishType: 'DEFAULT_PUBLISH'
       })
     }
   )
@@ -125,7 +125,7 @@ export const submitChromePackage = async ({
   return {
     extensionId,
     publisherId,
-    publishType: 'STAGED_PUBLISH',
+    publishType: 'DEFAULT_PUBLISH',
     status: 'submitted'
   }
 }

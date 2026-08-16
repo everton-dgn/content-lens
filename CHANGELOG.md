@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.5 - 2026-08-16
+
+### Fixed
+
+- automate Chrome publishing
+
 ## 1.0.4 - 2026-08-15
 
 ### Fixed

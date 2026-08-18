@@ -233,6 +233,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh attestation verify "release/content-lens-$RELEASE_VERSION-firefox.zip" --repo "$GITHUB_REPOSITORY"
 
+      # AMO_EXTENSION_ID must be the listing slug or its numeric id. The
+      # submission client below strips the braces from a GUID, so a braced
+      # value reaches addons.mozilla.org unresolvable and fails with a bare
+      # 404. The status script rejects that shape before anything uploads.
       - name: Query AMO before upload
         id: status
         env:

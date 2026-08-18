@@ -14,7 +14,10 @@ import {
 } from '../../scripts/release/generate-sbom.mjs'
 import { findUnreviewedNetworkLiterals } from '../../scripts/release/guard-artifact.mjs'
 import { artifactNames, validateVersion } from '../../scripts/release/lib.mjs'
-import { decideStoreStatus } from '../../scripts/release/store-status.mjs'
+import {
+  decideStoreStatus,
+  requireAmoIdentifier
+} from '../../scripts/release/store-status.mjs'
 import { submitChromePackage } from '../../scripts/release/submit-chrome.mjs'
 
 const chromeItemUrl =
@@ -163,6 +166,24 @@ describe('release evidence contracts', () => {
         .decision
     ).toBe(decision)
   })
+
+  it.each(['contentlens', '3054064', 'content-lens@example.com'] as const)(
+    'accepts an AMO identifier the submission client keeps intact',
+    identifier => {
+      expect(requireAmoIdentifier(identifier)).toBe(identifier)
+    }
+  )
+
+  it.each([
+    '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}',
+    '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e',
+    'b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}'
+  ] as const)(
+    'rejects a braced AMO GUID before any upload runs',
+    identifier => {
+      expect(() => requireAmoIdentifier(identifier)).toThrow(/braced GUID/u)
+    }
+  )
 
   it('submits the verified Chrome ZIP with a short-lived access token', async () => {
     const responses = [

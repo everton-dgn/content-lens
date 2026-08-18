@@ -16,6 +16,7 @@ import { findUnreviewedNetworkLiterals } from '../../scripts/release/guard-artif
 import { artifactNames, validateVersion } from '../../scripts/release/lib.mjs'
 import {
   decideStoreStatus,
+  queryStoreStatus,
   requireAmoIdentifier
 } from '../../scripts/release/store-status.mjs'
 import { submitChromePackage } from '../../scripts/release/submit-chrome.mjs'
@@ -184,6 +185,25 @@ describe('release evidence contracts', () => {
       expect(() => requireAmoIdentifier(identifier)).toThrow(/braced GUID/u)
     }
   )
+
+  it('keeps a braced AMO identifier from reaching the network', async () => {
+    const fetchImpl = vi.fn()
+    vi.stubGlobal('fetch', fetchImpl)
+
+    await expect(
+      queryStoreStatus({
+        store: 'amo',
+        version: '1.2.3',
+        env: {
+          AMO_EXTENSION_ID: '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}',
+          AMO_JWT: 'test-jwt'
+        }
+      })
+    ).rejects.toThrow(/braced GUID/u)
+    expect(fetchImpl).not.toHaveBeenCalled()
+
+    vi.unstubAllGlobals()
+  })
 
   it('submits the verified Chrome ZIP with a short-lived access token', async () => {
     const responses = [

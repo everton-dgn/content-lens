@@ -190,19 +190,23 @@ describe('release evidence contracts', () => {
     const fetchImpl = vi.fn()
     vi.stubGlobal('fetch', fetchImpl)
 
-    await expect(
-      queryStoreStatus({
-        store: 'amo',
-        version: '1.2.3',
-        env: {
-          AMO_EXTENSION_ID: '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}',
-          AMO_JWT: 'test-jwt'
-        }
-      })
-    ).rejects.toThrow(/braced GUID/u)
-    expect(fetchImpl).not.toHaveBeenCalled()
-
-    vi.unstubAllGlobals()
+    // restoreMocks does not undo stubGlobal and unstubGlobals stays off, so a
+    // failed assertion here would leak the stub into the following tests.
+    try {
+      await expect(
+        queryStoreStatus({
+          store: 'amo',
+          version: '1.2.3',
+          env: {
+            AMO_EXTENSION_ID: '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}',
+            AMO_JWT: 'test-jwt'
+          }
+        })
+      ).rejects.toThrow(/braced GUID/u)
+      expect(fetchImpl).not.toHaveBeenCalled()
+    } finally {
+      vi.unstubAllGlobals()
+    }
   })
 
   it('submits the verified Chrome ZIP with a short-lived access token', async () => {

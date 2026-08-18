@@ -167,7 +167,7 @@ describe('release evidence contracts', () => {
     ).toBe(decision)
   })
 
-  it.each(['contentlens', '3054064', 'content-lens@example.com'] as const)(
+  it.each(['contentlens', '3054064', 'content-lens-beta'] as const)(
     'accepts an AMO identifier the submission client keeps intact',
     identifier => {
       expect(requireAmoIdentifier(identifier)).toBe(identifier)

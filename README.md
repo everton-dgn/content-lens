@@ -68,9 +68,11 @@ Both listings serve the signed package of the current stable release.
 
 Use this path to install an exact version or to verify the package yourself.
 
-1. Download `content-lens-<version>-chrome.zip` or
-   `content-lens-<version>-firefox.zip` from the
-   [latest release](https://github.com/everton-dgn/content-lens/releases/latest).
+1. Open the
+   [releases list](https://github.com/everton-dgn/content-lens/releases),
+   select the version you want and download its
+   `content-lens-<version>-chrome.zip` or
+   `content-lens-<version>-firefox.zip`.
 2. Extract the ZIP into its own folder. `manifest.json` must be at the top level
    of that folder.
 3. Chrome: open `chrome://extensions`, enable **Developer mode**, choose

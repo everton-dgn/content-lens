@@ -1,3 +1,5 @@
+export function requireAmoIdentifier(value: unknown): string
+
 export function decideStoreStatus(input: {
   store: string
   version: string

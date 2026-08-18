@@ -13,6 +13,22 @@ const requireText = (value, name) => {
   return value
 }
 
+// The submission step runs `wxt submit`, whose AMO client strips a leading `{`
+// and a trailing `}` before calling the API. A braced GUID therefore reaches
+// addons.mozilla.org without its braces and resolves to nothing, so the upload
+// fails with a bare 404 after the release assets were already verified. Reject
+// that shape here, while the run can still report an actionable reason.
+export const requireAmoIdentifier = value => {
+  const identifier = requireText(value, 'AMO extension ID')
+  if (identifier.startsWith('{') || identifier.endsWith('}')) {
+    throw new Error(
+      'AMO extension ID must be the listing slug or its numeric id, not a braced GUID. ' +
+        'The submission client removes the braces and addons.mozilla.org answers 404.'
+    )
+  }
+  return identifier
+}
+
 export const createAmoJwt = ({
   issuer,
   keyMaterial,
@@ -116,7 +132,7 @@ const fetchChromeStatus = async ({ publisherId, itemId, accessToken }) => {
 }
 
 const fetchAmoStatus = async ({ extensionId, jwt }) => {
-  requireText(extensionId, 'AMO extension ID')
+  requireAmoIdentifier(extensionId)
   requireText(jwt, 'AMO JWT')
   const pages = []
   const initial = new URL(

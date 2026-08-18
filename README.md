@@ -17,14 +17,15 @@ required backend. No telemetry.
 
 ![ContentLens filtering a YouTube home feed with the rule preview open in the browser side panel](docs/assets/readme/contentlens-hero.webp)
 
-**[Download the Chrome or Firefox package](https://github.com/everton-dgn/content-lens/releases/latest)**
+**[Install for Chrome](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp)**
+· **[Install for Firefox](https://addons.mozilla.org/firefox/addon/contentlens/)**
 · [Install in 2 minutes](#install)
 · [Build from source](#from-source)
 · [Read the manifesto](MANIFESTO.md)
 
-Choose `content-lens-<version>-chrome.zip` or
-`content-lens-<version>-firefox.zip`. Both packages must be loaded manually for
-now; browser-store listings are in preparation.
+Both stores carry the signed package for the current stable version. Every
+release also publishes `content-lens-<version>-chrome.zip` and
+`content-lens-<version>-firefox.zip` for manual installation and verification.
 
 ## Make the feed answer to you
 
@@ -52,9 +53,20 @@ inactive until you enable it and approve its origin.
 
 ## Install
 
-### Stable release
+### Browser stores
 
 Requires Chrome 149 or newer, or Firefox 151 or newer.
+
+1. Add ContentLens from the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp) or from
+   [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/contentlens/).
+2. Pin ContentLens, open its panel, enable one platform and create your first
+   rule.
+
+Both listings serve the signed package of the current stable release.
+
+### Manual package
+
+Use this path to install an exact version or to verify the package yourself.
 
 1. Download `content-lens-<version>-chrome.zip` or
    `content-lens-<version>-firefox.zip` from the
@@ -68,8 +80,8 @@ Requires Chrome 149 or newer, or Firefox 151 or newer.
 5. Pin ContentLens, open its panel, enable one platform and create your first
    rule.
 
-Firefox removes temporary add-ons when the browser closes. Repeat step 4 after
-reopening Firefox until the signed browser-store package is available.
+Firefox removes temporary add-ons when the browser closes. Install from
+[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/contentlens/) for a permanent installation.
 
 ### Verify the download
 

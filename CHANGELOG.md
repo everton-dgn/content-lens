@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.6 - 2026-08-18
+
+### Fixed
+
+- reject an AMO identifier the submission client breaks
+
 ## 1.0.5 - 2026-08-16
 
 ### Fixed

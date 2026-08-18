@@ -1,7 +1,8 @@
 # Getting started
 
-This guide covers a local development installation of ContentLens. No public
-browser-store release exists yet.
+This guide covers a local development installation of ContentLens. The stable
+extension is published on the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp) and on
+[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/contentlens/).
 
 ## Requirements
 

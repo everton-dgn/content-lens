@@ -123,8 +123,8 @@ capability reports a degraded or unavailable state while deterministic
 filtering remains available.
 
 No support claim covers store-signed packages, Firefox MV3, mobile browsers,
-enterprise-policy environments, mobile browsers or authenticated platform
-variants that are absent from the packaged journeys.
+enterprise-policy environments or authenticated platform variants that are
+absent from the packaged journeys.
 
 The Chrome journey loads the production MV3 package and opens its real
 extension-owned side panel. The Firefox journey installs the production MV2

@@ -4,6 +4,15 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.7 - 2026-08-19
+
+### Fixed
+
+- report a beacon reached through optional chaining
+- serialize activation reconciliations before publishing
+- ship message catalogs without translator descriptions
+- apply the language the reader actually chose
+
 ## 1.0.6 - 2026-08-18
 
 ### Fixed

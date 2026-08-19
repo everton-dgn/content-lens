@@ -70,6 +70,24 @@ describe('interface locale application', () => {
     expect(spanish.length).toBeGreaterThan(0)
   })
 
+  it('reads the packaged catalog once for a language already in place', async () => {
+    await applyInterfaceLocale('pt_BR')
+    await applyInterfaceLocale('pt_BR')
+
+    expect(fetch).toHaveBeenCalledOnce()
+    expect(t('panelHomeNavigation')).toBe('Início')
+  })
+
+  it('reads the catalog again once the language actually changes', async () => {
+    await applyInterfaceLocale('pt_BR')
+    await applyInterfaceLocale('es')
+
+    // Skipping the read has to key on the language rather than on merely
+    // having one installed, or a switch would keep answering the old one.
+    expect(fetch).toHaveBeenCalledTimes(2)
+    expect(t('panelHomeNavigation')).not.toBe('Início')
+  })
+
   it('follows the first preferred language on the automatic choice', async () => {
     const api = {
       getAcceptLanguages: async () => ['pt-BR', 'en-US'],

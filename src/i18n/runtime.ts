@@ -37,6 +37,14 @@ export const installMessageCatalog = (next: InstalledCatalog | undefined) => {
   installed = next
 }
 
+/**
+ * Reports the language currently answering messages. The packaged catalog of a
+ * language never changes while the extension runs, so a caller that would
+ * install the same language again can skip reading it.
+ */
+export const getInstalledLocale = (): SupportedLocale | undefined =>
+  installed?.locale
+
 export const createI18nRuntime = (api: BrowserI18nApi): I18nRuntime => ({
   getUiLanguage: () =>
     installed ? localeTagFor(installed.locale) : api.getUILanguage(),

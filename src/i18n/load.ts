@@ -6,7 +6,11 @@ import {
   matchSupportedLocale,
   type SupportedLocale
 } from './catalog'
-import { type BrowserI18nApi, installMessageCatalog } from './runtime'
+import {
+  type BrowserI18nApi,
+  getInstalledLocale,
+  installMessageCatalog
+} from './runtime'
 
 export type BrowserLanguageApi = BrowserI18nApi & {
   getAcceptLanguages?(): Promise<string[]>
@@ -72,6 +76,14 @@ export const applyInterfaceLocale = async (
   if (!resolved) {
     installMessageCatalog(undefined)
     return undefined
+  }
+
+  // Activation is reconciled on boot, on every permission change and on every
+  // saved setting, and each pass used to read the whole catalog again before
+  // the worker could publish. The language already in place answers the same
+  // messages, so reading it again only delays that publication.
+  if (getInstalledLocale() === resolved) {
+    return resolved
   }
   const catalog = await loadCatalog(resolved)
 

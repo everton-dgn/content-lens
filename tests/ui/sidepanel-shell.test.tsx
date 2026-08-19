@@ -71,6 +71,43 @@ describe('sidepanel shell', () => {
     expect(page.querySelector('[data-slot="sidepanel-shell"]')).not.toBeNull()
   })
 
+  it('reserves a navigation row only for the shell that carries one', () => {
+    const withNavigation = render(
+      <SidepanelShell
+        footer="Local processing"
+        navigation={<nav>Sections</nav>}
+        productName="ContentLens"
+        status="ready"
+        statusLabel="Local engine ready"
+      >
+        <p>Panel body</p>
+      </SidepanelShell>
+    )
+    const withoutNavigation = render(
+      <SidepanelShell
+        footer="Local processing"
+        productName="ContentLens"
+        status="ready"
+        statusLabel="Local engine ready"
+      >
+        <p>Panel body</p>
+      </SidepanelShell>
+    )
+    const shellOf = (page: Document) =>
+      page.querySelector('[data-slot="sidepanel-shell"]')
+
+    // The scroll area sizes itself against this modifier, so a shell without
+    // navigation must not keep the class or an empty row behind it.
+    expect(shellOf(withNavigation)?.getAttribute('class')).toBe(
+      'cl-shell cl-shell--with-navigation'
+    )
+    expect(
+      withNavigation.querySelector('.cl-shell__navigation')?.textContent
+    ).toBe('Sections')
+    expect(shellOf(withoutNavigation)?.getAttribute('class')).toBe('cl-shell')
+    expect(withoutNavigation.querySelector('.cl-shell__navigation')).toBeNull()
+  })
+
   it.each(viewStates)('renders the %s view state contract', state => {
     const page = render(
       <StatePanel

@@ -95,8 +95,22 @@ jobs:
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
 
+      # A hung apt mirror once ate the whole job, so each attempt gets its
+      # own deadline and the step insists before giving up.
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium firefox
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if timeout 240 pnpm exec playwright install --with-deps chromium firefox; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Playwright install attempt $attempt failed, retrying"
+              sleep 10
+            fi
+          done
+          echo "Playwright install failed after 3 attempts"
+          exit 1
 
       # The lane renders the packaged bundle through the preview fixture, so it
       # needs a build of its own: the browser matrix below builds later.
@@ -135,8 +149,22 @@ jobs:
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
 
+      # A hung apt mirror once ate the whole job, so each attempt gets its
+      # own deadline and the step insists before giving up.
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium firefox
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if timeout 240 pnpm exec playwright install --with-deps chromium firefox; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Playwright install attempt $attempt failed, retrying"
+              sleep 10
+            fi
+          done
+          echo "Playwright install failed after 3 attempts"
+          exit 1
 
       - name: Package development build once
         run: pnpm release:package -- --channel dev --output .release/ci-build

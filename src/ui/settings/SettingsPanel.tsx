@@ -27,7 +27,6 @@ import {
   Button,
   Notice,
   SectionNav,
-  type SectionNavVariant,
   StatePanel,
   Surface,
   ToggleField
@@ -71,7 +70,6 @@ export type SettingsPanelProps = {
   onOpenData?(): void
   onOpenFeeds?(): void
   onProfileChanged(): undefined | Promise<unknown>
-  navigationVariant?: Extract<SectionNavVariant, 'compact' | 'tabs'>
   runtime?: SettingsRuntimeClient
 }
 
@@ -80,7 +78,6 @@ export const SettingsPanel = ({
   onOpenData,
   onOpenFeeds,
   onProfileChanged,
-  navigationVariant = 'tabs',
   runtime = browserSettingsRuntime
 }: SettingsPanelProps) => {
   const { setTheme } = useTheme()
@@ -208,14 +205,14 @@ export const SettingsPanel = ({
   ].join(':')
 
   useEffect(() => {
-    if (navigationVariant !== 'compact' || !scrollResetKey) {
+    if (!scrollResetKey) {
       return
     }
     const scrollContainer = settingsPanelRef.current?.closest(
       '.cl-shell--with-navigation .cl-shell__content'
     )
     scrollContainer?.scrollTo?.({ behavior: 'auto', left: 0, top: 0 })
-  }, [navigationVariant, scrollResetKey])
+  }, [scrollResetKey])
 
   const selectedProvider = snapshot?.providers.providers.find(
     provider => provider.providerConfigId === selectedProviderId
@@ -941,7 +938,6 @@ export const SettingsPanel = ({
         draft={draft}
         onOpenData={onOpenData}
         onOpenFeeds={onOpenFeeds}
-        presentation={navigationVariant === 'compact' ? 'sidepanel' : 'default'}
         snapshot={snapshot}
       />
     )
@@ -1054,13 +1050,7 @@ export const SettingsPanel = ({
   }
 
   return (
-    <section
-      className="settings-panel"
-      data-presentation={
-        navigationVariant === 'compact' ? 'sidepanel' : 'default'
-      }
-      ref={settingsPanelRef}
-    >
+    <section className="settings-panel" ref={settingsPanelRef}>
       <header className="settings-heading">
         <p>{copy.eyebrow}</p>
         <h2>{copy.title}</h2>
@@ -1072,38 +1062,37 @@ export const SettingsPanel = ({
           {
             value: 'general',
             label: copy.tabGeneral,
-            icon:
-              navigationVariant === 'compact' ? SlidersHorizontal : undefined
+            icon: SlidersHorizontal
           },
           {
             value: 'ai',
             label: copy.tabAiProviders,
-            icon: navigationVariant === 'compact' ? Bot : undefined
+            icon: Bot
           },
           {
             value: 'platforms',
             label: copy.tabPlatforms,
-            icon: navigationVariant === 'compact' ? PanelsTopLeft : undefined
+            icon: PanelsTopLeft
           },
           {
             value: 'privacy-data',
             label: copy.tabPrivacyData,
-            icon: navigationVariant === 'compact' ? ShieldCheck : undefined
+            icon: ShieldCheck
           },
           {
             value: 'diagnostics',
             label: copy.tabDiagnostics,
-            icon: navigationVariant === 'compact' ? Activity : undefined
+            icon: Activity
           },
           {
             value: 'interface',
             label: copy.tabInterface,
-            icon: navigationVariant === 'compact' ? Palette : undefined
+            icon: Palette
           }
         ]}
         onChange={requestSection}
         value={section}
-        variant={navigationVariant}
+        variant="compact"
       />
       {section === 'ai' ? (
         <SectionNav
@@ -1114,7 +1103,7 @@ export const SettingsPanel = ({
           ]}
           onChange={requestAiSection}
           value={aiSection}
-          variant={navigationVariant}
+          variant="compact"
         />
       ) : null}
       {pendingSection ? (

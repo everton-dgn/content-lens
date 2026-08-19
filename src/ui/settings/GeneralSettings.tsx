@@ -10,7 +10,6 @@ export type GeneralSettingsProps = {
   draft: ContentLensSettings
   onOpenData?: () => void
   onOpenFeeds?: () => void
-  presentation?: 'default' | 'sidepanel'
   snapshot: SettingsRuntimeSnapshot
 }
 
@@ -35,10 +34,9 @@ export const GeneralSettings = ({
   draft,
   onOpenData,
   onOpenFeeds,
-  presentation = 'default',
   snapshot
 }: GeneralSettingsProps) => (
-  <div className="settings-overview" data-presentation={presentation}>
+  <div className="settings-overview">
     <Surface className="settings-summary-card" elevation="raised">
       <div className="settings-form settings-summary">
         <div className="settings-summary__heading">
@@ -75,7 +73,7 @@ export const GeneralSettings = ({
       </div>
     </Surface>
     {onOpenData || onOpenFeeds ? (
-      <Surface tone={presentation === 'sidepanel' ? undefined : 'subtle'}>
+      <Surface>
         <div className="settings-form">
           <h3>{copy.shortcutsTitle}</h3>
           <p className="settings-muted">{copy.shortcutsDescription}</p>
@@ -83,17 +81,13 @@ export const GeneralSettings = ({
             {onOpenFeeds ? (
               <Button onClick={onOpenFeeds} variant="secondary">
                 <span>{copy.feedsShortcutAction}</span>
-                {presentation === 'sidepanel' ? (
-                  <ChevronRight aria-hidden="true" />
-                ) : null}
+                <ChevronRight aria-hidden="true" />
               </Button>
             ) : null}
             {onOpenData ? (
               <Button onClick={onOpenData} variant="secondary">
                 <span>{copy.dataShortcutAction}</span>
-                {presentation === 'sidepanel' ? (
-                  <ChevronRight aria-hidden="true" />
-                ) : null}
+                <ChevronRight aria-hidden="true" />
               </Button>
             ) : null}
           </div>

@@ -14,7 +14,6 @@ import type {
 } from '@/application/settings/runtime-contracts'
 import { createDefaultSettings } from '@/core/settings'
 import { disconnectedSyncConnection } from '@/sync/connection'
-import type { SectionNavVariant } from '@/ui/components'
 import type { SettingsPanelCopy } from '@/ui/settings/copy'
 import {
   getPlatformSurfaceLabel,
@@ -83,7 +82,6 @@ const setTheme = vi.fn()
 async function mount(
   runtime: SettingsRuntimeClient,
   callbacks: {
-    navigationVariant?: Extract<SectionNavVariant, 'compact' | 'tabs'>
     onOpenData?(): void
     onOpenFeeds?(): void
   } = {}
@@ -310,7 +308,7 @@ describe('Settings panel', () => {
     ).toHaveLength(2)
   })
 
-  it('uses the compact sidepanel navigation without changing the default settings layout', async () => {
+  it('renders the compact sidepanel navigation with one icon per section', async () => {
     const runtime = {
       request: vi.fn(async () => ({
         kind: 'snapshot' as const,
@@ -319,33 +317,16 @@ describe('Settings panel', () => {
       requestPlatformPermission: vi.fn(async () => true),
       requestProviderPermission: vi.fn(async () => true)
     }
-    const compact = await mount(runtime, {
-      navigationVariant: 'compact',
+    const container = await mount(runtime, {
       onOpenData: vi.fn(),
       onOpenFeeds: vi.fn()
     })
 
-    const compactNavigation = compact.querySelector(
+    const navigation = container.querySelector(
       '.cl-section-nav[data-variant="compact"]'
     )
-    expect(compactNavigation?.querySelectorAll('button')).toHaveLength(6)
-    expect(compactNavigation?.querySelectorAll('svg')).toHaveLength(6)
-    expect(
-      compact
-        .querySelector('.settings-overview')
-        ?.getAttribute('data-presentation')
-    ).toBe('sidepanel')
-
-    const standard = await mount(runtime)
-    expect(
-      standard.querySelector('.cl-section-nav')?.getAttribute('data-variant')
-    ).toBe('tabs')
-    expect(standard.querySelector('.cl-section-nav svg')).toBeNull()
-    expect(
-      standard
-        .querySelector('.settings-overview')
-        ?.getAttribute('data-presentation')
-    ).toBe('default')
+    expect(navigation?.querySelectorAll('button')).toHaveLength(6)
+    expect(navigation?.querySelectorAll('svg')).toHaveLength(6)
   })
 
   it('updates platform and interface controls and opens data shortcuts', async () => {

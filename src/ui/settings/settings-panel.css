@@ -104,22 +104,6 @@
 }
 
 .settings-shortcuts .cl-button {
-  border-block-end: 0;
-  border-block-start: var(--cl-border-width) solid var(--cl-color-border);
-  border-radius: var(--cl-space-0);
-  border-inline: 0;
-  justify-content: space-between;
-  padding-inline: var(--cl-space-0);
-}
-
-.settings-shortcuts .cl-button::after {
-  content: '→';
-  font-family: var(--cl-font-mono);
-}
-
-.settings-overview[data-presentation='sidepanel']
-  .settings-shortcuts
-  .cl-button {
   background: var(--cl-color-surface-subtle);
   border: var(--cl-border-width) solid var(--cl-color-border);
   border-radius: var(--cl-radius-md);
@@ -128,22 +112,11 @@
   padding-inline: var(--cl-space-3);
 }
 
-.settings-overview[data-presentation='sidepanel']
-  .settings-shortcuts
-  .cl-button:hover {
+.settings-shortcuts .cl-button:hover {
   background: var(--cl-color-surface-hover);
 }
 
-.settings-overview[data-presentation='sidepanel']
-  .settings-shortcuts
-  .cl-button::after {
-  content: none;
-}
-
-.settings-overview[data-presentation='sidepanel']
-  .settings-shortcuts
-  .cl-button
-  span {
+.settings-shortcuts .cl-button span {
   min-inline-size: 0;
   text-align: start;
 }

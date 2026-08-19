@@ -64,10 +64,7 @@ export default defineBackground({
       reconcileAdapterActivation()
     })
     const messageListener = createRuntimeMessageListener({
-      extensionPageUrls: [
-        browser.runtime.getURL('/sidepanel.html'),
-        browser.runtime.getURL('/options.html')
-      ],
+      extensionPageUrls: [browser.runtime.getURL('/sidepanel.html')],
       extensionId: browser.runtime.id,
       originMap: installedAdapterOriginMap,
       onDecisionRequest: message => runtime.decisions.decide(message),

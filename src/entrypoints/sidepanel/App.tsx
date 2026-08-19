@@ -119,7 +119,6 @@ export const App = () => {
       <Suspense fallback={loadingPanel}>
         <SettingsPanel
           copy={getSettingsPanelCopy()}
-          navigationVariant="compact"
           onOpenData={openData}
           onOpenFeeds={openFeeds}
           onProfileChanged={ruleProfile.refresh}

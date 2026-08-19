@@ -986,31 +986,6 @@
   color: var(--cl-color-action-hover);
 }
 
-.cl-section-nav[data-variant='tabs'] {
-  background: var(--cl-color-surface-subtle);
-  border: var(--cl-border-width) solid var(--cl-color-border);
-  border-radius: var(--cl-radius-md);
-  display: flex;
-  flex-wrap: nowrap;
-  gap: var(--cl-space-1);
-  overflow-x: auto;
-  padding: var(--cl-space-1);
-}
-
-.cl-section-nav[data-variant='tabs'] .cl-button {
-  border: none;
-  border-radius: var(--cl-radius-sm);
-  flex: 0 0 auto;
-  white-space: nowrap;
-}
-
-.cl-section-nav[data-variant='tabs'] [aria-current='page'] {
-  background: var(--cl-color-surface);
-  border: none;
-  box-shadow: var(--cl-shadow-raised);
-  color: var(--cl-color-text);
-}
-
 .cl-section-nav[data-variant='compact'] {
   background: transparent;
   border: none;

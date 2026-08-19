@@ -9,13 +9,13 @@ export type SectionNavItem<Value extends string> = {
   value: Value
 }
 
-export type SectionNavVariant = 'compact' | 'primary' | 'tabs'
+export type SectionNavVariant = 'compact' | 'primary'
 
 export type SectionNavProps<Value extends string> = {
   ariaLabel: string
   items: readonly SectionNavItem<Value>[]
   onChange(value: Value): void
-  variant?: SectionNavVariant
+  variant: SectionNavVariant
   value: Value
 }
 
@@ -23,7 +23,7 @@ export const SectionNav = <Value extends string>({
   ariaLabel,
   items,
   onChange,
-  variant = 'tabs',
+  variant,
   value
 }: SectionNavProps<Value>) => {
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

@@ -62,7 +62,7 @@ const sender: RuntimeMessageSender = {
   }
 }
 const extensionPageUrl = `chrome-extension://${extensionId}/sidepanel.html`
-const optionsPageUrl = `chrome-extension://${extensionId}/options.html`
+const secondaryPageUrl = `chrome-extension://${extensionId}/secondary-panel.html`
 const rssMessage: RssRevalidateMessage = {
   namespace: CONTENT_LENS_MESSAGE_NAMESPACE,
   version: 1,
@@ -150,21 +150,21 @@ describe('runtime message security boundary', () => {
         id: extensionId,
         frameId: 0,
         url: extensionPageUrl,
-        tab: { id: 11, url: optionsPageUrl }
+        tab: { id: 11, url: secondaryPageUrl }
       })
     ).resolves.toEqual({ state: 'rejected', code: 'untrusted-sender' })
     expect(onSettingsRequest).toHaveBeenCalledTimes(2)
     expect(onDecisionRequest).not.toHaveBeenCalled()
   })
 
-  it('accepts Settings from the exact options page allowlist', async () => {
+  it('accepts Settings from every exact entry in the page allowlist', async () => {
     const onSettingsRequest = vi.fn(async () => ({
       kind: 'unavailable' as const,
       code: 'profile-not-found' as const
     }))
     const listener = createRuntimeMessageListener({
       extensionId,
-      extensionPageUrls: [extensionPageUrl, optionsPageUrl],
+      extensionPageUrls: [extensionPageUrl, secondaryPageUrl],
       originMap,
       onDecisionRequest: vi.fn(),
       onSettingsRequest,
@@ -174,7 +174,7 @@ describe('runtime message security boundary', () => {
     await expect(
       invoke(listener, settingsSnapshotMessage, {
         id: extensionId,
-        url: optionsPageUrl
+        url: secondaryPageUrl
       })
     ).resolves.toMatchObject({
       state: 'acknowledged',
@@ -183,7 +183,7 @@ describe('runtime message security boundary', () => {
     await expect(
       invoke(listener, settingsSnapshotMessage, {
         id: extensionId,
-        url: `${optionsPageUrl}?forged=1`
+        url: `${secondaryPageUrl}?forged=1`
       })
     ).resolves.toEqual({ state: 'rejected', code: 'untrusted-sender' })
     expect(onSettingsRequest).toHaveBeenCalledOnce()

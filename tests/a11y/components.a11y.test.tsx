@@ -88,6 +88,7 @@ describe('section navigation accessibility', () => {
           ]}
           onChange={() => undefined}
           value="platforms"
+          variant="compact"
         />
       )
     )

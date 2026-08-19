@@ -8,7 +8,7 @@
 | `src/application/` | Use cases and orchestration through explicit ports |
 | `src/adapters/` | Platform extraction, normalization and reversible rendering |
 | `src/extension/` | Browser lifecycle and service-worker composition |
-| `src/entrypoints/` | WXT background, content-script, side-panel and options entrypoints |
+| `src/entrypoints/` | WXT background, content-script and side-panel entrypoints |
 | `src/storage/` | IndexedDB, migration and portability implementations |
 | `src/security/` | Credential envelopes, vault boundaries and redaction |
 | `src/ui/` | Shared components, views and semantic design tokens |

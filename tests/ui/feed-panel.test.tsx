@@ -186,8 +186,7 @@ describe('RSS feed panel', () => {
     database.close()
   })
 
-  it('shows the browser limitation, invokes back navigation and reports load errors', async () => {
-    const onBack = vi.fn()
+  it('shows the browser limitation and reports load errors', async () => {
     const database = {
       exportProfile: vi.fn(async () => {
         throw new Error('storage unavailable')
@@ -196,10 +195,8 @@ describe('RSS feed panel', () => {
     } as unknown as ContentLensDatabase
     const view = await mount(
       <FeedPanel
-        backLabel="back"
         copy={copy}
         database={database}
-        onBack={onBack}
         onProfileChanged={vi.fn(async () => false)}
       />
     )
@@ -209,15 +206,7 @@ describe('RSS feed panel', () => {
     )
     expect(view.container.textContent).toContain('browserUnavailableTitle')
     expect(view.container.textContent).toContain('browserPortableNote')
-    const backAction = view.container.querySelector('[data-slot="back-action"]')
-    expect(backAction?.getAttribute('data-size')).toBe('compact')
-    expect(backAction?.getAttribute('data-variant')).toBe('quiet')
-    expect(backAction?.parentElement?.getAttribute('data-slot')).toBe(
-      'subpage-header'
-    )
-    expect(backAction?.querySelectorAll('svg')).toHaveLength(1)
-    await click(button(view.container, 'back'))
-    expect(onBack).toHaveBeenCalledOnce()
+    expect(view.container.querySelector('[data-slot="back-action"]')).toBeNull()
   })
 
   it('maps every persisted runtime state to its visible status', async () => {
@@ -278,6 +267,38 @@ describe('RSS feed panel', () => {
     ]) {
       expect(view.container.textContent).toContain(label)
     }
+    database.close()
+  })
+
+  it('reports a mutation that throws instead of leaving the panel pending', async () => {
+    const database = await databaseWithFeeds(
+      'contentlens-feed-panel-mutation-throw',
+      [subscription()]
+    )
+    const view = await mount(
+      <FeedPanel
+        copy={copy}
+        database={database}
+        notifyRemoved={vi.fn(async () => undefined)}
+        onProfileChanged={vi.fn(async () => true)}
+      />
+    )
+    await vi.waitFor(() =>
+      expect(view.container.textContent).toContain('https://feeds.example')
+    )
+    // The panel reads the profile again to stamp the revision of a mutation.
+    // A storage failure at that point must surface, not hang the panel.
+    vi.spyOn(database, 'exportProfile').mockRejectedValue(
+      new Error('storage unavailable')
+    )
+
+    await click(button(view.container, 'removeAction'))
+    await click(button(view.container, 'removeAction'))
+
+    await vi.waitFor(() =>
+      expect(view.container.textContent).toContain('errorTitle')
+    )
+    expect(button(view.container, 'removeAction').disabled).toBe(false)
     database.close()
   })
 

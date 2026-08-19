@@ -15,7 +15,7 @@ import {
 } from '@/application/messages/contracts'
 import type { OperationResponse } from '@/core/operations/journal'
 import type { ContentLensDatabase } from '@/storage/indexed-db/database'
-import { BackAction, Badge, Button, Notice, Surface } from '@/ui/components'
+import { Badge, Button, Notice, Surface } from '@/ui/components'
 import type { FeedPanelCopy } from '@/ui/feeds/copy'
 
 type Feedback = {
@@ -25,10 +25,8 @@ type Feedback = {
 }
 
 export type FeedPanelProps = {
-  backLabel?: string
   copy: FeedPanelCopy
   database: ContentLensDatabase
-  onBack?(): void
   onProfileChanged(): Promise<boolean>
   notifyRemoved?: (feedId: string) => Promise<void>
 }
@@ -72,10 +70,8 @@ const defaultNotifyRemoved = (feedId: string) =>
   notifyRssRemoved(feedId, browser.runtime)
 
 export const FeedPanel = ({
-  backLabel,
   copy,
   database,
-  onBack,
   onProfileChanged,
   notifyRemoved = defaultNotifyRemoved
 }: FeedPanelProps) => {
@@ -246,14 +242,7 @@ export const FeedPanel = ({
 
   return (
     <section aria-busy={pending} className="feed-panel" data-slot="feed-panel">
-      {onBack && backLabel ? (
-        <div data-slot="subpage-header">
-          <BackAction label={backLabel} onClick={onBack} />
-          {heading}
-        </div>
-      ) : (
-        heading
-      )}
+      {heading}
       <Notice
         body={copy.browserUnavailableBody}
         title={copy.browserUnavailableTitle}

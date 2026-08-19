@@ -108,7 +108,6 @@ modules/
     service-worker/
     content-script/
     side-panel/
-    options/
   ui/
   testing/
 ```

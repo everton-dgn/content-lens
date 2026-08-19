@@ -54,9 +54,12 @@ jobs:
             if timeout 240 pnpm exec playwright install --with-deps chromium; then
               exit 0
             fi
-            echo "Playwright install attempt $attempt failed, retrying"
-            sleep 10
+            if [ "$attempt" -lt 3 ]; then
+              echo "Playwright install attempt $attempt failed, retrying"
+              sleep 10
+            fi
           done
+          echo "Playwright install failed after 3 attempts"
           exit 1
 
       - name: Build the Chrome bundle the lane renders

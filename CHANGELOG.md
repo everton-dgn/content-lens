@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.8 - 2026-08-19
+
+### Fixed
+
+- reuse the catalog already answering messages
+
 ## 1.0.7 - 2026-08-19
 
 ### Fixed

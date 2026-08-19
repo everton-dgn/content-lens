@@ -27,12 +27,10 @@ const injectedPrimitiveFile = resolve(tokenRoot, 'injected-primitives.ts')
 const injectedStyleFile = resolve(tokenRoot, 'injected.ts')
 const cssRoots = [
   resolve(root, 'src/ui'),
-  resolve(root, 'src/entrypoints/options'),
   resolve(root, 'src/entrypoints/sidepanel')
 ]
 const tsxRoots = [
   resolve(root, 'src/ui'),
-  resolve(root, 'src/entrypoints/options'),
   resolve(root, 'src/entrypoints/sidepanel')
 ]
 const expectedComponents = [

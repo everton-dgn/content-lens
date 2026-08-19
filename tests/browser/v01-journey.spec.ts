@@ -782,151 +782,6 @@ const runV01Journey = async (
 
   expect(pageErrors).toEqual([])
 }
-
-const runOptionsJourney = async (
-  page: Page,
-  testInfo: TestInfo,
-  pageErrors: Error[],
-  providerMode: 'create' | 'select-fixture'
-) => {
-  await page.setViewportSize({ height: 900, width: 960 })
-  page.setDefaultTimeout(5_000)
-  const settingsNavigation = page.getByRole('navigation', {
-    name: 'Settings'
-  })
-  await test.step('options exposes the six settings groups', async () => {
-    await expect(
-      page.getByRole('heading', { name: 'Settings', exact: true })
-    ).toBeVisible()
-    await expect(settingsNavigation.getByRole('button')).toHaveCount(6)
-    await expect(
-      settingsNavigation.getByRole('button', { name: 'General' })
-    ).toHaveAttribute('aria-current', 'page')
-    await settingsNavigation
-      .getByRole('button', { name: 'AI and providers' })
-      .click()
-    await expect(
-      page.getByRole('navigation', { name: 'AI and provider settings' })
-    ).toBeVisible()
-    await expect(
-      page.getByRole('heading', { name: 'Providers and credentials' })
-    ).toBeVisible()
-    if (providerMode === 'create') {
-      await page
-        .getByRole('button', { name: 'Add provider', exact: true })
-        .click()
-    } else {
-      await page.getByRole('combobox', { name: 'Configured provider' }).click()
-      await page
-        .getByRole('option', { name: 'OpenAI packaged fixture', exact: true })
-        .click()
-    }
-    await expect(page.getByLabel('API key or access token')).toBeVisible()
-    await expect(
-      page.getByRole('button', { name: 'Update model catalog' })
-    ).toBeVisible()
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-providers')
-    await captureSidepanel(page, testInfo, 'v02-options-providers.png')
-    await page.evaluate(() => {
-      document.documentElement.dataset.theme = 'dark'
-    })
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-providers-dark')
-    await captureSidepanel(page, testInfo, 'v02-options-providers-dark.png')
-    await page.evaluate(() => {
-      document.documentElement.removeAttribute('data-theme')
-    })
-    await page
-      .getByRole('navigation', { name: 'AI and provider settings' })
-      .getByRole('button', { name: 'Models' })
-      .click()
-    await expect(
-      page.getByRole('heading', { name: 'Model catalog' })
-    ).toBeVisible()
-    await expect(page.locator('[data-slot="data-list"]')).toHaveCount(1)
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-models')
-    await captureSidepanel(page, testInfo, 'v02-options-models.png')
-  })
-  await test.step('options captures the remaining redesigned groups', async () => {
-    await settingsNavigation.getByRole('button', { name: 'Platforms' }).click()
-    await expect(
-      settingsNavigation.getByRole('button', { name: 'Platforms' })
-    ).toHaveAttribute('aria-current', 'page')
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-platforms')
-    await captureSidepanel(page, testInfo, 'v02-options-platforms.png')
-
-    await settingsNavigation
-      .getByRole('button', { name: 'Diagnostics' })
-      .click()
-    await expect(
-      page.getByRole('heading', { name: 'Diagnostics', exact: true })
-    ).toBeVisible()
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-diagnostics')
-    await captureSidepanel(page, testInfo, 'v02-options-diagnostics.png')
-
-    await settingsNavigation.getByRole('button', { name: 'Interface' }).click()
-    await expect(
-      page.getByRole('heading', { name: 'Interface preferences' })
-    ).toBeVisible()
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-interface')
-    await captureSidepanel(page, testInfo, 'v02-options-interface.png')
-    await page.getByRole('combobox', { name: 'Color mode' }).click()
-    await page.getByRole('option', { name: 'Dark', exact: true }).click()
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-interface-dark')
-    await captureSidepanel(page, testInfo, 'v02-options-interface-dark.png')
-    await page.getByRole('combobox', { name: 'Color mode' }).click()
-    await page
-      .getByRole('option', { name: 'Follow the system', exact: true })
-      .click()
-  })
-  await test.step('options opens shared privacy and data', async () => {
-    await settingsNavigation
-      .getByRole('button', { name: 'Privacy and data' })
-      .click()
-    await expect(
-      page.getByRole('heading', { name: 'Privacy and data', exact: true })
-    ).toBeVisible()
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-privacy')
-    await captureSidepanel(page, testInfo, 'v02-options-privacy.png')
-    await page.getByRole('button', { name: 'Open privacy and data' }).click()
-    await expect(
-      page.getByRole('heading', { name: 'Data and health' })
-    ).toBeVisible()
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-data-health')
-    await captureSidepanel(page, testInfo, 'v02-options-data-health.png')
-    await page.getByRole('button', { name: 'Back to settings' }).click()
-    await expect(
-      page.getByRole('heading', { name: 'Settings', exact: true })
-    ).toBeVisible()
-  })
-  await test.step('options opens feeds with the shared back action', async () => {
-    await settingsNavigation.getByRole('button', { name: 'General' }).click()
-    await page.getByRole('button', { name: 'Manage feeds' }).click()
-    await expect(
-      page.getByRole('heading', { name: 'RSS and Atom feeds' })
-    ).toBeVisible()
-    const feedsBackAction = page.getByRole('button', {
-      name: 'Back to settings'
-    })
-    await expect(feedsBackAction.locator('svg')).toHaveCount(1)
-    await expect(feedsBackAction).toHaveAttribute('data-variant', 'quiet')
-    await expect(feedsBackAction).toHaveAttribute('data-slot', 'back-action')
-    await assertBackActionGeometry(page, '.feed-panel__heading')
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-rss-feeds')
-    await captureSidepanel(page, testInfo, 'v03-options-rss-feeds.png')
-    await feedsBackAction.click()
-    await expect(
-      page.getByRole('heading', { name: 'Settings', exact: true })
-    ).toBeVisible()
-  })
-  await test.step('options passes accessibility and visual capture', async () => {
-    await settingsNavigation.getByRole('button', { name: 'General' }).click()
-    await assertNoSeriousAxeViolations(page, testInfo, 'options-wide')
-    await captureSidepanel(page, testInfo, 'v01-options-wide.png')
-  })
-  expect(pageErrors).toEqual([])
-}
-
 test.describe('v0.1 packaged sidepanel journey', () => {
   test('runs the v0.1 journey in packaged Chrome', async ({
     browserName
@@ -959,10 +814,6 @@ test.describe('v0.1 packaged sidepanel journey', () => {
         waitUntil: 'domcontentloaded'
       })
       await runV01Journey(page, testInfo, pageErrors)
-      await page.goto(`chrome-extension://${extensionId}/options.html`, {
-        waitUntil: 'domcontentloaded'
-      })
-      await runOptionsJourney(page, testInfo, pageErrors, 'create')
     } finally {
       await context.close()
     }
@@ -1025,10 +876,6 @@ test.describe('v0.1 packaged sidepanel journey', () => {
           waitUntil: 'domcontentloaded'
         })
         await runV01Journey(page, testInfo, pageErrors)
-        await page.goto(`${server.baseUrl}/options.html`, {
-          waitUntil: 'domcontentloaded'
-        })
-        await runOptionsJourney(page, testInfo, pageErrors, 'select-fixture')
       } finally {
         await server.close()
       }

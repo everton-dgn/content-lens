@@ -8,7 +8,9 @@ import {
   startBrowserAiBridgeHost
 } from '@/ai/browser/bridge'
 import { createBrowserPromptExecutor } from '@/ai/browser/language-model'
+import { applyInterfaceLocale } from '@/i18n/load'
 import { getUiLanguage, t } from '@/i18n/runtime'
+import { browserSettingsRuntime } from '@/ui/settings/runtime'
 import { ThemeProvider } from '@/ui/styles/ThemeProvider'
 import '@/ui/styles/globals.css'
 import '@/ui/data/data-panel.css'
@@ -19,8 +21,33 @@ import '@/ui/rules/rule-workbench.css'
 import '@/ui/similarity/similarity-review.css'
 import '@/ui/settings/settings-panel.css'
 
-import { App } from './App'
 import './styles.css'
+
+/**
+ * The stored language has to be applied before any module reads a message,
+ * because copy is resolved eagerly at import time. An unreadable profile keeps
+ * the browser-resolved language rather than blocking the panel.
+ */
+const bootstrapLocale = async () => {
+  let stored = 'auto'
+
+  try {
+    const response = await browserSettingsRuntime.request({
+      type: 'settings.snapshot'
+    })
+
+    if (response.kind === 'snapshot') {
+      stored = response.value.settings.settings.interface.locale
+    }
+  } catch {
+    // A profile that cannot be read yet still deserves the automatic choice.
+  }
+  await applyInterfaceLocale(stored)
+}
+
+await bootstrapLocale()
+
+const { App } = await import('./App')
 
 document.documentElement.lang = getUiLanguage()
 document.title = t('extensionName')

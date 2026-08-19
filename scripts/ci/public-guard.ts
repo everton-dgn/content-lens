@@ -269,6 +269,29 @@ const approvedNetworkClientPaths = new Set([
   'src/ai/providers/request-policy.ts',
   'src/sync/providers/conditional-http.ts'
 ])
+/**
+ * Files allowed to read the extension's own packaged files. The exemption
+ * only holds while every request in the file targets `runtime.getURL`, so a
+ * remote endpoint added later is still reported.
+ */
+const packagedResourceReaderPaths = new Set(['src/i18n/load.ts'])
+
+/** Optional chaining reaches the same API, so both spellings must match. */
+const beaconPattern = String.raw`navigator\s*\??\.\s*sendBeacon\s*\(`
+const streamingClientPattern = String.raw`\b(?:EventSource|WebSocket|XMLHttpRequest)\s*\(`
+
+const readsOnlyPackagedResources = (content: string): boolean => {
+  if (
+    new RegExp(`${streamingClientPattern}|${beaconPattern}`, 'u').test(content)
+  ) {
+    return false
+  }
+  const requests = content.match(/\bfetch\s*\(/gu)?.length ?? 0
+  const packaged =
+    content.match(/\bfetch\s*\(\s*browser\.runtime\.getURL\s*\(/gu)?.length ?? 0
+
+  return requests > 0 && requests === packaged
+}
 const rssNetworkForbiddenPaths = [
   'src/adapters/rss/',
   'src/application/feed-subscriptions/',
@@ -572,10 +595,10 @@ export const scanText = (path: string, content: string): GuardFinding[] => {
   const policyPath = worktreePath.includes('!/')
     ? (worktreePath.split('!/').at(-1) ?? worktreePath)
     : worktreePath
-  const containsNetworkClient =
-    /\b(?:EventSource|WebSocket|XMLHttpRequest|fetch)\s*\(|navigator\.sendBeacon\s*\(/u.test(
-      content
-    )
+  const containsNetworkClient = new RegExp(
+    String.raw`\b(?:EventSource|WebSocket|XMLHttpRequest|fetch)\s*\(|${beaconPattern}`,
+    'u'
+  ).test(content)
   const rssNetworkReferenceIndex = rssNetworkForbiddenPaths.some(prefix =>
     policyPath.startsWith(prefix)
   )
@@ -689,7 +712,11 @@ export const scanText = (path: string, content: string): GuardFinding[] => {
   if (
     policyPath.startsWith('src/') &&
     !approvedNetworkClientPaths.has(policyPath) &&
-    containsNetworkClient
+    containsNetworkClient &&
+    !(
+      packagedResourceReaderPaths.has(policyPath) &&
+      readsOnlyPackagedResources(content)
+    )
   ) {
     findings.push(finding(normalizedPath, 'unapproved-network-client'))
   }

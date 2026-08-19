@@ -49,6 +49,35 @@ describe('public repository guard', () => {
     ).toContain('unapproved-network-client')
   })
 
+  it('lets the i18n loader read packaged catalogs but not a remote endpoint', () => {
+    const request = ['fet', 'ch'].join('')
+    const packagedRead = `const r = await ${request}(browser.runtime.getURL(path));`
+    const remoteRead = `${packagedRead} const remote = await ${request}(endpoint);`
+
+    expect(
+      findingCodes(scanText('src/i18n/load.ts', packagedRead))
+    ).not.toContain('unapproved-network-client')
+    expect(findingCodes(scanText('src/i18n/load.ts', remoteRead))).toContain(
+      'unapproved-network-client'
+    )
+    expect(findingCodes(scanText('src/i18n/other.ts', packagedRead))).toContain(
+      'unapproved-network-client'
+    )
+  })
+
+  it.each([
+    ['navigator.sendBeacon', 'navigator.sendBeacon(endpoint, body);'],
+    ['optional-chained sendBeacon', 'navigator?.sendBeacon(endpoint, body);'],
+    ['spaced optional chain', 'navigator ?. sendBeacon (endpoint, body);']
+  ])('reports %s even in the packaged-catalog reader', (_label, beacon) => {
+    const request = ['fet', 'ch'].join('')
+    const packagedRead = `const r = await ${request}(browser.runtime.getURL(path));`
+
+    expect(
+      findingCodes(scanText('src/i18n/load.ts', `${packagedRead} ${beacon}`))
+    ).toContain('unapproved-network-client')
+  })
+
   it('accepts only reviewed provider patterns and loopback references in their exact files', () => {
     const httpsPattern = ['https', '://', '*', '/*'].join('')
     const httpPattern = ['http', '://', '*', '/*'].join('')

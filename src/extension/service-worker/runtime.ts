@@ -5,6 +5,7 @@ import {
   createBrowserVisualModelPort
 } from '@/ai/browser/model-ports'
 import { createBrowserVisualMediaPorts } from '@/ai/vision/media-runtime'
+import type { PlatformActivationResult } from '@/application/adapter-activation/browser-content-scripts'
 import {
   BrowserContentScriptActivation,
   type BrowserScriptingApi
@@ -21,6 +22,7 @@ import {
 import { ProviderStatePersistence } from '@/application/provider-management/persistence'
 import { projectContentLensSettings } from '@/application/settings/profile-settings'
 import { INSTALLED_ADAPTER_ORIGINS } from '@/config/adapter-origins'
+import type { Platform } from '@/core/content/contracts'
 import type { PlatformSurface } from '@/core/content/surfaces'
 import { fingerprintPortableValue } from '@/core/operations/fingerprint'
 import { bootstrapServiceWorkerProviderRuntime } from '@/extension/service-worker/provider-runtime'
@@ -42,6 +44,16 @@ export function createServiceWorkerRuntime(options: {
   }
   database?: ContentLensDatabase
   browserAi?: BrowserPromptExecutor
+  /**
+   * Called after every activation reconciliation, including the one a settings
+   * save triggers. Without it a saved language would only reach open platform
+   * tabs on the next permission change or worker restart.
+   */
+  onAdapterActivationReconciled?(outcome: {
+    enabledSurfaces: Partial<Record<Platform, readonly PlatformSurface[]>>
+    locale: string
+    results: PlatformActivationResult[]
+  }): Promise<void> | void
 }) {
   const database = options.database ?? new ContentLensDatabase()
   const browserAiBridge = new BrowserAiBridgeClient()
@@ -54,7 +66,7 @@ export function createServiceWorkerRuntime(options: {
     permissions: options.permissionApi,
     scripting: options.scriptingApi
   })
-  const reconcileAdapterActivation = async () => {
+  const runReconcile = async () => {
     const profile = await database.exportProfile()
     const settings = projectContentLensSettings(
       profile?.settings ?? {}
@@ -64,7 +76,8 @@ export function createServiceWorkerRuntime(options: {
         .filter(({ state }) => state === 'enabled')
         .map(({ platform }) => platform)
     )
-    return {
+    const outcome = {
+      locale: settings.interface.locale,
       enabledSurfaces: Object.fromEntries(
         Object.values(settings.platforms).map(({ platform, surfaces }) => [
           platform,
@@ -75,6 +88,24 @@ export function createServiceWorkerRuntime(options: {
       ),
       results
     }
+
+    await options.onAdapterActivationReconciled?.(outcome)
+
+    return outcome
+  }
+  /**
+   * Reconciliations run one at a time. Each reads the profile at its start and
+   * only installs the language once its own asynchronous work finishes, so
+   * overlapping runs could otherwise publish an older locale last and leave
+   * open platform tabs on the previous language.
+   */
+  let pendingReconcile: Promise<unknown> = Promise.resolve()
+  const reconcileAdapterActivation = () => {
+    const next = pendingReconcile.then(runReconcile, runReconcile)
+
+    pendingReconcile = next.catch(() => undefined)
+
+    return next
   }
   const providers = bootstrapServiceWorkerProviderRuntime({
     browser: options.browser,

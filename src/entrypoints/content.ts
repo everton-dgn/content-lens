@@ -28,7 +28,10 @@ import {
   startPlatformContentLifecycle
 } from '@/extension/content-script/platform-lifecycle'
 import { sendRuntimeMessageWithRetry } from '@/extension/content-script/runtime-messaging'
-import { t } from '@/i18n/runtime'
+import {
+  type InjectedOverlayCopy,
+  isInjectedOverlayCopy
+} from '@/i18n/overlay-copy'
 
 const runtimeKey = Symbol.for('contentlens.platform.runtime')
 const runtimeMessageAttempts = 3
@@ -72,7 +75,9 @@ function isControlMessage(
       surface =>
         platformSurfaceSchema.safeParse(surface).success &&
         surface.startsWith(`${platform}:`)
-    )
+    ) &&
+    'copy' in input &&
+    isInjectedOverlayCopy(input.copy)
   )
 }
 
@@ -100,7 +105,9 @@ export default defineContentScript({
       lifecycle?.dispose()
       lifecycle = undefined
     }
-    const start = () => {
+    // The worker resolves the overlay strings and ships them with the
+    // activation message, so the platform only ever starts with copy in hand.
+    const start = (overlayCopy: InjectedOverlayCopy) => {
       if (disposed || lifecycle) {
         return
       }
@@ -109,17 +116,7 @@ export default defineContentScript({
         createRuntime: ({ pageInstanceId, restoreFocus, surface }) =>
           startDomContentRuntime(document, {
             adapter: definition.adapter,
-            copy: {
-              actionsLabel: t('injectedActionsLabel'),
-              decisionConflict: t('injectedDecisionConflict'),
-              decisionFailed: t('injectedDecisionFailed'),
-              decisionPending: t('injectedDecisionPending'),
-              hiddenHeading: t('injectedHiddenHeading'),
-              hideForSession: t('injectedHideForSession'),
-              reasonForRule: t('injectedReasonRule'),
-              reasonForSession: t('injectedReasonSession'),
-              reveal: t('injectedReveal')
-            },
+            copy: overlayCopy,
             pageInstanceId,
             enabledSurfaces: [...enabledSurfaces],
             requestDecision: async (
@@ -185,7 +182,7 @@ export default defineContentScript({
         if (message.state === 'active') {
           enabledSurfaces = new Set(message.surfaces)
           stop()
-          start()
+          start(message.copy)
         } else {
           enabledSurfaces.clear()
           stop()

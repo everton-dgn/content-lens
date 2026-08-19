@@ -7,6 +7,19 @@ import {
   type AdapterControlPort,
   AdapterRuntimeControlHub
 } from '@/application/adapter-activation/runtime-control'
+import type { InjectedOverlayCopy } from '@/i18n/overlay-copy'
+
+const overlayCopy: InjectedOverlayCopy = {
+  actionsLabel: 'actions',
+  decisionConflict: 'conflict',
+  decisionFailed: 'failed',
+  decisionPending: 'pending',
+  hiddenHeading: 'hidden',
+  hideForSession: 'hide',
+  reasonForRule: 'rule',
+  reasonForSession: 'session',
+  reveal: 'reveal'
+}
 
 function port(overrides: Partial<AdapterControlPort> = {}) {
   let disconnect: () => void = () => undefined
@@ -54,13 +67,15 @@ describe('adapter runtime control hub', () => {
           origins: ['https://www.reddit.com/*']
         }
       ],
+      overlayCopy,
       { reddit: ['reddit:home', 'reddit:all'] }
     )
     expect(channel.postMessage).toHaveBeenLastCalledWith({
       type: 'adapter.control',
       platform: 'reddit',
       state: 'active',
-      surfaces: ['reddit:home', 'reddit:all']
+      surfaces: ['reddit:home', 'reddit:all'],
+      copy: overlayCopy
     })
   })
 
@@ -109,13 +124,16 @@ describe('adapter runtime control hub', () => {
       originMap: installedAdapterOriginMap
     })
     hub.attach(channel.port)
-    hub.publish([
-      {
-        state: 'inactive',
-        platform: 'reddit',
-        code: 'host-permission-missing'
-      }
-    ])
+    hub.publish(
+      [
+        {
+          state: 'inactive',
+          platform: 'reddit',
+          code: 'host-permission-missing'
+        }
+      ],
+      overlayCopy
+    )
     expect(channel.postMessage).toHaveBeenLastCalledWith({
       type: 'adapter.control',
       platform: 'reddit',
@@ -125,13 +143,16 @@ describe('adapter runtime control hub', () => {
 
     channel.disconnect()
     channel.postMessage.mockClear()
-    hub.publish([
-      {
-        state: 'active',
-        platform: 'reddit',
-        origins: ['https://www.reddit.com/*']
-      }
-    ])
+    hub.publish(
+      [
+        {
+          state: 'active',
+          platform: 'reddit',
+          origins: ['https://www.reddit.com/*']
+        }
+      ],
+      overlayCopy
+    )
     expect(channel.postMessage).not.toHaveBeenCalled()
   })
 })

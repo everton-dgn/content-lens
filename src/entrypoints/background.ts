@@ -16,6 +16,8 @@ import {
 import { createRuntimeMessageListener } from '@/application/messages/runtime'
 import type { BrowserPermissionsApi } from '@/application/provider-management/browser-permissions'
 import { createServiceWorkerRuntime } from '@/extension/service-worker/runtime'
+import { applyInterfaceLocale } from '@/i18n/load'
+import { getInjectedOverlayCopy } from '@/i18n/overlay-copy'
 
 const isSupportedBrowser = (
   browserName: string
@@ -32,28 +34,37 @@ export default defineBackground({
     }
     void configurePanelAction(browserName)
 
+    const adapterControl = new AdapterRuntimeControlHub({
+      extensionId: browser.runtime.id,
+      originMap: installedAdapterOriginMap
+    })
     const runtime = createServiceWorkerRuntime({
       alarmsApi: browser.alarms,
       browser: browserName,
       permissionApi: browser.permissions as unknown as BrowserPermissionsApi,
-      scriptingApi: browser.scripting
+      scriptingApi: browser.scripting,
+      async onAdapterActivationReconciled({
+        enabledSurfaces,
+        locale,
+        results
+      }) {
+        // Overlay copy is resolved here, so the stored language has to be
+        // applied before the control port publishes it.
+        await applyInterfaceLocale(locale)
+        adapterControl.publish(
+          results,
+          getInjectedOverlayCopy(),
+          enabledSurfaces
+        )
+      }
     })
     void runtime.rss.start().catch(() => undefined)
     void runtime.sync.start().catch(() => undefined)
     browser.alarms.onAlarm.addListener(alarm => {
       void runtime.sync.handleAlarm(alarm).catch(() => undefined)
     })
-    const adapterControl = new AdapterRuntimeControlHub({
-      extensionId: browser.runtime.id,
-      originMap: installedAdapterOriginMap
-    })
     const reconcileAdapterActivation = () => {
-      void runtime
-        .reconcileAdapterActivation()
-        .then(({ enabledSurfaces, results }) =>
-          adapterControl.publish(results, enabledSurfaces)
-        )
-        .catch(() => undefined)
+      void runtime.reconcileAdapterActivation().catch(() => undefined)
     }
     reconcileAdapterActivation()
     browser.permissions.onAdded.addListener(() => {

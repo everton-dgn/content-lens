@@ -7,7 +7,12 @@ import { createManifest } from '@/config/manifest'
 
 import { collectMessageKeys, renderMessageKeys } from './generate-message-keys'
 import { messageKeys } from './message-keys.generated'
-import { createI18nRuntime, getUiLanguage, t as translate } from './runtime'
+import {
+  createI18nRuntime,
+  getUiLanguage,
+  installMessageCatalog,
+  t as translate
+} from './runtime'
 
 const browserI18n = vi.hoisted(() => ({
   getMessage: vi.fn(() => 'Browser message'),
@@ -94,6 +99,37 @@ describe('native i18n catalogs', () => {
     expect(getUiLanguage()).toBe('es')
     expect(browserI18n.getMessage).toHaveBeenCalledWith('panelReady', undefined)
     expect(browserI18n.getUILanguage).toHaveBeenCalledOnce()
+  })
+
+  it('answers from the installed catalog instead of the browser language', () => {
+    const getMessage = vi.fn(() => 'Browser text')
+    const runtime = createI18nRuntime({
+      getMessage,
+      getUILanguage: () => 'en-US'
+    })
+    installMessageCatalog({
+      catalog: { panelReady: { message: 'Pronto' } },
+      locale: 'pt_BR'
+    })
+
+    try {
+      expect(runtime.t('panelReady')).toBe('Pronto')
+      expect(runtime.getUiLanguage()).toBe('pt-BR')
+      expect(getMessage).not.toHaveBeenCalled()
+    } finally {
+      installMessageCatalog(undefined)
+    }
+  })
+
+  it('falls back to the browser language once the catalog is cleared', () => {
+    installMessageCatalog({
+      catalog: { panelReady: { message: 'Pronto' } },
+      locale: 'pt_BR'
+    })
+    installMessageCatalog(undefined)
+
+    expect(translate('panelReady')).toBe('Browser message')
+    expect(getUiLanguage()).toBe('es')
   })
 
   it('prevents visible panel copy from being hard-coded in JSX or HTML', async () => {

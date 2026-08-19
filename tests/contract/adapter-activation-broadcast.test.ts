@@ -64,6 +64,38 @@ describe('adapter activation broadcast', () => {
     )
   })
 
+  it('publishes one reconciliation at a time', async () => {
+    let releaseFirst: () => void = () => undefined
+    const firstReached = new Promise<void>(resolve => {
+      releaseFirst = resolve
+    })
+    let entered = 0
+    const runtime = await createRuntime(
+      'contentlens-activation-serialized',
+      async () => {
+        entered += 1
+        if (entered === 1) {
+          await firstReached
+        }
+      }
+    )
+
+    // Overlapping runs each read the profile at their start and only install
+    // the language once their own async work finishes, so a second run that
+    // reaches the callback while the first is still inside it could publish an
+    // older locale last and leave open tabs on the previous language.
+    const first = runtime.reconcileAdapterActivation()
+    const second = runtime.reconcileAdapterActivation()
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(entered).toBe(1)
+
+    releaseFirst()
+    await Promise.all([first, second])
+
+    expect(entered).toBe(2)
+  })
+
   it('reaches open platform tabs when a saved language changes', async () => {
     const reconciled = vi.fn()
     const runtime = await createRuntime(

@@ -66,7 +66,7 @@ export function createServiceWorkerRuntime(options: {
     permissions: options.permissionApi,
     scripting: options.scriptingApi
   })
-  const reconcileAdapterActivation = async () => {
+  const runReconcile = async () => {
     const profile = await database.exportProfile()
     const settings = projectContentLensSettings(
       profile?.settings ?? {}
@@ -92,6 +92,20 @@ export function createServiceWorkerRuntime(options: {
     await options.onAdapterActivationReconciled?.(outcome)
 
     return outcome
+  }
+  /**
+   * Reconciliations run one at a time. Each reads the profile at its start and
+   * only installs the language once its own asynchronous work finishes, so
+   * overlapping runs could otherwise publish an older locale last and leave
+   * open platform tabs on the previous language.
+   */
+  let pendingReconcile: Promise<unknown> = Promise.resolve()
+  const reconcileAdapterActivation = () => {
+    const next = pendingReconcile.then(runReconcile, runReconcile)
+
+    pendingReconcile = next.catch(() => undefined)
+
+    return next
   }
   const providers = bootstrapServiceWorkerProviderRuntime({
     browser: options.browser,

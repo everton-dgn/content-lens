@@ -29,7 +29,6 @@ import {
 } from '@/extension/content-script/platform-lifecycle'
 import { sendRuntimeMessageWithRetry } from '@/extension/content-script/runtime-messaging'
 import {
-  getInjectedOverlayCopy,
   type InjectedOverlayCopy,
   isInjectedOverlayCopy
 } from '@/i18n/overlay-copy'
@@ -98,10 +97,6 @@ export default defineContentScript({
     const sessionActions: DomRuntimeSessionActions = new Map()
     let disposed = false
     let enabledSurfaces = new Set<PlatformSurface>()
-    // Replaced by the worker-resolved copy as soon as the control port
-    // reports the platform active; the local fallback keeps the overlay
-    // readable if that message never arrives.
-    let overlayCopy: InjectedOverlayCopy = getInjectedOverlayCopy()
     let lifecycle: PlatformContentLifecycle | undefined
     let reconnectTimer: ReturnType<typeof setTimeout> | undefined
     let controlPort: ReturnType<typeof browser.runtime.connect> | undefined
@@ -110,7 +105,9 @@ export default defineContentScript({
       lifecycle?.dispose()
       lifecycle = undefined
     }
-    const start = () => {
+    // The worker resolves the overlay strings and ships them with the
+    // activation message, so the platform only ever starts with copy in hand.
+    const start = (overlayCopy: InjectedOverlayCopy) => {
       if (disposed || lifecycle) {
         return
       }
@@ -184,9 +181,8 @@ export default defineContentScript({
         }
         if (message.state === 'active') {
           enabledSurfaces = new Set(message.surfaces)
-          overlayCopy = message.copy
           stop()
-          start()
+          start(message.copy)
         } else {
           enabledSurfaces.clear()
           stop()

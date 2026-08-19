@@ -45,8 +45,19 @@ jobs:
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
 
+      # A hung apt mirror once ate the whole job, so each attempt gets its
+      # own deadline and the step insists before giving up.
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if timeout 240 pnpm exec playwright install --with-deps chromium; then
+              exit 0
+            fi
+            echo "Playwright install attempt $attempt failed, retrying"
+            sleep 10
+          done
+          exit 1
 
       - name: Build the Chrome bundle the lane renders
         run: pnpm build:chrome

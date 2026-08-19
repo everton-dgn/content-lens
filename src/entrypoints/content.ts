@@ -28,7 +28,11 @@ import {
   startPlatformContentLifecycle
 } from '@/extension/content-script/platform-lifecycle'
 import { sendRuntimeMessageWithRetry } from '@/extension/content-script/runtime-messaging'
-import { t } from '@/i18n/runtime'
+import {
+  getInjectedOverlayCopy,
+  type InjectedOverlayCopy,
+  isInjectedOverlayCopy
+} from '@/i18n/overlay-copy'
 
 const runtimeKey = Symbol.for('contentlens.platform.runtime')
 const runtimeMessageAttempts = 3
@@ -72,7 +76,9 @@ function isControlMessage(
       surface =>
         platformSurfaceSchema.safeParse(surface).success &&
         surface.startsWith(`${platform}:`)
-    )
+    ) &&
+    'copy' in input &&
+    isInjectedOverlayCopy(input.copy)
   )
 }
 
@@ -92,6 +98,10 @@ export default defineContentScript({
     const sessionActions: DomRuntimeSessionActions = new Map()
     let disposed = false
     let enabledSurfaces = new Set<PlatformSurface>()
+    // Replaced by the worker-resolved copy as soon as the control port
+    // reports the platform active; the local fallback keeps the overlay
+    // readable if that message never arrives.
+    let overlayCopy: InjectedOverlayCopy = getInjectedOverlayCopy()
     let lifecycle: PlatformContentLifecycle | undefined
     let reconnectTimer: ReturnType<typeof setTimeout> | undefined
     let controlPort: ReturnType<typeof browser.runtime.connect> | undefined
@@ -109,17 +119,7 @@ export default defineContentScript({
         createRuntime: ({ pageInstanceId, restoreFocus, surface }) =>
           startDomContentRuntime(document, {
             adapter: definition.adapter,
-            copy: {
-              actionsLabel: t('injectedActionsLabel'),
-              decisionConflict: t('injectedDecisionConflict'),
-              decisionFailed: t('injectedDecisionFailed'),
-              decisionPending: t('injectedDecisionPending'),
-              hiddenHeading: t('injectedHiddenHeading'),
-              hideForSession: t('injectedHideForSession'),
-              reasonForRule: t('injectedReasonRule'),
-              reasonForSession: t('injectedReasonSession'),
-              reveal: t('injectedReveal')
-            },
+            copy: overlayCopy,
             pageInstanceId,
             enabledSurfaces: [...enabledSurfaces],
             requestDecision: async (
@@ -184,6 +184,7 @@ export default defineContentScript({
         }
         if (message.state === 'active') {
           enabledSurfaces = new Set(message.surfaces)
+          overlayCopy = message.copy
           stop()
           start()
         } else {

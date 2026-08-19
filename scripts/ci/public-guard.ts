@@ -269,6 +269,27 @@ const approvedNetworkClientPaths = new Set([
   'src/ai/providers/request-policy.ts',
   'src/sync/providers/conditional-http.ts'
 ])
+/**
+ * Files allowed to read the extension's own packaged files. The exemption
+ * only holds while every request in the file targets `runtime.getURL`, so a
+ * remote endpoint added later is still reported.
+ */
+const packagedResourceReaderPaths = new Set(['src/i18n/load.ts'])
+
+const readsOnlyPackagedResources = (content: string): boolean => {
+  if (
+    /\b(?:EventSource|WebSocket|XMLHttpRequest)\s*\(|navigator\.sendBeacon\s*\(/u.test(
+      content
+    )
+  ) {
+    return false
+  }
+  const requests = content.match(/\bfetch\s*\(/gu)?.length ?? 0
+  const packaged =
+    content.match(/\bfetch\s*\(\s*browser\.runtime\.getURL\s*\(/gu)?.length ?? 0
+
+  return requests > 0 && requests === packaged
+}
 const rssNetworkForbiddenPaths = [
   'src/adapters/rss/',
   'src/application/feed-subscriptions/',
@@ -689,7 +710,11 @@ export const scanText = (path: string, content: string): GuardFinding[] => {
   if (
     policyPath.startsWith('src/') &&
     !approvedNetworkClientPaths.has(policyPath) &&
-    containsNetworkClient
+    containsNetworkClient &&
+    !(
+      packagedResourceReaderPaths.has(policyPath) &&
+      readsOnlyPackagedResources(content)
+    )
   ) {
     findings.push(finding(normalizedPath, 'unapproved-network-client'))
   }

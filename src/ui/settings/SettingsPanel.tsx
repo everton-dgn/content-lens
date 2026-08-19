@@ -70,6 +70,7 @@ export type SettingsPanelProps = {
   onOpenData?(): void
   onOpenFeeds?(): void
   onProfileChanged(): undefined | Promise<unknown>
+  reloadSurface?(): void
   runtime?: SettingsRuntimeClient
 }
 
@@ -78,6 +79,9 @@ export const SettingsPanel = ({
   onOpenData,
   onOpenFeeds,
   onProfileChanged,
+  reloadSurface = () => {
+    globalThis.location.reload()
+  },
   runtime = browserSettingsRuntime
 }: SettingsPanelProps) => {
   const { setTheme } = useTheme()
@@ -697,6 +701,14 @@ export const SettingsPanel = ({
         response.value.state !== 'committed'
       ) {
         throw new Error('settings-save-failed')
+      }
+      if (
+        draft.interface.locale !== snapshot.settings.settings.interface.locale
+      ) {
+        // Copy is resolved at import time, so a new language only reaches
+        // every string once the surface boots again.
+        reloadSurface()
+        return
       }
       const next = await refresh()
       setDraft(structuredClone(next.settings.settings))

@@ -2,6 +2,7 @@ import type { AdapterOriginMap } from '@/adapters/registry'
 import type { PlatformActivationResult } from '@/application/adapter-activation/browser-content-scripts'
 import type { Platform } from '@/core/content/contracts'
 import type { PlatformSurface } from '@/core/content/surfaces'
+import type { InjectedOverlayCopy } from '@/i18n/overlay-copy'
 
 export const ADAPTER_CONTROL_PORT_NAME = 'contentlens.adapter-control.v1'
 
@@ -11,6 +12,7 @@ export type AdapterControlMessage =
       platform: Platform
       state: 'active'
       surfaces: readonly PlatformSurface[]
+      copy: InjectedOverlayCopy
     }
   | {
       type: 'adapter.control'
@@ -88,6 +90,7 @@ export class AdapterRuntimeControlHub {
 
   publish(
     results: readonly PlatformActivationResult[],
+    copy: InjectedOverlayCopy,
     enabledSurfaces: Readonly<
       Partial<Record<Platform, readonly PlatformSurface[]>>
     > = {}
@@ -99,7 +102,8 @@ export class AdapterRuntimeControlHub {
               type: 'adapter.control',
               platform: result.platform,
               state: 'active',
-              surfaces: enabledSurfaces[result.platform] ?? []
+              surfaces: enabledSurfaces[result.platform] ?? [],
+              copy
             }
           : {
               type: 'adapter.control',

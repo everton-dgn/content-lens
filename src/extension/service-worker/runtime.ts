@@ -5,6 +5,7 @@ import {
   createBrowserVisualModelPort
 } from '@/ai/browser/model-ports'
 import { createBrowserVisualMediaPorts } from '@/ai/vision/media-runtime'
+import type { PlatformActivationResult } from '@/application/adapter-activation/browser-content-scripts'
 import {
   BrowserContentScriptActivation,
   type BrowserScriptingApi
@@ -21,6 +22,7 @@ import {
 import { ProviderStatePersistence } from '@/application/provider-management/persistence'
 import { projectContentLensSettings } from '@/application/settings/profile-settings'
 import { INSTALLED_ADAPTER_ORIGINS } from '@/config/adapter-origins'
+import type { Platform } from '@/core/content/contracts'
 import type { PlatformSurface } from '@/core/content/surfaces'
 import { fingerprintPortableValue } from '@/core/operations/fingerprint'
 import { bootstrapServiceWorkerProviderRuntime } from '@/extension/service-worker/provider-runtime'
@@ -42,6 +44,16 @@ export function createServiceWorkerRuntime(options: {
   }
   database?: ContentLensDatabase
   browserAi?: BrowserPromptExecutor
+  /**
+   * Called after every activation reconciliation, including the one a settings
+   * save triggers. Without it a saved language would only reach open platform
+   * tabs on the next permission change or worker restart.
+   */
+  onAdapterActivationReconciled?(outcome: {
+    enabledSurfaces: Partial<Record<Platform, readonly PlatformSurface[]>>
+    locale: string
+    results: PlatformActivationResult[]
+  }): Promise<void> | void
 }) {
   const database = options.database ?? new ContentLensDatabase()
   const browserAiBridge = new BrowserAiBridgeClient()
@@ -64,7 +76,8 @@ export function createServiceWorkerRuntime(options: {
         .filter(({ state }) => state === 'enabled')
         .map(({ platform }) => platform)
     )
-    return {
+    const outcome = {
+      locale: settings.interface.locale,
       enabledSurfaces: Object.fromEntries(
         Object.values(settings.platforms).map(({ platform, surfaces }) => [
           platform,
@@ -75,6 +88,10 @@ export function createServiceWorkerRuntime(options: {
       ),
       results
     }
+
+    await options.onAdapterActivationReconciled?.(outcome)
+
+    return outcome
   }
   const providers = bootstrapServiceWorkerProviderRuntime({
     browser: options.browser,

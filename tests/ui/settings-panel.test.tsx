@@ -84,6 +84,7 @@ async function mount(
   callbacks: {
     onOpenData?(): void
     onOpenFeeds?(): void
+    reloadSurface?(): void
   } = {}
 ) {
   const container = document.createElement('div')
@@ -170,6 +171,99 @@ describe('Settings panel', () => {
       await Promise.resolve()
     })
     expect(setTheme).not.toHaveBeenCalled()
+  })
+
+  it('reboots the surface when the saved interface language changes', async () => {
+    const request = vi.fn(async (message): Promise<SettingsRuntimeResponse> => {
+      if (message.type === 'settings.save') {
+        return {
+          kind: 'settings-save',
+          value: {
+            revision: 1,
+            state: 'committed',
+            value: { settingsSchemaVersion: 1 }
+          },
+          activation: []
+        }
+      }
+      return { kind: 'snapshot', value: snapshot }
+    })
+    const reloadSurface = vi.fn()
+    const container = await mount(
+      {
+        request,
+        requestPlatformPermission: vi.fn(async () => true),
+        requestProviderPermission: vi.fn(async () => true)
+      },
+      { reloadSurface }
+    )
+
+    await click(button(container, 'tabInterface'))
+    const locale = [...container.querySelectorAll('select')].find(
+      select => select.labels?.[0]?.textContent === 'localeLabel'
+    )
+    if (!locale) {
+      throw new Error('Locale selector not found')
+    }
+    const valueSetter = Object.getOwnPropertyDescriptor(
+      HTMLSelectElement.prototype,
+      'value'
+    )?.set
+    await act(async () => {
+      valueSetter?.call(locale, 'pt_BR')
+      locale.dispatchEvent(new Event('change', { bubbles: true }))
+    })
+    await click(button(container, 'saveAction'))
+
+    await vi.waitFor(() => expect(reloadSurface).toHaveBeenCalledOnce())
+  })
+
+  it('keeps the surface mounted when the language is untouched', async () => {
+    const request = vi.fn(async (message): Promise<SettingsRuntimeResponse> => {
+      if (message.type === 'settings.save') {
+        return {
+          kind: 'settings-save',
+          value: {
+            revision: 1,
+            state: 'committed',
+            value: { settingsSchemaVersion: 1 }
+          },
+          activation: []
+        }
+      }
+      return { kind: 'snapshot', value: snapshot }
+    })
+    const reloadSurface = vi.fn()
+    const container = await mount(
+      {
+        request,
+        requestPlatformPermission: vi.fn(async () => true),
+        requestProviderPermission: vi.fn(async () => true)
+      },
+      { reloadSurface }
+    )
+
+    await click(button(container, 'tabInterface'))
+    const colorMode = container.querySelector('select')
+    if (!(colorMode instanceof HTMLSelectElement)) {
+      throw new Error('Color mode selector not found')
+    }
+    const valueSetter = Object.getOwnPropertyDescriptor(
+      HTMLSelectElement.prototype,
+      'value'
+    )?.set
+    await act(async () => {
+      valueSetter?.call(colorMode, 'dark')
+      colorMode.dispatchEvent(new Event('change', { bubbles: true }))
+    })
+    await click(button(container, 'saveAction'))
+
+    await vi.waitFor(() =>
+      expect(request).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'settings.save' })
+      )
+    )
+    expect(reloadSurface).not.toHaveBeenCalled()
   })
 
   it('keeps theme previews local and broadcasts only the saved value', async () => {

@@ -276,11 +276,13 @@ const approvedNetworkClientPaths = new Set([
  */
 const packagedResourceReaderPaths = new Set(['src/i18n/load.ts'])
 
+/** Optional chaining reaches the same API, so both spellings must match. */
+const beaconPattern = String.raw`navigator\s*\??\.\s*sendBeacon\s*\(`
+const streamingClientPattern = String.raw`\b(?:EventSource|WebSocket|XMLHttpRequest)\s*\(`
+
 const readsOnlyPackagedResources = (content: string): boolean => {
   if (
-    /\b(?:EventSource|WebSocket|XMLHttpRequest)\s*\(|navigator\.sendBeacon\s*\(/u.test(
-      content
-    )
+    new RegExp(`${streamingClientPattern}|${beaconPattern}`, 'u').test(content)
   ) {
     return false
   }
@@ -593,10 +595,10 @@ export const scanText = (path: string, content: string): GuardFinding[] => {
   const policyPath = worktreePath.includes('!/')
     ? (worktreePath.split('!/').at(-1) ?? worktreePath)
     : worktreePath
-  const containsNetworkClient =
-    /\b(?:EventSource|WebSocket|XMLHttpRequest|fetch)\s*\(|navigator\.sendBeacon\s*\(/u.test(
-      content
-    )
+  const containsNetworkClient = new RegExp(
+    String.raw`\b(?:EventSource|WebSocket|XMLHttpRequest|fetch)\s*\(|${beaconPattern}`,
+    'u'
+  ).test(content)
   const rssNetworkReferenceIndex = rssNetworkForbiddenPaths.some(prefix =>
     policyPath.startsWith(prefix)
   )

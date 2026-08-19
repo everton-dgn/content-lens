@@ -215,6 +215,18 @@ describe('Settings panel', () => {
     })
     await click(button(container, 'saveAction'))
 
+    // Reloading without persisting the choice would show the old language
+    // again on the next boot, so the request has to carry it.
+    await vi.waitFor(() =>
+      expect(request).toHaveBeenCalledWith(
+        expect.objectContaining({
+          settings: expect.objectContaining({
+            interface: expect.objectContaining({ locale: 'pt_BR' })
+          }),
+          type: 'settings.save'
+        })
+      )
+    )
     await vi.waitFor(() => expect(reloadSurface).toHaveBeenCalledOnce())
   })
 

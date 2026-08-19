@@ -65,6 +65,19 @@ describe('public repository guard', () => {
     )
   })
 
+  it.each([
+    ['navigator.sendBeacon', 'navigator.sendBeacon(endpoint, body);'],
+    ['optional-chained sendBeacon', 'navigator?.sendBeacon(endpoint, body);'],
+    ['spaced optional chain', 'navigator ?. sendBeacon (endpoint, body);']
+  ])('reports %s even in the packaged-catalog reader', (_label, beacon) => {
+    const request = ['fet', 'ch'].join('')
+    const packagedRead = `const r = await ${request}(browser.runtime.getURL(path));`
+
+    expect(
+      findingCodes(scanText('src/i18n/load.ts', `${packagedRead} ${beacon}`))
+    ).toContain('unapproved-network-client')
+  })
+
   it('accepts only reviewed provider patterns and loopback references in their exact files', () => {
     const httpsPattern = ['https', '://', '*', '/*'].join('')
     const httpPattern = ['http', '://', '*', '/*'].join('')

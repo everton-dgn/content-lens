@@ -74,11 +74,26 @@ const openPanel = async (
     reducedMotion: 'reduce'
   })
   await page.goto(`${baseUrl}/tests/browser/fixtures/sidepanel-preview.html`, {
-    waitUntil: 'networkidle'
+    waitUntil: 'load'
   })
   await page.waitForSelector('[data-slot="shell"], .cl-shell', {
     timeout: 15_000
   })
+  // The fixture appends the bundle stylesheet after load, so the shell can
+  // exist before its rules apply. Waiting on the applied rule rather than on
+  // network silence keeps the screenshot deterministic without depending on
+  // traffic ever going quiet.
+  await page.waitForFunction(
+    () => {
+      const shell = document.querySelector('.cl-shell')
+      return shell
+        ? getComputedStyle(shell).display === 'grid' &&
+            document.fonts.status === 'loaded'
+        : false
+    },
+    undefined,
+    { timeout: 15_000 }
+  )
   // The status rail animates its marker; reduced motion leaves a static cue.
   await page.waitForTimeout(250)
 }

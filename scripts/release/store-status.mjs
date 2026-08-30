@@ -95,7 +95,6 @@ const fetchChromeStatus = async ({ publisherId, itemId, accessToken }) => {
 }
 
 export const queryStoreStatus = async ({
-  store,
   version,
   dryResponse,
   env = process.env
@@ -107,7 +106,7 @@ export const queryStoreStatus = async ({
         itemId: env.CWS_EXTENSION_ID,
         accessToken: env.CWS_ACCESS_TOKEN
       })
-  return decideStoreStatus({ store, version, response })
+  return decideStoreStatus({ store: 'chrome', version, response })
 }
 
 if (
@@ -121,7 +120,6 @@ if (
     )
   }
   const result = await queryStoreStatus({
-    store: args.store,
     version: args.version,
     dryResponse:
       typeof args['dry-response'] === 'string'

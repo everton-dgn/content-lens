@@ -14,7 +14,10 @@ import {
 } from '../../scripts/release/generate-sbom.mjs'
 import { findUnreviewedNetworkLiterals } from '../../scripts/release/guard-artifact.mjs'
 import { artifactNames, validateVersion } from '../../scripts/release/lib.mjs'
-import { decideStoreStatus } from '../../scripts/release/store-status.mjs'
+import {
+  decideStoreStatus,
+  queryStoreStatus
+} from '../../scripts/release/store-status.mjs'
 import { submitChromePackage } from '../../scripts/release/submit-chrome.mjs'
 
 const chromeItemUrl =
@@ -160,6 +163,15 @@ describe('release evidence contracts', () => {
       decideStoreStatus({ store: 'chrome', version: '1.2.3', response })
         .decision
     ).toBe(decision)
+  })
+
+  it('keeps direct store status queries bound to Chrome', async () => {
+    await expect(
+      queryStoreStatus({
+        version: '1.2.3',
+        dryResponse: resolve('tests/fixtures/profiles/rule-conflict.json')
+      })
+    ).resolves.toMatchObject({ store: 'chrome', version: '1.2.3' })
   })
 
   it('submits the verified Chrome ZIP with a short-lived access token', async () => {

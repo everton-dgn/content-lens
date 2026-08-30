@@ -2,7 +2,8 @@
 
 This guide covers a local development installation of ContentLens. The stable
 extension is published on the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp).
-Release artifacts are also available on the stable GitHub release page.
+Release artifacts are also available on the
+[stable GitHub release page](https://github.com/everton-dgn/content-lens/releases/latest).
 
 ## Requirements
 

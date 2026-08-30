@@ -7,7 +7,6 @@ export function decideStoreStatus(input: {
 }
 
 export function queryStoreStatus(input: {
-  store: 'chrome'
   version: string
   dryResponse?: string
   env?: Record<string, string | undefined>

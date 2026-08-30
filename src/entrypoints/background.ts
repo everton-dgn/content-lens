@@ -1,9 +1,6 @@
 import { browser } from 'wxt/browser'
 
-import {
-  configurePanelAction,
-  type SupportedBrowser
-} from '@/adapters/browser/panel'
+import { configurePanelAction } from '@/adapters/browser/panel'
 import { installedAdapterOriginMap } from '@/adapters/registry'
 import {
   BROWSER_AI_PORT_NAME,
@@ -19,10 +16,8 @@ import { createServiceWorkerRuntime } from '@/extension/service-worker/runtime'
 import { applyInterfaceLocale } from '@/i18n/load'
 import { getInjectedOverlayCopy } from '@/i18n/overlay-copy'
 
-const isSupportedBrowser = (
-  browserName: string
-): browserName is SupportedBrowser =>
-  browserName === 'chrome' || browserName === 'firefox'
+const isSupportedBrowser = (browserName: string): browserName is 'chrome' =>
+  browserName === 'chrome'
 
 export default defineBackground({
   type: 'module',
@@ -32,7 +27,7 @@ export default defineBackground({
     if (!isSupportedBrowser(browserName)) {
       return
     }
-    void configurePanelAction(browserName)
+    void configurePanelAction()
 
     const adapterControl = new AdapterRuntimeControlHub({
       extensionId: browser.runtime.id,
@@ -40,7 +35,6 @@ export default defineBackground({
     })
     const runtime = createServiceWorkerRuntime({
       alarmsApi: browser.alarms,
-      browser: browserName,
       permissionApi: browser.permissions as unknown as BrowserPermissionsApi,
       scriptingApi: browser.scripting,
       async onAdapterActivationReconciled({

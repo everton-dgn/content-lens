@@ -32,7 +32,6 @@ import { createServiceWorkerSyncRuntime } from '@/extension/service-worker/sync-
 import { ContentLensDatabase } from '@/storage/indexed-db/database'
 
 export function createServiceWorkerRuntime(options: {
-  browser: 'chrome' | 'firefox'
   permissionApi: BrowserPermissionsApi
   scriptingApi: BrowserScriptingApi
   alarmsApi: {
@@ -59,8 +58,7 @@ export function createServiceWorkerRuntime(options: {
   const browserAiBridge = new BrowserAiBridgeClient()
   const browserAi = options.browserAi ?? browserAiBridge
   const permissionPort = new BrowserPermissionPort({
-    api: options.permissionApi,
-    browser: options.browser
+    api: options.permissionApi
   })
   const adapterActivation = new BrowserContentScriptActivation({
     permissions: options.permissionApi,
@@ -108,7 +106,6 @@ export function createServiceWorkerRuntime(options: {
     return next
   }
   const providers = bootstrapServiceWorkerProviderRuntime({
-    browser: options.browser,
     persistence: new ProviderStatePersistence(database),
     permissions: permissionPort
   })
@@ -119,8 +116,7 @@ export function createServiceWorkerRuntime(options: {
     alarms: options.alarmsApi,
     database,
     providers,
-    hasPermission: binding =>
-      permissionPort.has(binding, ['authenticationInfo'])
+    hasPermission: binding => permissionPort.has(binding)
   })
   const textStage = createRoutedTextStage({
     runtime: providers.then(runtime =>
@@ -152,9 +148,7 @@ export function createServiceWorkerRuntime(options: {
           entry => entry.platform === platform
         ).map(entry => entry.origin),
       hasPermission: origin =>
-        permissionPort.has({ endpointOrigin: origin, execution: 'cloud' }, [
-          'websiteContent'
-        ])
+        permissionPort.has({ endpointOrigin: origin, execution: 'cloud' })
     }),
     cache: {
       read: id => database.readCacheEntry(id),

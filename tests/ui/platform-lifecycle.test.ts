@@ -87,7 +87,7 @@ describe('platform content lifecycle', () => {
     const starts: PlatformRuntimeStart<FocusAnchor>[] = []
     const disabled: Array<ReturnType<typeof vi.fn>> = []
     const lifecycle = startPlatformContentLifecycle<FocusAnchor>({
-      browserName: 'firefox',
+      browserName: 'chrome',
       createPageInstanceId: () => `reddit:page:${starts.length + 1}`,
       createRuntime: start => {
         starts.push(start)
@@ -133,7 +133,7 @@ describe('platform content lifecycle', () => {
     history.replaceState({}, '', '/feed')
     const starts: PlatformRuntimeStart<FocusAnchor>[] = []
     const lifecycle = startPlatformContentLifecycle<FocusAnchor>({
-      browserName: 'firefox',
+      browserName: 'chrome',
       createPageInstanceId: () => `reddit:page:${starts.length + 1}`,
       createRuntime: start => {
         starts.push(start)

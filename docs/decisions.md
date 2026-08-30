@@ -17,7 +17,7 @@ Architecture decision records capture choices that affect several components or 
 | [0011](adr/0011-reviewable-ai-assistance.md) | Accepted | AI may create validated drafts and explanations but cannot mutate durable or platform state. |
 | [0012](adr/0012-truthful-idempotent-operations.md) | Accepted | Asynchronous user mutations separate acknowledgement from idempotent durable completion. |
 | [0013](adr/0013-extension-toolchain-layout.md) | Accepted | A standalone pnpm project uses React, TypeScript, WXT and Vite with reviewable dependency inputs. |
-| [0014](adr/0014-browser-manifest-permissions.md) | Accepted, security amendment | Chrome MV3 and Firefox MV2 use tested browser floors, optional exact-origin grants and Firefox optional data-collection consent. RSS network acquisition is disabled. |
+| [0014](adr/0014-browser-manifest-permissions.md) | Accepted, amended | Chrome MV3 uses a tested browser floor and optional exact-origin grants. RSS network acquisition is disabled. |
 | [0015](adr/0015-local-similarity-content-graph.md) | Accepted | Similarity and content-graph capabilities stay local, bounded and separately gated. |
 | [0016](adr/0016-reviewed-native-platform-feedback.md) | Accepted | Native platform feedback requires an explicit reviewed action and fails closed. |
 | [0017](adr/0017-model-and-dataset-licensing.md) | Accepted | Every model and dataset requires verified licensing, provenance and redistribution terms. |

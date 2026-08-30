@@ -1,37 +1,15 @@
 import { readFile } from 'node:fs/promises'
-import { createRequire } from 'node:module'
-import { dirname, resolve } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { resolve } from 'node:path'
 
 import {
   type BrowserContext,
   chromium,
   expect,
-  firefox,
   type Page,
   test
 } from '@playwright/test'
 
 const fixtureUrl = 'https://www.youtube.com/worker-restart'
-const firefoxExtensionId = '{74780624-e313-43b5-8558-799bbf9b95d3}'
-
-interface FirefoxRemote {
-  disconnect(): void
-  installTemporaryAddon(
-    addonPath: string,
-    openDevTools: boolean
-  ): Promise<{ addon: { id: string } }>
-  reloadAddon(addonId: string): Promise<void>
-}
-
-interface FirefoxRemoteModule {
-  connectWithMaxRetries(options: {
-    maxRetries: number
-    port: number
-    retryInterval: number
-  }): Promise<FirefoxRemote>
-  findFreeTcpPort(): Promise<number>
-}
 
 interface OperationResult {
   effectCount: number
@@ -50,15 +28,6 @@ interface CapabilityResult {
   runtimeState: string
 }
 
-const loadFirefoxRemote = async (): Promise<FirefoxRemoteModule> => {
-  const projectRequire = createRequire(import.meta.url)
-  const requireFromWxt = createRequire(projectRequire.resolve('wxt'))
-  const webExtEntry = requireFromWxt.resolve('web-ext-run')
-  const remoteModule = resolve(dirname(webExtEntry), 'lib/firefox/remote.js')
-
-  return (await import(pathToFileURL(remoteModule).href)) as FirefoxRemoteModule
-}
-
 const installFixtureRoute = async (context: BrowserContext): Promise<void> => {
   const fixture = await readFile(
     resolve('tests/fixtures/runtime/fixture.html'),
@@ -75,7 +44,7 @@ const installFixtureRoute = async (context: BrowserContext): Promise<void> => {
 
 const openFixture = async (
   context: BrowserContext,
-  expectedBrowser: 'chrome' | 'firefox'
+  expectedBrowser: 'chrome'
 ): Promise<Page> => {
   const page = await context.newPage()
   await page.goto(fixtureUrl, { waitUntil: 'domcontentloaded' })
@@ -211,62 +180,6 @@ test.describe('worker-restart', () => {
       })
       await assertCapabilities(page)
     } finally {
-      await context.close()
-    }
-  })
-
-  test('replays once after a packaged Firefox extension-context restart', async ({
-    browserName
-  }, testInfo) => {
-    expect(browserName).toBe('firefox')
-
-    const extensionPath = resolve('.output/runtime-feasibility/firefox-mv2')
-    const firefoxRemote = await loadFirefoxRemote()
-    const debuggerPort = await firefoxRemote.findFreeTcpPort()
-    const context = await firefox.launchPersistentContext(
-      testInfo.outputPath('firefox-profile'),
-      {
-        args: ['-start-debugger-server', String(debuggerPort)],
-        firefoxUserPrefs: {
-          'devtools.debugger.prompt-connection': false,
-          'devtools.debugger.remote-enabled': true,
-          'xpinstall.signatures.required': false
-        },
-        headless: true
-      }
-    )
-    const remote = await firefoxRemote.connectWithMaxRetries({
-      maxRetries: 100,
-      port: debuggerPort,
-      retryInterval: 50
-    })
-
-    try {
-      const installed = await remote.installTemporaryAddon(extensionPath, false)
-      expect(installed.addon.id).toBe(firefoxExtensionId)
-      await installFixtureRoute(context)
-      let page = await openFixture(context, 'firefox')
-      const operationId = 'firefox-restart-operation'
-
-      await dispatchOperation(page, operationId, 'commit-then-hang')
-      await expect(page.locator('html')).toHaveAttribute(
-        'data-contentlens-runtime-committed',
-        operationId
-      )
-      await remote.reloadAddon(firefoxExtensionId)
-      await page.close()
-      page = await openFixture(context, 'firefox')
-
-      await dispatchOperation(page, operationId, 'commit')
-      expect(await readOperationResult(page)).toMatchObject({
-        effectCount: 1,
-        operationId,
-        replayed: true,
-        state: 'committed'
-      })
-      await assertCapabilities(page)
-    } finally {
-      remote.disconnect()
       await context.close()
     }
   })

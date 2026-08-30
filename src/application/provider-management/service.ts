@@ -313,8 +313,7 @@ export class ProviderManagementService {
         provider,
         vault: state.vault,
         permissions: {
-          has: (binding, dataCollection) =>
-            permissionProbe.call(this.#permissions, binding, dataCollection)
+          has: binding => permissionProbe.call(this.#permissions, binding)
         }
       })
       return {
@@ -345,8 +344,7 @@ export class ProviderManagementService {
         provider,
         vault: state.vault,
         permissions: {
-          has: (binding, dataCollection) =>
-            permissionProbe.call(this.#permissions, binding, dataCollection)
+          has: binding => permissionProbe.call(this.#permissions, binding)
         }
       })
       return state.catalog.synchronizeProviderModels(

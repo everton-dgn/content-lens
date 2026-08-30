@@ -187,7 +187,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ needs.version.outputs.version }}
         run: |
-          for target in chrome firefox sources; do
+          for target in chrome sources; do
             cmp \
               "reference/content-lens-$RELEASE_VERSION-$target.zip" \
               "rebuild/content-lens-$RELEASE_VERSION-$target.zip"
@@ -289,7 +289,7 @@ jobs:
               --jq '.[].name' |
               while IFS= read -r asset; do
                 case "$asset" in
-                  checksums.sha256|content-lens-"$RELEASE_VERSION"-chrome.zip|content-lens-"$RELEASE_VERSION"-firefox.zip|content-lens-"$RELEASE_VERSION"-sources.zip|provenance.intoto.json|release-manifest.json|sbom.spdx.json) ;;
+                  checksums.sha256|content-lens-"$RELEASE_VERSION"-chrome.zip|content-lens-"$RELEASE_VERSION"-sources.zip|provenance.intoto.json|release-manifest.json|sbom.spdx.json) ;;
                   *) gh release delete-asset "$RELEASE_TAG" "$asset" --yes ;;
                 esac
               done
@@ -307,15 +307,14 @@ jobs:
           fi
 
   stores:
-    name: Submit stable release to browser stores
+    name: Submit stable release to Chrome Web Store
     needs:
       - version
       - publish
     if: >-
       needs.version.outputs.publish == 'true' &&
       needs.publish.result == 'success' &&
-      (vars.CHROME_STORE_PUBLISHING_ENABLED == 'true' ||
-       vars.FIREFOX_STORE_PUBLISHING_ENABLED == 'true')
+      vars.CHROME_STORE_PUBLISHING_ENABLED == 'true'
     permissions:
       attestations: read
       contents: read

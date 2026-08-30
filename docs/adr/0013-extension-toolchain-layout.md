@@ -10,8 +10,8 @@ OQ-001 also blocked the repository layout because
 the existing architecture tree described responsibilities without selecting a
 physical project structure.
 
-The first public release targets Chrome/Chromium and Firefox from one local-first
-codebase. The repository must keep the deterministic core independent from
+The public release targets Chrome/Chromium from one local-first codebase. The
+repository must keep the deterministic core independent from
 browser APIs, isolate platform DOM integration and avoid importing server,
 monorepo or proprietary application assumptions.
 
@@ -19,8 +19,8 @@ monorepo or proprietary application assumptions.
 
 The project needs a reproducible browser-extension toolchain that:
 
-- builds Chrome and Firefox artifacts from the same source;
-- supports React, strict TypeScript and browser-specific manifests;
+- builds the Chrome artifact from the shared source;
+- supports React, strict TypeScript and generated manifests;
 - keeps entrypoints thin and internal modules separated by responsibility;
 - lets contributors install and validate the project with one package manager;
 - exposes dependency and build inputs to review.
@@ -32,9 +32,9 @@ The project needs a reproducible browser-extension toolchain that:
    Vite plugins.
 3. Adopt a server-oriented application scaffold or a monorepo structure.
 
-Option 1 keeps browser-specific generation in a framework whose declared peers
+Option 1 keeps manifest generation in a framework whose declared peers
 include Vite 8 and TypeScript 7. Option 2 would require project-owned code for
-cross-browser manifests, packaging and generated extension types. Option 3
+manifests, packaging and generated extension types. Option 3
 would retain server and workspace boundaries that the extension does not use.
 
 ## Evidence
@@ -65,12 +65,11 @@ corepack pnpm install --ignore-scripts
 corepack pnpm run prepare:wxt
 corepack pnpm run typecheck
 corepack pnpm run build:chrome
-corepack pnpm run build:firefox
 corepack pnpm install --frozen-lockfile --ignore-scripts
 ```
 
-WXT generated types, TypeScript passed with strict checks, and WXT built Chrome
-MV3 and Firefox MV2 artifacts with Vite 8.1.5. TypeScript 6 was the research
+WXT generated types, TypeScript passed with strict checks, and WXT built the
+Chrome MV3 artifact with Vite 8.1.5. TypeScript 6 was the research
 baseline, but 7.0.2 was the stable registry version at implementation time. The
 selected WXT version accepts TypeScript 5.4 or newer, and the probe used no
 compiler option removed by TypeScript 7.
@@ -89,9 +88,8 @@ vite@8.1.5
 ```
 
 The WASM runtime requests 2.x alpha releases of `@emnapi/core` and
-`@emnapi/runtime`, while the binding pins version 1.11.1. Native Chrome and
-Firefox builds passed without that
-fallback. This exact chain is the only bootstrap peer exception. Any other peer
+`@emnapi/runtime`, while the binding pins version 1.11.1. The native Chrome
+build passed without that fallback. This exact chain is the only bootstrap peer exception. Any other peer
 issue blocks installation. The exception expires when the upstream versions
 align or when a supported build environment requires the WASM fallback.
 
@@ -155,14 +153,14 @@ bundler-specific plugins and unrelated packages are outside this toolchain.
 - Runtime dependencies are preferred only when a platform API or existing
   dependency cannot meet the requirement.
 - Dependency updates arrive through reviewable pull requests and repeat frozen
-  install, typecheck, tests and both browser builds.
+  install, typecheck, tests and the Chrome build.
 - Executable remote code and unverified model downloads remain prohibited by
   [ADR 0008](0008-supply-chain-integrity.md).
 
 ## Tradeoffs
 
 - WXT reduces project-owned manifest and packaging code but becomes a build
-  dependency that needs cross-browser verification.
+  dependency that needs packaged-browser verification.
 - Exact versions and a minimum release age slow routine upgrades.
 - A standalone layout keeps ownership clear now but defers reusable package
   boundaries until evidence justifies them.
@@ -174,8 +172,7 @@ bundler-specific plugins and unrelated packages are outside this toolchain.
 - OQ-001 is resolved.
 - Task 1.2 creates the machine-readable versions, lockfile and dependency-policy
   record from this decision.
-- Chrome and Firefox builds remain separate validation gates over one source
-  tree.
+- The Chrome build remains a validation gate over the source tree.
 - Browser minimum versions stay unresolved until OQ-002 capability probes;
   this ADR makes no browser support claim.
 - Changing the package manager, build framework, Node major, root layout or
@@ -183,11 +180,11 @@ bundler-specific plugins and unrelated packages are outside this toolchain.
 
 ## Validation
 
-Task 1.2 must repeat the frozen install and both builds from a clean checkout,
+Task 1.2 must repeat the frozen install and Chrome build from a clean checkout,
 record the optional WASM peer exception, and prove that no server-only or
 monorepo-only dependency entered the graph. Task 1.3 then validates packaged
-manifest and panel behavior in both browsers.
+manifest and panel behavior in Chrome.
 
-Revisit this decision if WXT cannot preserve required Chrome/Firefox parity, a
+Revisit this decision if WXT cannot preserve the required Chrome package, a
 supported CI platform needs the WASM fallback, or a toolchain update changes
 the selected engine or peer contracts.

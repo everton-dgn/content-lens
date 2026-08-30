@@ -26,14 +26,11 @@ export type ServiceWorkerProviderRuntime =
 export async function bootstrapServiceWorkerProviderRuntime(options: {
   persistence: ProviderStatePersistencePort
   permissions: ProviderRuntimePermissions
-  browser?: 'chrome' | 'firefox'
 }): Promise<ServiceWorkerProviderRuntime> {
   try {
     const runtime = await options.persistence.load()
-    if (options.browser === 'chrome') {
-      runtime.providers.upsert(browserBuiltInProvider())
-      runtime.catalog.upsertBuiltIn(browserBuiltInModel())
-    }
+    runtime.providers.upsert(browserBuiltInProvider())
+    runtime.catalog.upsertBuiltIn(browserBuiltInModel())
     return {
       state: 'ready',
       ...runtime,

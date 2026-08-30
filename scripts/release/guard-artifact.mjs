@@ -115,53 +115,45 @@ const validateBundleNetworkLiterals = archive => {
   }
 }
 
-const validateBrowserManifest = (
-  archive,
-  browser,
-  version,
-  generatedIconManifest
-) => {
+const validateBrowserManifest = (archive, version, generatedIconManifest) => {
   const manifest = JSON.parse(unzipEntry(archive, 'manifest.json'))
   if (manifest.version !== version)
-    throw new Error(`${browser} manifest version does not match ${version}.`)
-  if (manifest.manifest_version !== (browser === 'chrome' ? 3 : 2)) {
-    throw new Error(`${browser} uses an unexpected manifest version.`)
+    throw new Error(`Chrome manifest version does not match ${version}.`)
+  if (manifest.manifest_version !== 3) {
+    throw new Error('Chrome uses an unexpected manifest version.')
   }
-  const expectedPermissions =
-    browser === 'chrome'
-      ? ['alarms', 'sidePanel', 'scripting']
-      : ['alarms', 'scripting']
+  const expectedPermissions = ['alarms', 'sidePanel', 'scripting']
   if (
     JSON.stringify(manifest.permissions?.sort()) !==
     JSON.stringify(expectedPermissions.sort())
   ) {
-    throw new Error(`${browser} permissions differ from the reviewed contract.`)
+    throw new Error('Chrome permissions differ from the reviewed contract.')
   }
   const serialized = JSON.stringify(manifest)
   if (/https?:\/\/[^*]/u.test(String(manifest.content_security_policy ?? ''))) {
-    throw new Error(`${browser} CSP permits remote code.`)
+    throw new Error('Chrome CSP permits remote code.')
   }
   if (/"(?:background|content_scripts)"[\s\S]*https?:\/\//u.test(serialized)) {
-    throw new Error(`${browser} manifest references remote executable code.`)
+    throw new Error('Chrome manifest references remote executable code.')
   }
   const entries = listArchive(archive)
   if (entries.some(entry => entry.endsWith('.map')))
-    throw new Error(`${browser} archive contains source maps.`)
+    throw new Error('Chrome archive contains source maps.')
   for (const locale of ['en', 'pt_BR', 'es']) {
     if (!entries.includes(`_locales/${locale}/messages.json`))
-      throw new Error(`${browser} is missing locale ${locale}.`)
+      throw new Error(`Chrome is missing locale ${locale}.`)
   }
   for (const size of [16, 20, 24, 32, 48, 64, 128]) {
     const entry = `icon/${size}.png`
     if (!entries.includes(entry))
-      throw new Error(`${browser} is missing icon ${size}.`)
+      throw new Error(`Chrome is missing icon ${size}.`)
     const expectedSha256 = generatedIconManifest.icons?.[size]?.sha256
     const actualSha256 = createHash('sha256')
       .update(unzipEntryBuffer(archive, entry))
       .digest('hex')
     if (actualSha256 !== expectedSha256) {
       throw new Error(
-        `${browser} icon ${size} differs from the canonical generated asset.`
+        `Chrome icon ${size} differs from the canonical generated asset.`
       )
     }
   }
@@ -229,8 +221,8 @@ export const guardReleaseDirectory = async ({ root, directory }) => {
       )
     }
   }
-  if (manifest.artifacts?.length !== 3)
-    throw new Error('Release manifest must describe three artifacts.')
+  if (manifest.artifacts?.length !== 2)
+    throw new Error('Release manifest must describe two artifacts.')
 
   const sbom = await readJson(resolve(directory, RELEASE_FILES.sbom))
   if (
@@ -259,19 +251,11 @@ export const guardReleaseDirectory = async ({ root, directory }) => {
 
   validateBrowserManifest(
     resolve(directory, expectedArchives[0]),
-    'chrome',
     product.version,
     generatedIconManifest
   )
   validateBundleNetworkLiterals(resolve(directory, expectedArchives[0]))
-  validateBundleNetworkLiterals(resolve(directory, expectedArchives[1]))
-  validateBrowserManifest(
-    resolve(directory, expectedArchives[1]),
-    'firefox',
-    product.version,
-    generatedIconManifest
-  )
-  const sourceEntries = listArchive(resolve(directory, expectedArchives[2]))
+  const sourceEntries = listArchive(resolve(directory, expectedArchives[1]))
   for (const required of [
     'SOURCE_CODE_REVIEW.md',
     'package.json',
@@ -297,9 +281,7 @@ export const guardReleaseDirectory = async ({ root, directory }) => {
     expectedArchives.map(name => resolve(directory, name))
   )
   const blockingFindings = findings.filter(finding => {
-    const browserBundle =
-      finding.path.includes('-chrome.zip!/') ||
-      finding.path.includes('-firefox.zip!/')
+    const browserBundle = finding.path.includes('-chrome.zip!/')
     return !(
       browserBundle &&
       (finding.code === 'private-network-reference' ||

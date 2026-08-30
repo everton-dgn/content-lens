@@ -80,18 +80,17 @@ Before public release:
 
 The implementation uses `.github/workflows/auto-release.yml` after a successful
 `main` CI run to calculate a stable version, normal-merge the bot version pull
-request, create the annotated tag, build the Chrome, Firefox and sources ZIPs,
+request, create the annotated tag, build the Chrome and sources ZIPs,
 attest their digests and SBOM with GitHub OIDC, and compare an independent
 rebuild byte for byte. A separate verification job recalculates every digest
-before publishing the stable GitHub Release. When either
-`CHROME_STORE_PUBLISHING_ENABLED=true` or
-`FIREFOX_STORE_PUBLISHING_ENABLED=true`, `.github/workflows/auto-release.yml`
-calls `.github/workflows/publish-extension.yml` with the released version. Each
-variable gates only its matching store job. The store workflow remains manually
+before publishing the stable GitHub Release. When
+`CHROME_STORE_PUBLISHING_ENABLED=true`, `.github/workflows/auto-release.yml`
+calls `.github/workflows/publish-extension.yml` with the released version. The
+variable gates the store job. The store workflow remains manually
 dispatchable for recovery. It downloads the permanent assets from that exact
 stable GitHub Release, verifies the complete set, freezes it inside the
-submission run and submits each enabled browser-specific package from a
-protected store environment without rebuilding. Chrome submissions use
+submission run and submits the Chrome package from a protected store
+environment without rebuilding. Chrome submissions use
 `DEFAULT_PUBLISH`, so an approved revision becomes public automatically. The
 workflow does not leave an approved Chrome revision waiting for a manual
 dashboard publication.
@@ -99,8 +98,7 @@ dashboard publication.
 Chrome Web Store access has no stored service-account private key. GitHub OIDC
 may impersonate the publisher service account only for
 `everton-dgn/content-lens` on `refs/heads/main`; the job requests a short-lived
-token with only the `chromewebstore` scope. AMO issuer and secret values remain
-limited to the protected `amo` environment. Public extension, publisher,
+token with only the `chromewebstore` scope. Public extension, publisher,
 service-account and provider identifiers are environment variables rather than
 secrets.
 

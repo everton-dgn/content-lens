@@ -80,13 +80,10 @@ describe('provider catalog refresh', () => {
       { modelId: 'gpt-a', capabilities: [], catalogSource: 'provider' },
       { modelId: 'gpt-b', capabilities: [], catalogSource: 'provider' }
     ])
-    expect(permissionProbe.has).toHaveBeenCalledWith(
-      {
-        endpointOrigin: 'https://api.example',
-        execution: 'cloud'
-      },
-      ['authenticationInfo']
-    )
+    expect(permissionProbe.has).toHaveBeenCalledWith({
+      endpointOrigin: 'https://api.example',
+      execution: 'cloud'
+    })
   })
 
   it('paginates Anthropic models with an opaque cursor', async () => {
@@ -185,7 +182,7 @@ describe('provider catalog refresh', () => {
     ])
   })
 
-  it('lists local Ollama models without requesting authentication data', async () => {
+  it('lists local Ollama models after checking the exact origin permission', async () => {
     const permissionProbe = permissions()
     const fetchImpl = vi.fn(async (_request, init?: RequestInit) => {
       expect(new Headers(init?.headers).has('authorization')).toBe(false)
@@ -203,13 +200,10 @@ describe('provider catalog refresh', () => {
     ).resolves.toMatchObject([
       { modelId: 'gemma3', displayName: 'gemma3:latest' }
     ])
-    expect(permissionProbe.has).toHaveBeenCalledWith(
-      {
-        endpointOrigin: 'http://127.0.0.1:11434',
-        execution: 'local'
-      },
-      []
-    )
+    expect(permissionProbe.has).toHaveBeenCalledWith({
+      endpointOrigin: 'http://127.0.0.1:11434',
+      execution: 'local'
+    })
   })
 
   it('requires an explicit gesture, permission and a supported provider', async () => {

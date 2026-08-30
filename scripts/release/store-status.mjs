@@ -1,50 +1,13 @@
-import { createHmac, randomUUID } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 import { parseArgs, stableJson } from './lib.mjs'
 
-const encode = value => Buffer.from(value).toString('base64url')
-
 const requireText = (value, name) => {
   if (typeof value !== 'string' || value.trim() === '')
     throw new Error(`${name} is required.`)
   return value
-}
-
-// The submission step runs `wxt submit`, whose AMO client strips a leading `{`
-// and a trailing `}` before calling the API. A braced GUID therefore reaches
-// addons.mozilla.org without its braces and resolves to nothing, so the upload
-// fails with a bare 404 after the release assets were already verified. Reject
-// that shape here, while the run can still report an actionable reason.
-export const requireAmoIdentifier = value => {
-  const identifier = requireText(value, 'AMO extension ID')
-  if (identifier.startsWith('{') || identifier.endsWith('}')) {
-    throw new Error(
-      'AMO extension ID must be the listing slug or its numeric id, not a braced GUID. ' +
-        'The submission client removes the braces and addons.mozilla.org answers 404.'
-    )
-  }
-  return identifier
-}
-
-export const createAmoJwt = ({
-  issuer,
-  keyMaterial,
-  now = Math.floor(Date.now() / 1000)
-}) => {
-  const header = encode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-  const payload = encode(
-    JSON.stringify({
-      iss: issuer,
-      jti: randomUUID(),
-      iat: now,
-      exp: now + 300
-    })
-  )
-  const input = `${header}.${payload}`
-  return `${input}.${createHmac('sha256', keyMaterial).update(input).digest('base64url')}`
 }
 
 const fetchJson = async (url, options) => {
@@ -131,28 +94,6 @@ const fetchChromeStatus = async ({ publisherId, itemId, accessToken }) => {
   )
 }
 
-const fetchAmoStatus = async ({ extensionId, jwt }) => {
-  requireAmoIdentifier(extensionId)
-  requireText(jwt, 'AMO JWT')
-  const pages = []
-  const initial = new URL(
-    `https://addons.mozilla.org/api/v5/addons/addon/${encodeURIComponent(extensionId)}/versions/`
-  )
-  initial.searchParams.set('filter', 'all_without_unlisted')
-  initial.searchParams.set('page_size', '50')
-  let url = initial.toString()
-  while (url) {
-    const page = await fetchJson(url, {
-      headers: { authorization: `JWT ${jwt}` }
-    })
-    pages.push(page)
-    url = typeof page?.next === 'string' ? page.next : ''
-    if (pages.length > 20)
-      throw new Error('AMO status pagination exceeded 20 pages.')
-  }
-  return { pages }
-}
-
 export const queryStoreStatus = async ({
   store,
   version,
@@ -161,21 +102,11 @@ export const queryStoreStatus = async ({
 }) => {
   const response = dryResponse
     ? JSON.parse(await readFile(dryResponse, 'utf8'))
-    : store === 'chrome'
-      ? await fetchChromeStatus({
-          publisherId: env.CWS_PUBLISHER_ID,
-          itemId: env.CWS_EXTENSION_ID,
-          accessToken: env.CWS_ACCESS_TOKEN
-        })
-      : await fetchAmoStatus({
-          extensionId: env.AMO_EXTENSION_ID,
-          jwt:
-            env.AMO_JWT ||
-            createAmoJwt({
-              issuer: requireText(env.AMO_JWT_ISSUER, 'AMO JWT issuer'),
-              keyMaterial: requireText(env.AMO_JWT_SECRET, 'AMO JWT secret')
-            })
-        })
+    : await fetchChromeStatus({
+        publisherId: env.CWS_PUBLISHER_ID,
+        itemId: env.CWS_EXTENSION_ID,
+        accessToken: env.CWS_ACCESS_TOKEN
+      })
   return decideStoreStatus({ store, version, response })
 }
 
@@ -184,12 +115,9 @@ if (
   import.meta.url === pathToFileURL(resolve(process.argv[1])).href
 ) {
   const args = parseArgs(process.argv.slice(2))
-  if (
-    (args.store !== 'chrome' && args.store !== 'amo') ||
-    typeof args.version !== 'string'
-  ) {
+  if (args.store !== 'chrome' || typeof args.version !== 'string') {
     throw new Error(
-      'Usage: store-status.mjs --store chrome|amo --version <version> [--dry-response <json>]'
+      'Usage: store-status.mjs --store chrome --version <version> [--dry-response <json>]'
     )
   }
   const result = await queryStoreStatus({

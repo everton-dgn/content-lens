@@ -23,8 +23,7 @@ boundary.
 
 | Command | Purpose |
 | --- | --- |
-| `pnpm dev` | Start the Chrome development extension |
-| `pnpm dev:firefox` | Start the Firefox development extension |
+| `pnpm dev` | Start the Chrome development build for manual loading |
 | `pnpm typecheck` | Generate WXT types and run TypeScript |
 | `pnpm lint` | Run Biome and project lint plugins |
 | `pnpm test:unit` | Run unit and contract tests |

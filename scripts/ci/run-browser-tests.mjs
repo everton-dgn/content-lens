@@ -29,41 +29,35 @@ const run = (command, arguments_) => {
 }
 
 if (runsAllBrowserTests || runsPackagedPanel) {
-  for (const browser of ['chrome', 'firefox']) {
-    run('pnpm', ['exec', 'wxt', 'build', '--browser', browser])
-  }
+  run('pnpm', ['exec', 'wxt', 'build', '--browser', 'chrome'])
 }
 
 if (runsAllBrowserTests || runsProductionYoutubeFlow) {
   const config = 'wxt.adapter-e2e.config.ts'
 
-  for (const browser of ['chrome', 'firefox']) {
-    run('pnpm', [
-      'exec',
-      'wxt',
-      'build',
-      '--config',
-      config,
-      '--browser',
-      browser
-    ])
-  }
+  run('pnpm', [
+    'exec',
+    'wxt',
+    'build',
+    '--config',
+    config,
+    '--browser',
+    'chrome'
+  ])
 }
 
 if (runsAllBrowserTests || runsWorkerRestart) {
   const config = 'tests/browser/harness/runtime/wxt.config.ts'
 
-  for (const browser of ['chrome', 'firefox']) {
-    run('pnpm', [
-      'exec',
-      'wxt',
-      'build',
-      '--config',
-      config,
-      '--browser',
-      browser
-    ])
-  }
+  run('pnpm', [
+    'exec',
+    'wxt',
+    'build',
+    '--config',
+    config,
+    '--browser',
+    'chrome'
+  ])
 }
 
 run('pnpm', ['exec', 'playwright', 'test', ...testArguments])

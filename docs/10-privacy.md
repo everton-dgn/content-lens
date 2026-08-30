@@ -154,9 +154,8 @@ removes snapshots, journals and quarantined evidence.
 The browser extension requests platform host permissions only for enabled
 adapters where feasible. Provider host patterns are optional manifest
 capabilities, not installation grants. Connection requests one exact normalized
-origin after a named user action. Firefox also treats `authenticationInfo` and
-`websiteContent` as optional data-collection categories. Refusal sends no
-provider request and leaves the local baseline available.
+origin after a named user action. Refusal sends no provider request and leaves
+the local baseline available.
 
 ## Secrets
 

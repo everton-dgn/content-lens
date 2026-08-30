@@ -21,9 +21,6 @@ Nothing. There is no analytics, no crash reporting, no usage measurement and no
 identifier that follows you. No data reaches the authors of this extension by
 any path.
 
-Firefox installs declare this as `data_collection_permissions.required:
-["none"]`.
-
 ## What the extension stores, and where
 
 Everything below stays in the extension's own storage inside your browser

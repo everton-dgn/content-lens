@@ -203,15 +203,10 @@ export async function refreshProviderCatalog(input: {
     throw new Error('provider-catalog-refresh-unavailable')
   }
   const plan = planFor(input.provider)
-  const authenticationData =
-    plan.authentication === 'none' ? [] : (['authenticationInfo'] as const)
-  const permitted = await input.permissions.has(
-    {
-      endpointOrigin: input.provider.endpointOrigin,
-      execution: input.provider.execution
-    },
-    authenticationData
-  )
+  const permitted = await input.permissions.has({
+    endpointOrigin: input.provider.endpointOrigin,
+    execution: input.provider.execution
+  })
   if (!permitted) {
     throw new Error('provider-catalog-refresh-permission-denied')
   }

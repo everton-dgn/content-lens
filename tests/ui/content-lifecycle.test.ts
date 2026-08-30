@@ -98,7 +98,7 @@ describe('YouTube content lifecycle', () => {
     let disabled = 0
     const testUrl = createYouTubeLocation()
     const lifecycle = startYouTubeContentLifecycle({
-      browserName: 'firefox',
+      browserName: 'chrome',
       createPageInstanceId: () => `page:${starts.length + 1}`,
       createRuntime: start => {
         starts.push(start)
@@ -124,7 +124,7 @@ describe('YouTube content lifecycle', () => {
     globalThis.dispatchEvent(transitionEvent('pageshow', true))
     expect(starts).toHaveLength(2)
     expect(document.documentElement.dataset.contentlensRuntimeReady).toBe(
-      'firefox'
+      'chrome'
     )
     lifecycle.dispose()
   })

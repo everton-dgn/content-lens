@@ -69,14 +69,6 @@ function validModelOutput(): ClassificationModelOutput {
 function permissionApi(): BrowserPermissionsApi {
   return {
     contains: vi.fn(async () => true),
-    getAll: vi.fn(async () => ({
-      origins: ['https://api.openai.com/*'],
-      permissions: [],
-      data_collection: [
-        'authenticationInfo',
-        'websiteContent'
-      ] as const as unknown as Array<'authenticationInfo' | 'websiteContent'>
-    })),
     remove: vi.fn(async () => true),
     request: vi.fn(async () => true)
   }
@@ -215,13 +207,10 @@ describe('provider connection test', () => {
       latencyMs: 24,
       providerStatus: 'ready'
     })
-    expect(permissions.has).toHaveBeenCalledWith(
-      {
-        endpointOrigin: 'https://provider.example',
-        execution: 'cloud'
-      },
-      ['authenticationInfo']
-    )
+    expect(permissions.has).toHaveBeenCalledWith({
+      endpointOrigin: 'https://provider.example',
+      execution: 'cloud'
+    })
     expect(
       JSON.stringify(await fetchImpl.mock.results[0]?.value)
     ).not.toContain('connection-credential-canary')
@@ -583,10 +572,7 @@ describe('provider connection test', () => {
 describe('browser provider permissions', () => {
   it('requests only the exact normalized origin inside an explicit user gesture', async () => {
     const api = permissionApi()
-    const permissions = new BrowserPermissionPort({
-      api,
-      browser: 'firefox'
-    })
+    const permissions = new BrowserPermissionPort({ api })
 
     await expect(
       permissions.request(
@@ -594,24 +580,17 @@ describe('browser provider permissions', () => {
           endpointOrigin: 'https://api.openai.com',
           execution: 'cloud'
         },
-        {
-          userInitiated: true,
-          dataCollection: ['authenticationInfo', 'websiteContent']
-        }
+        { userInitiated: true }
       )
     ).resolves.toBe(true)
     expect(api.request).toHaveBeenCalledWith({
-      origins: ['https://api.openai.com/*'],
-      data_collection: ['authenticationInfo', 'websiteContent']
+      origins: ['https://api.openai.com/*']
     })
   })
 
   it('rejects permission requests outside a user gesture before invoking the browser', async () => {
     const api = permissionApi()
-    const permissions = new BrowserPermissionPort({
-      api,
-      browser: 'chrome'
-    })
+    const permissions = new BrowserPermissionPort({ api })
 
     await expect(
       permissions.request(
@@ -619,26 +598,21 @@ describe('browser provider permissions', () => {
           endpointOrigin: 'https://provider.example',
           execution: 'cloud'
         },
-        { userInitiated: false, dataCollection: [] }
+        { userInitiated: false }
       )
     ).rejects.toThrow('provider-permission-user-gesture-required')
     expect(api.request).not.toHaveBeenCalled()
   })
 
-  it('checks host and Firefox data consent and removes only the exact origin', async () => {
+  it('checks host permission and removes only the exact origin', async () => {
     const api = permissionApi()
-    const permissions = new BrowserPermissionPort({
-      api,
-      browser: 'firefox'
-    })
+    const permissions = new BrowserPermissionPort({ api })
     const binding = {
       endpointOrigin: 'https://api.openai.com',
       execution: 'cloud' as const
     }
 
-    await expect(
-      permissions.has(binding, ['authenticationInfo', 'websiteContent'])
-    ).resolves.toBe(true)
+    await expect(permissions.has(binding)).resolves.toBe(true)
     expect(api.contains).toHaveBeenCalledWith({
       origins: ['https://api.openai.com/*']
     })
@@ -650,22 +624,16 @@ describe('browser provider permissions', () => {
     })
   })
 
-  it('omits Firefox-only data categories on Chrome', async () => {
+  it('requests a local provider origin without extra permission metadata', async () => {
     const api = permissionApi()
-    const permissions = new BrowserPermissionPort({
-      api,
-      browser: 'chrome'
-    })
+    const permissions = new BrowserPermissionPort({ api })
 
     await permissions.request(
       {
         endpointOrigin: 'http://127.0.0.1:11434',
         execution: 'local'
       },
-      {
-        userInitiated: true,
-        dataCollection: ['authenticationInfo']
-      }
+      { userInitiated: true }
     )
 
     expect(api.request).toHaveBeenCalledWith({

@@ -25,7 +25,6 @@ Optional capabilities must remain removable from the deterministic baseline.
 | --- | --- | --- | --- | --- |
 | `react`, `react-dom` | Runtime | ADR 0013 and the UI contract | UI | The React runtime and renderer are included in extension pages that use them. |
 | `wxt`, `vite` | Build | ADR 0013 | Extension platform | Development-only; generated manifests and bundled output are reviewed. |
-| `web-ext` | Development | ADR 0013 and the Firefox development runner | Extension platform | MPL-2.0, maintained by Mozilla; development-only WXT peer used to build, run and test Firefox extensions. Version 10.5.0 reaches 313 unique transitive package versions in the installed graph, 150 new relative to the baseline, including `addons-linter` and `eslint`; the affected `brace-expansion` paths are pinned below. Excluded from extension artifacts and removable when the Firefox toolchain no longer requires it. |
 | `@wxt-dev/module-react` | Build | ADR 0013 | Extension platform | Development-only integration between WXT and React. |
 | `typescript`, `@types/*` | Build | ADR 0013 | Architecture | Type declarations and the compiler stay outside shipped bundles. |
 | `tailwindcss` | Runtime source | ADR 0013 and the UI contract | UI | Imported by the production stylesheet and classified as a production dependency by the graph gate. The build emits CSS only; no Tailwind JavaScript reaches extension runtime. |
@@ -71,15 +70,14 @@ radius and the removal condition.
 
 | Package | Advisory | Reached through | Scope | Resolution |
 | --- | --- | --- | --- | --- |
-| `adm-zip` | GHSA-xcpc-8h2w-3j85, high, crafted ZIP input can trigger a 4 GB allocation | `web-ext` and `web-ext-run` to `firefox-profile` to `adm-zip` | Development only; Firefox profile creation | Exact override `0.6.0`, from 0.5.18 |
-| `brace-expansion` | GHSA-mh99-v99m-4gvg and GHSA-rgw5-rvv9-x895, both high, unbounded expansion denial of service | `web-ext` to `multimatch` to `minimatch`; `web-ext` to `addons-linter` to `eslint` to `@eslint/config-array` to `minimatch`; and `wxt` to `web-ext-run` to `multimatch` to `minimatch` | Development only; Firefox tooling and add-on linting | Exact override `1.1.18`, from 1.1.16 |
+| `adm-zip` | GHSA-xcpc-8h2w-3j85, high, crafted ZIP input can trigger a 4 GB allocation | WXT development tooling | Development only; temporary browser profile creation | Exact override `0.6.0`, from 0.5.18 |
+| `brace-expansion` | GHSA-mh99-v99m-4gvg and GHSA-rgw5-rvv9-x895, both high, unbounded expansion denial of service | WXT to `web-ext-run` to `multimatch` to `minimatch` | Development only; browser-runner glob matching | Exact override `1.1.18`, from 1.1.16 |
 | `fast-uri` | GHSA-7p8r-x3mc-p8w7, high, host confusion via a backslash authority introducer | `@commitlint/cli` to `@commitlint/config-validator` to `ajv` | Development only; commit message validation | Exact override `3.1.5`, from 3.1.4 |
-| `image-size` | GHSA-w3rx-r6r6-pgpr and GHSA-5p2g-fcmc-qvqq, both high, infinite-loop denial of service in ICNS, HEIF and JXL parsing | `web-ext` to `addons-linter` to `image-size` | Development only; add-on icon validation | `patches/image-size-2.0.2.patch` rejects zero-length entries in the CommonJS and ESM entrypoints; remove when a published release contains equivalent guards |
-| `js-yaml` | GHSA-5p4m-2wfm-xmqj, high, quadratic CPU consumption while resolving `!!omap` | `eslint` to `@eslint/eslintrc` to `js-yaml`; `@commitlint/cli` to `cosmiconfig` to `js-yaml` | Development only; lint and commit validation | Exact override `4.3.1`, from 4.3.0 |
+| `js-yaml` | GHSA-5p4m-2wfm-xmqj, high, quadratic CPU consumption while resolving `!!omap` | `@commitlint/cli` to `cosmiconfig` to `js-yaml` | Development only; commit validation | Exact override `4.3.1`, from 4.3.0 |
 | `nanoid` | GHSA-2v37-7h3g-55p8, high, infinite loop in custom generators when size is zero | `postcss` to `nanoid` | Build and test only; CSS processing | Exact override `3.3.17`, from 3.3.16 |
-| `shell-quote` | GHSA-395f-4hp3-45gv, high, quadratic denial of service in `parse()` | `wxt` to `web-ext-run` to `fx-runner` to `shell-quote`; `web-ext` to `fx-runner` to `shell-quote` | Development only; Firefox runners | Exact override `1.9.0`, from 1.7.3 and 1.8.4 |
-| `tmp` | GHSA-ph9p-34f9-6g65, high, path traversal through an unsanitized prefix or postfix | `wxt` to `web-ext-run` to `tmp` | Development only; temporary Firefox runner directories | Exact override `0.2.7`, from 0.2.5 |
-| `uuid` | GHSA-w5hq-g745-h8pq, moderate, missing buffer bounds check in namespace-based UUID generation | `wxt` to `web-ext-run` to `node-notifier` to `uuid` | Development only; Firefox runner notifications | Exact override `11.1.1`, from 8.3.2 |
+| `shell-quote` | GHSA-395f-4hp3-45gv, high, quadratic denial of service in `parse()` | WXT development tooling | Development only; browser runners | Exact override `1.9.0`, from 1.7.3 and 1.8.4 |
+| `tmp` | GHSA-ph9p-34f9-6g65, high, path traversal through an unsanitized prefix or postfix | WXT development tooling | Development only; temporary runner directories | Exact override `0.2.7`, from 0.2.5 |
+| `uuid` | GHSA-w5hq-g745-h8pq, moderate, missing buffer bounds check in namespace-based UUID generation | WXT development tooling and its notification helper | Development only; runner notifications | Exact override `11.1.1`, from 8.3.2 |
 
 `postcss` needed no override: it is a direct development dependency and moved
 from 8.5.22 to 8.5.23 for GHSA-fxqj-rqcc-2cmp, an arbitrary `.map` read through
@@ -87,10 +85,8 @@ an attacker-controlled `sourceMappingURL`. It processes CSS at build time and
 ships nothing into the extension.
 
 None of these packages reaches the shipped bundle. The evidence for each change
-includes the sequence in the next section, both production builds and their
-per-file size guards. The `image-size` patch also has denial-of-service
-regressions for malformed and valid ICNS, HEIF and JXL inputs in both module
-formats.
+includes the sequence in the next section, the production build and its
+per-file size guards.
 
 A resolution is removed as soon as the direct dependency ships an equivalent
 fix, which `pnpm why <package>` and the focused regression confirm.
@@ -102,8 +98,8 @@ Node engine compatibility and a 24-hour minimum release age. Lifecycle scripts
 are denied unless their package is named in `allowBuilds`; each allowed script
 requires review when its version changes.
 
-WXT currently reaches `spawn-sync@1.0.15` through its Firefox development
-runner. Its postinstall only installs a fallback for Node versions without
+WXT currently reaches `spawn-sync@1.0.15` through its development runner. Its
+postinstall only installs a fallback for Node versions without
 `child_process.spawnSync`. Node 24 provides that API, so the lifecycle is
 explicitly denied while the package remains available to WXT's native path.
 

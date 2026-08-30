@@ -1,6 +1,6 @@
 # Store listing copy
 
-Draft copy for both stores, in the three locales the extension ships. It is a
+Draft copy for the Chrome Web Store, in the three locales the extension ships. It is a
 starting point for the maintainer, not approved marketing text. Screenshots
 come from the packaged journey, not from hand-made mockups.
 
@@ -106,7 +106,7 @@ The captures land under the ignored Playwright results directory. Pick the
 first-run panel, the rule editor, the preview with a match and a protected
 exception, and the wide settings page. Do not retouch them.
 
-Each store has its own required dimensions; check them at submission time
+The Chrome Web Store has required dimensions; check them at submission time
 rather than trusting a number recorded here.
 
 ## Store icons
@@ -117,10 +117,8 @@ them with `pnpm brand:icons`, then verify the tracked outputs with
 
 - Chrome Web Store: upload `public/icon/128.png` when the dashboard requests a
   listing icon. The same file ships in the Chrome package.
-- Firefox Add-ons: upload `public/icon/64.png` when the listing uses a custom
-  icon. The same size now ships in the Firefox package.
 
-Do not recolor either store icon or export it from a screenshot. A palette or
+Do not recolor the store icon or export it from a screenshot. A palette or
 geometry change starts in `src/ui/brand/mark.ts` and regenerates every size.
 
 ## What not to claim

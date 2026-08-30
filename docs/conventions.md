@@ -47,7 +47,7 @@ storage directly.
 - Pure domain behavior belongs in unit tests close to the implementation or in
   the matching test layer.
 - Cross-implementation behavior belongs in shared contract suites.
-- Browser behavior uses packaged Chrome and Firefox journeys against local
+- Browser behavior uses packaged Chrome journeys against local
   fixtures.
 - A regression test proves the failed input, state or lifecycle branch. Do not
   weaken an existing assertion to make a change pass.

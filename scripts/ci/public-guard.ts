@@ -29,7 +29,6 @@ interface FixtureMetadata {
 
 const allowedUrlHosts = new Set([
   'ai.google.dev',
-  'addons.mozilla.org',
   'api.anthropic.com',
   'api.example.com',
   'api.openai.com',
@@ -39,7 +38,6 @@ const allowedUrlHosts = new Set([
   'chromewebstore.google.com',
   'chromewebstore.googleapis.com',
   'developer.chrome.com',
-  'developer.mozilla.org',
   'developers.openai.com',
   'docs.github.com',
   'extensionworkshop.com',
@@ -357,7 +355,7 @@ const approvedFindingLinesByPath = new Map<
   ],
   [
     'tests/contract/settings-runtime.test.ts',
-    new Map([['literal-secret-assignment', new Set([71])]])
+    new Map([['literal-secret-assignment', new Set([69])]])
   ],
   [
     'tests/sync/conditional-http-provider.test.ts',

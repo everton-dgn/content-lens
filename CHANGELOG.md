@@ -4,6 +4,10 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+### Changed
+
+- limit browser packaging, runtime declarations and store publishing to Chrome
+
 ## 1.0.8 - 2026-08-19
 
 ### Fixed
@@ -23,7 +27,7 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ### Fixed
 
-- reject an AMO identifier the submission client breaks
+- reject an invalid store submission identifier
 
 ## 1.0.5 - 2026-08-16
 
@@ -102,10 +106,10 @@ Significant user-facing and contributor-facing changes are recorded here.
   boundary.
 - Localized interface in `en`, `pt_BR` and `es` with parity-checked message
   catalogs.
-- Release tooling: deterministic three-package build, checksums, SPDX 2.3 SBOM,
+- Release tooling: deterministic package build, checksums, SPDX 2.3 SBOM,
   in-toto and SLSA v1 provenance, release manifest with version domains, and
   independent verification before publication.
-- Packaged Chrome MV3 and Firefox MV2 journeys covering first run, rule editor,
+- Packaged Chrome MV3 journeys covering first run, rule editor,
   preview, save, undo, diagnostics export review, 200% zoom, reduced motion,
   keyboard focus and axe checks without serious or critical findings.
 

@@ -43,7 +43,7 @@ describe('pull-request CI contract', () => {
     expect(workflow).toContain('pnpm release:package -- --channel dev')
     expect(workflow).toContain('pnpm release:guard -- --directory')
     expect(workflow).toContain(
-      'pnpm exec playwright install --with-deps chromium firefox'
+      'pnpm exec playwright install --with-deps chromium'
     )
     expect(workflow).toContain('pnpm test:browser')
     expect(workflow).toContain('pnpm test:browser:packaged')
@@ -97,6 +97,17 @@ describe('pull-request CI contract', () => {
     expect(docsCheck).toContain('forbiddenCorepackCommand')
     expect(docsCheck).toContain("'.github', 'workflows'")
     expect(docsCheck).toContain("'docs/adr/0013-extension-toolchain-layout.md'")
+  })
+
+  it('documents source-inclusive Chrome archives for review gates', async () => {
+    const [contributing, sourceReview] = await Promise.all([
+      readFile(resolve('CONTRIBUTING.md'), 'utf8'),
+      readFile(resolve('SOURCE_CODE_REVIEW.md'), 'utf8')
+    ])
+
+    for (const guide of [contributing, sourceReview]) {
+      expect(guide).toContain('pnpm exec wxt zip -b chrome --sources')
+    }
   })
 
   it('keeps focused test commands mapped to their owned suites', async () => {

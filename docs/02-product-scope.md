@@ -180,7 +180,7 @@ Promote:
 
 The stable release line includes:
 
-- Chrome Manifest V3 and Firefox Manifest V2 packages.
+- Chrome Manifest V3 package.
 - YouTube, LinkedIn, X, Reddit and Hacker News adapters for the surfaces listed
   above.
 - Deterministic channel, term and allow rules.

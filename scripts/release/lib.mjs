@@ -69,7 +69,6 @@ export const getPackage = async (root = process.cwd()) =>
 
 export const artifactNames = version => [
   `content-lens-${version}-chrome.zip`,
-  `content-lens-${version}-firefox.zip`,
   `content-lens-${version}-sources.zip`
 ]
 

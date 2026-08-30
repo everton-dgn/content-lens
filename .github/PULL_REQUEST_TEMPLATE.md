@@ -24,7 +24,7 @@ Describe privacy, security, compatibility, migration and performance impact.
 - [ ] An ADR is included for a cross-cutting decision.
 - [ ] Security-sensitive changes update the threat model.
 - [ ] `pnpm ci:local` and `pnpm guard:public` pass.
-- [ ] Chrome and Firefox packaged builds pass.
+- [ ] The packaged Chrome build passes.
 - [ ] New fixtures include reviewed license and provenance metadata.
 - [ ] `git diff --check` passes.
 - [ ] `CHANGELOG.md` is updated or the omission is explained.

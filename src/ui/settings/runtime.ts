@@ -56,13 +56,8 @@ export const browserSettingsRuntime: SettingsRuntimeClient = {
     if (provider.execution === 'browser') {
       return Promise.resolve(true)
     }
-    const dataCollection =
-      provider.credentialMode === 'none' ? [] : ['authenticationInfo']
     return browser.permissions.request({
-      origins: [exactOriginPattern(provider.endpointOrigin)],
-      ...(import.meta.env.BROWSER === 'firefox' && dataCollection.length > 0
-        ? { data_collection: dataCollection }
-        : {})
+      origins: [exactOriginPattern(provider.endpointOrigin)]
     })
   }
 }

@@ -33,7 +33,7 @@ extension toolchain. `package.json` currently requires:
 | `@wxt-dev/module-react` | 1.x | 1.2.2 |
 
 The manifest and lockfile own the exact versions. A version update repeats the
-clean frozen install, strict typecheck and packaged Chrome and Firefox builds.
+clean frozen install, strict typecheck and packaged Chrome build.
 Toolchain versions do not establish browser support; the browser table is
 governed by ADR 0014 and packaged capability tests.
 
@@ -87,7 +87,6 @@ declare these minimums:
 | Browser | Minimum version | Manifest | Capability level | Status |
 | --- | --- | --- | --- | --- |
 | Chrome/Chromium | 149 | MV3 | Deterministic baseline | Supported |
-| Firefox Desktop | 151.0 | MV2 | Deterministic baseline | Supported with optional-capability fallback |
 
 Earlier versions are unsupported because the project does not run equivalent
 packaged checks against them.
@@ -122,14 +121,12 @@ WebGPU and every model-backed feature remain optional. A missing optional
 capability reports a degraded or unavailable state while deterministic
 filtering remains available.
 
-No support claim covers store-signed packages, Firefox MV3, mobile browsers,
+No support claim covers store-signed packages, mobile browsers,
 enterprise-policy environments or authenticated platform variants that are
 absent from the packaged journeys.
 
 The Chrome journey loads the production MV3 package and opens its real
-extension-owned side panel. The Firefox journey installs the production MV2
-package and exercises its built panel bundle through the repository harness.
-Native Firefox sidebar operation remains a manual release check.
+extension-owned side panel.
 
 Current automated evidence lives in executable checks rather than committed
 reports:

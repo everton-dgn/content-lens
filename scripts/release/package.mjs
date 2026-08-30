@@ -96,15 +96,12 @@ export const packageRelease = async ({
   await mkdir(output, { recursive: true })
 
   if (!skipBuild) {
-    run('pnpm', ['exec', 'wxt', 'zip', '-b', 'chrome'], { cwd: root })
-    run('pnpm', ['exec', 'wxt', 'zip', '-b', 'firefox'], { cwd: root })
+    run('pnpm', ['exec', 'wxt', 'zip', '-b', 'chrome', '--sources'], {
+      cwd: root
+    })
   }
 
-  await Promise.all(
-    ['chrome-mv3', 'firefox-mv2'].map(bundle =>
-      guardBundleDirectory(resolve(root, '.output', bundle))
-    )
-  )
+  await guardBundleDirectory(resolve(root, '.output', 'chrome-mv3'))
 
   for (const name of artifactNames(product.version)) {
     const source = resolve(root, '.output', name)

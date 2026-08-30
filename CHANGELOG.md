@@ -4,6 +4,8 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.9 - 2026-08-30
+
 ### Changed
 
 - limit browser packaging, runtime declarations and store publishing to Chrome

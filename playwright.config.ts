@@ -26,14 +26,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         browserName: 'chromium'
       }
-    },
-    {
-      name: 'firefox-extension',
-      grep: /packaged Firefox/,
-      use: {
-        ...devices['Desktop Firefox'],
-        browserName: 'firefox'
-      }
     }
   ]
 })

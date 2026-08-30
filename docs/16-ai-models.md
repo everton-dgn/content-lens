@@ -150,9 +150,8 @@ passive feed processing cannot trigger it.
 
 The current browser catalog declares only `en` and `es`. `pt_BR` and unknown
 language inputs are rejected before session creation because the current Prompt
-API documentation does not list Portuguese support. Firefox receives no
-built-in browser model entry. Local and explicitly authorized cloud routes
-remain available on both browsers.
+API documentation does not list Portuguese support. Local and explicitly
+authorized cloud routes remain available.
 
 ## Cloud providers
 

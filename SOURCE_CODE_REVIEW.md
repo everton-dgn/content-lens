@@ -1,8 +1,8 @@
-# Firefox source-code review guide
+# Source-code review guide
 
 ## Candidate identity
 
-The source archive and Firefox package are generated together from the annotated
+The source archive and Chrome package are generated together from the annotated
 tag recorded in `release-manifest.json`. Compare their SHA-256 values with
 `checksums.sha256` before starting a review.
 
@@ -19,11 +19,12 @@ tag recorded in `release-manifest.json`. Compare their SHA-256 values with
 npm install --global pnpm@11.17.0
 pnpm install --frozen-lockfile
 pnpm typecheck
-pnpm exec wxt zip -b firefox
+pnpm exec wxt zip -b chrome --sources
 ```
 
-The resulting `.output/content-lens-<version>-firefox.zip` must match the digest
-in the release manifest. The build performs no network access after the locked
+The resulting `.output/content-lens-<version>-chrome.zip` and
+`.output/content-lens-<version>-sources.zip` must match their digests in the
+release manifest. The build performs no network access after the locked
 dependency installation and downloads no model artifact.
 
 ## Source layout

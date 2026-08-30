@@ -16,8 +16,7 @@ import { findUnreviewedNetworkLiterals } from '../../scripts/release/guard-artif
 import { artifactNames, validateVersion } from '../../scripts/release/lib.mjs'
 import {
   decideStoreStatus,
-  queryStoreStatus,
-  requireAmoIdentifier
+  queryStoreStatus
 } from '../../scripts/release/store-status.mjs'
 import { submitChromePackage } from '../../scripts/release/submit-chrome.mjs'
 
@@ -76,10 +75,9 @@ describe('release evidence contracts', () => {
     ])
   })
 
-  it('uses the three exact package names', () => {
+  it('uses the two exact package names', () => {
     expect(artifactNames('1.2.3')).toEqual([
       'content-lens-1.2.3-chrome.zip',
-      'content-lens-1.2.3-firefox.zip',
       'content-lens-1.2.3-sources.zip'
     ])
     expect(() => validateVersion('1.2')).toThrow('Invalid package version')
@@ -119,7 +117,6 @@ describe('release evidence contracts', () => {
       inputs: { lockfile: { sha256: 'b'.repeat(64) } },
       artifacts: [
         { name: 'content-lens-1.2.3-chrome.zip', sha256: 'c'.repeat(64) },
-        { name: 'content-lens-1.2.3-firefox.zip', sha256: 'd'.repeat(64) },
         { name: 'content-lens-1.2.3-sources.zip', sha256: 'e'.repeat(64) }
       ]
     }
@@ -168,45 +165,13 @@ describe('release evidence contracts', () => {
     ).toBe(decision)
   })
 
-  it.each(['contentlens', '3054064', 'content-lens-beta'] as const)(
-    'accepts an AMO identifier the submission client keeps intact',
-    identifier => {
-      expect(requireAmoIdentifier(identifier)).toBe(identifier)
-    }
-  )
-
-  it.each([
-    '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}',
-    '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e',
-    'b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}'
-  ] as const)(
-    'rejects a braced AMO GUID before any upload runs',
-    identifier => {
-      expect(() => requireAmoIdentifier(identifier)).toThrow(/braced GUID/u)
-    }
-  )
-
-  it('keeps a braced AMO identifier from reaching the network', async () => {
-    const fetchImpl = vi.fn()
-    vi.stubGlobal('fetch', fetchImpl)
-
-    // restoreMocks does not undo stubGlobal and unstubGlobals stays off, so a
-    // failed assertion here would leak the stub into the following tests.
-    try {
-      await expect(
-        queryStoreStatus({
-          store: 'amo',
-          version: '1.2.3',
-          env: {
-            AMO_EXTENSION_ID: '{b83fdbe3-ec9c-453e-8a61-72d4cfc6dd4e}',
-            AMO_JWT: 'test-jwt'
-          }
-        })
-      ).rejects.toThrow(/braced GUID/u)
-      expect(fetchImpl).not.toHaveBeenCalled()
-    } finally {
-      vi.unstubAllGlobals()
-    }
+  it('keeps direct store status queries bound to Chrome', async () => {
+    await expect(
+      queryStoreStatus({
+        version: '1.2.3',
+        dryResponse: resolve('tests/fixtures/profiles/rule-conflict.json')
+      })
+    ).resolves.toMatchObject({ store: 'chrome', version: '1.2.3' })
   })
 
   it('submits the verified Chrome ZIP with a short-lived access token', async () => {
@@ -359,7 +324,8 @@ describe('release evidence contracts', () => {
     )
     expect(schema.additionalProperties).toBe(false)
     expect(schema.properties.schemaVersion.const).toBe(1)
-    expect(schema.properties.artifacts.minItems).toBe(3)
-    expect(schema.properties.artifacts.maxItems).toBe(3)
+    const artifactCount = artifactNames('1.2.3').length
+    expect(schema.properties.artifacts.minItems).toBe(artifactCount)
+    expect(schema.properties.artifacts.maxItems).toBe(artifactCount)
   })
 })

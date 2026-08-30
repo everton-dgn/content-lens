@@ -156,7 +156,6 @@ Controls:
 - Store jobs accept only verified assets from the exact stable GitHub Release.
 - Chrome uses short-lived GitHub OIDC credentials restricted to this repository
   and protected `main`, with no service-account private key.
-- AMO publisher credentials stay inside the protected store environment.
 - Automatic store submission stays disabled until the first manually submitted
   versions have completed store review.
 

@@ -11,17 +11,13 @@
     "brand:icons": "node scripts/brand/generate-icons.mjs",
     "brand:icons:check": "node scripts/brand/generate-icons.mjs --check",
     "build:adapter-e2e:chrome": "wxt build -b chrome --config wxt.adapter-e2e.config.ts",
-    "build:adapter-e2e:firefox": "wxt build -b firefox --config wxt.adapter-e2e.config.ts",
     "build:chrome": "wxt build -b chrome && pnpm bundle:check:chrome",
-    "build:firefox": "wxt build -b firefox && pnpm bundle:check:firefox",
     "bundle:check:chrome": "node scripts/ci/bundle-size-guard.ts .output/chrome-mv3",
-    "bundle:check:firefox": "node scripts/ci/bundle-size-guard.ts .output/firefox-mv2",
     "ci:local": "pnpm guard:public && pnpm typecheck && pnpm deps:check && pnpm test:coverage && pnpm test:soak",
     "commitlint": "commitlint",
     "deps:check": "knip --strict --include dependencies,unlisted && knip --include unlisted,unresolved,binaries && knip --cycles",
     "design-system:check": "node scripts/ci/design-system-guard.ts",
     "dev": "wxt",
-    "dev:firefox": "wxt -b firefox",
     "docs:check": "node scripts/check-docs.mjs",
     "format": "biome check --write --no-errors-on-unmatched .",
     "guard:public": "pnpm docs:check && pnpm design-system:check && pnpm brand:icons:check && pnpm lint && node scripts/ci/public-guard.ts",
@@ -91,7 +87,6 @@
     "typescript": "7.0.2",
     "vite": "8.1.5",
     "vitest": "4.1.10",
-    "web-ext": "10.5.0",
     "wxt": "0.21.1"
   }
 }

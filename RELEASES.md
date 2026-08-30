@@ -24,14 +24,12 @@ tag targets the version commit after its normal merge has been verified. A
 concurrent `main` advance therefore stays outside that release and enters the
 next Semantic Versioning calculation.
 
-Browser-store submission runs after the stable GitHub Release when either
-`CHROME_STORE_PUBLISHING_ENABLED` or `FIREFOX_STORE_PUBLISHING_ENABLED` is
-`true`. Each repository variable controls only its matching store job. The same
+Browser-store submission runs after the stable GitHub Release when
+`CHROME_STORE_PUBLISHING_ENABLED` is `true`. The
 protected workflow remains manually dispatchable for recovery. It downloads the
-exact release assets, verifies them and freezes them for the enabled store jobs
+exact release assets, verifies them and freezes them for the store job
 without rebuilding. Chrome authentication uses a short-lived Google token
-issued from the protected `main` GitHub OIDC identity; AMO credentials stay in
-its protected environment.
+issued from the protected `main` GitHub OIDC identity.
 
 ## Versioning
 
@@ -157,10 +155,10 @@ Stable public contracts receive a documented replacement and at least one minor-
 ## Signing and provenance
 
 The automatic stable release workflow generates checksums, an SPDX 2.3 SBOM
-and in-toto/SLSA v1 provenance for exactly three packages. GitHub artifact
+and in-toto/SLSA v1 provenance for exactly two packages. GitHub artifact
 attestations use the protected workflow OIDC identity and are verified again in
-a separate job before the GitHub Release is published. Chrome Web Store and AMO
-then sign their own store packages.
+a separate job before the GitHub Release is published. Chrome Web Store then
+signs its store package.
 
 Missing attestations, a digest mismatch, a dirty checkout, an unannotated tag or
 a package rebuilt after verification blocks publication. Local `dev` builds are

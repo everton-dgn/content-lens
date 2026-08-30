@@ -18,13 +18,10 @@ export const SYNTHETIC_CONNECTION_PROMPT = [
 ].join(' ')
 
 export type ProviderPermissionProbe = {
-  has(
-    binding: {
-      endpointOrigin: string
-      execution: ProviderDescriptor['execution']
-    },
-    dataCollection: readonly ('authenticationInfo' | 'websiteContent')[]
-  ): Promise<boolean>
+  has(binding: {
+    endpointOrigin: string
+    execution: ProviderDescriptor['execution']
+  }): Promise<boolean>
 }
 
 type ConnectionFailureContext = {
@@ -188,15 +185,10 @@ export async function runProviderConnectionTest(
       prompt: SYNTHETIC_CONNECTION_PROMPT,
       task: 'classification-text'
     })
-    const authenticationData =
-      plan.authentication === 'none' ? [] : (['authenticationInfo'] as const)
-    const permitted = await input.permissions.has(
-      {
-        endpointOrigin: input.provider.endpointOrigin,
-        execution: input.provider.execution
-      },
-      authenticationData
-    )
+    const permitted = await input.permissions.has({
+      endpointOrigin: input.provider.endpointOrigin,
+      execution: input.provider.execution
+    })
     if (!permitted) {
       throw new ProviderConnectionFailure(
         'provider-connection-permission-denied'

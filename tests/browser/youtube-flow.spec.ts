@@ -1,18 +1,13 @@
 import { readFile } from 'node:fs/promises'
-import { createRequire } from 'node:module'
-import { dirname, resolve } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { resolve } from 'node:path'
 
 import {
   type BrowserContext,
   chromium,
   expect,
-  firefox,
   type Page,
   test
 } from '@playwright/test'
-
-import { firefoxExtensionId } from '@/config/manifest'
 
 const youtubeOrigin = 'https://www.youtube.com/'
 const fixtureUrl = (path: string, key?: string, value?: string) => {
@@ -30,31 +25,6 @@ const fixtureUrls = {
 const conflictProfilePath = resolve(
   'tests/fixtures/profiles/rule-conflict.json'
 )
-
-interface FirefoxRemote {
-  disconnect(): void
-  installTemporaryAddon(
-    addonPath: string,
-    openDevTools: boolean
-  ): Promise<{ addon: { id: string } }>
-}
-
-interface FirefoxRemoteModule {
-  connectWithMaxRetries(options: {
-    maxRetries: number
-    port: number
-    retryInterval: number
-  }): Promise<FirefoxRemote>
-  findFreeTcpPort(): Promise<number>
-}
-
-const loadFirefoxRemote = async (): Promise<FirefoxRemoteModule> => {
-  const projectRequire = createRequire(import.meta.url)
-  const requireFromWxt = createRequire(projectRequire.resolve('wxt'))
-  const webExtEntry = requireFromWxt.resolve('web-ext-run')
-  const remoteModule = resolve(dirname(webExtEntry), 'lib/firefox/remote.js')
-  return (await import(pathToFileURL(remoteModule).href)) as FirefoxRemoteModule
-}
 
 const installFixtureRoutes = async (
   context: BrowserContext
@@ -109,7 +79,7 @@ const waitForChromeYouTubeRegistration = async (
 const assertProductionYoutubeFlow = async (
   context: BrowserContext,
   page: Page,
-  expectedBrowser: 'chrome' | 'firefox',
+  expectedBrowser: 'chrome',
   searchFixture: string
 ): Promise<void> => {
   await page.goto(fixtureUrls.home, { waitUntil: 'domcontentloaded' })
@@ -364,45 +334,6 @@ test.describe('youtube-flow', () => {
         await page.pause()
       }
     } finally {
-      await context.close()
-    }
-  })
-
-  test('runs the production content flow in the packaged Firefox extension', async ({
-    browserName
-  }, testInfo) => {
-    expect(browserName).toBe('firefox')
-    const extensionPath = resolve('.output/adapter-e2e/firefox-mv2')
-    const profilePath = testInfo.outputPath('firefox-profile')
-    const firefoxRemote = await loadFirefoxRemote()
-    const debuggerPort = await firefoxRemote.findFreeTcpPort()
-    const context = await firefox.launchPersistentContext(profilePath, {
-      args: ['-start-debugger-server', String(debuggerPort)],
-      firefoxUserPrefs: {
-        'devtools.debugger.prompt-connection': false,
-        'devtools.debugger.remote-enabled': true,
-        'xpinstall.signatures.required': false
-      },
-      headless: process.env.CONTENTLENS_MANUAL_A11Y !== 'placeholder'
-    })
-    const remote = await firefoxRemote.connectWithMaxRetries({
-      maxRetries: 100,
-      port: debuggerPort,
-      retryInterval: 50
-    })
-
-    try {
-      const installed = await remote.installTemporaryAddon(extensionPath, false)
-      expect(installed.addon.id).toBe(firefoxExtensionId)
-      const fixtures = await installFixtureRoutes(context)
-      await assertProductionYoutubeFlow(
-        context,
-        await context.newPage(),
-        'firefox',
-        fixtures.search
-      )
-    } finally {
-      remote.disconnect()
       await context.close()
     }
   })

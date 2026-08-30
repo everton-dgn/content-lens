@@ -1,14 +1,15 @@
 # Getting started
 
 This guide covers a local development installation of ContentLens. The stable
-extension is published on the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp) and on
-[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/contentlens/).
+extension is published on the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp).
+Release artifacts are also available on the
+[stable GitHub release page](https://github.com/everton-dgn/content-lens/releases/latest).
 
 ## Requirements
 
 - Node.js 24.x
 - pnpm 11.17.0, installed directly
-- Chrome 149 or newer, or Firefox 151 or newer
+- Chrome 149 or newer
 
 ## Install the project
 
@@ -22,21 +23,13 @@ dependency graph and pnpm version.
 
 ## Run the extension
 
-For Chrome:
-
 ```sh
 pnpm dev
 ```
 
-For Firefox:
-
-```sh
-pnpm dev:firefox
-```
-
-WXT creates the development extension under `.output/`. When Chrome does not
-open it automatically, open `chrome://extensions`, enable Developer mode,
-choose **Load unpacked**, and select `.output/chrome-mv3`.
+WXT creates the development extension under `.output/`. Open
+`chrome://extensions`, enable Developer mode, choose **Load unpacked**, and
+select `.output/chrome-mv3`.
 
 ## First use
 
@@ -70,7 +63,6 @@ networks.
 
 ```sh
 pnpm build:chrome
-pnpm build:firefox
 ```
 
 The generated packages remain under `.output/` and are ignored by Git.

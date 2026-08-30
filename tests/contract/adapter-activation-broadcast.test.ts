@@ -31,12 +31,10 @@ const createRuntime = async (
 
   return createServiceWorkerRuntime({
     alarmsApi: { create: vi.fn(async () => undefined) },
-    browser: 'chrome',
     database,
     onAdapterActivationReconciled,
     permissionApi: {
       contains: vi.fn(async () => true),
-      getAll: vi.fn(async () => ({ origins: [], permissions: [] })),
       remove: vi.fn(async () => true),
       request: vi.fn(async () => true)
     },

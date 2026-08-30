@@ -1,38 +1,13 @@
 import { execFileSync } from 'node:child_process'
 import { readFile, writeFile } from 'node:fs/promises'
-import { createRequire } from 'node:module'
 import { arch, cpus, freemem, platform, release, totalmem } from 'node:os'
-import { dirname, resolve } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { resolve } from 'node:path'
 
-import {
-  type BrowserContext,
-  chromium,
-  firefox,
-  type Page
-} from '@playwright/test'
+import { type BrowserContext, chromium, type Page } from '@playwright/test'
 
 const repetitions = 30
 const benchmarkUrl = 'https://www.youtube.com/phase0-benchmark'
 const baselineUrl = 'https://www.youtube.com/phase0-baseline'
-const firefoxExtensionId = '{74780624-e313-43b5-8558-799bbf9b95d3}'
-
-interface FirefoxRemote {
-  disconnect(): void
-  installTemporaryAddon(
-    addonPath: string,
-    openDevTools: boolean
-  ): Promise<{ addon: { id: string } }>
-}
-
-interface FirefoxRemoteModule {
-  connectWithMaxRetries(options: {
-    maxRetries: number
-    port: number
-    retryInterval: number
-  }): Promise<FirefoxRemote>
-  findFreeTcpPort(): Promise<number>
-}
 
 interface RuntimeBenchmarkSample {
   acknowledgementMs: number
@@ -78,7 +53,7 @@ interface ScenarioSummary {
 
 interface BrowserBenchmarkEvidence {
   baselinePageMs: MetricSummary
-  browser: 'chrome' | 'firefox'
+  browser: 'chrome'
   browserVersion: string
   capabilities: CapabilityEvidence
   cold: ScenarioSummary
@@ -88,15 +63,6 @@ interface BrowserBenchmarkEvidence {
   packageVersion: string
   residualPlaceholders: number
   warm: ScenarioSummary
-}
-
-const loadFirefoxRemote = async (): Promise<FirefoxRemoteModule> => {
-  const projectRequire = createRequire(import.meta.url)
-  const requireFromWxt = createRequire(projectRequire.resolve('wxt'))
-  const webExtEntry = requireFromWxt.resolve('web-ext-run')
-  const remoteModule = resolve(dirname(webExtEntry), 'lib/firefox/remote.js')
-
-  return (await import(pathToFileURL(remoteModule).href)) as FirefoxRemoteModule
 }
 
 const summarize = (values: readonly number[]): MetricSummary => {
@@ -312,7 +278,7 @@ const readManifest = async (
   ) as { manifest_version: number; version: string }
 
 const benchmarkContext = async (
-  browserName: 'chrome' | 'firefox',
+  browserName: 'chrome',
   context: BrowserContext,
   extensionPath: string
 ): Promise<BrowserBenchmarkEvidence> => {
@@ -370,37 +336,6 @@ const runChrome = async (): Promise<BrowserBenchmarkEvidence> => {
   try {
     return await benchmarkContext('chrome', context, extensionPath)
   } finally {
-    await context.close()
-  }
-}
-
-const runFirefox = async (): Promise<BrowserBenchmarkEvidence> => {
-  const extensionPath = resolve('.output/runtime-feasibility/firefox-mv2')
-  const firefoxRemote = await loadFirefoxRemote()
-  const debuggerPort = await firefoxRemote.findFreeTcpPort()
-  const context = await firefox.launchPersistentContext('', {
-    args: ['-start-debugger-server', String(debuggerPort)],
-    firefoxUserPrefs: {
-      'devtools.debugger.prompt-connection': false,
-      'devtools.debugger.remote-enabled': true,
-      'xpinstall.signatures.required': false
-    },
-    headless: true
-  })
-  const remote = await firefoxRemote.connectWithMaxRetries({
-    maxRetries: 100,
-    port: debuggerPort,
-    retryInterval: 50
-  })
-
-  try {
-    const installed = await remote.installTemporaryAddon(extensionPath, false)
-    if (installed.addon.id !== firefoxExtensionId) {
-      throw new Error('Unexpected Firefox feasibility extension ID.')
-    }
-    return await benchmarkContext('firefox', context, extensionPath)
-  } finally {
-    remote.disconnect()
     await context.close()
   }
 }
@@ -519,7 +454,7 @@ const readSystemVersion = (
 }
 
 const generatedAt = new Date().toISOString()
-const browsers = [await runChrome(), await runFirefox()]
+const browsers = [await runChrome()]
 const gateFailures = browsers.flatMap(browserGateFailures)
 const operatingSystemVersion = readSystemVersion('-productVersion')
 const operatingSystemBuild = readSystemVersion('-buildVersion')
@@ -576,11 +511,8 @@ const webGpuResults = browsers.map(browser => ({
 const webGpuEvidence = webGpuResults.every(
   ({ result }) => result?.state === 'supported'
 )
-  ? 'The packaged WebGPU adapter probe passed in both browsers.'
-  : `The optional WebGPU adapter probe was unavailable in ${webGpuResults
-      .filter(({ result }) => result?.state !== 'supported')
-      .map(({ browser }) => (browser === 'chrome' ? 'Chrome' : 'Firefox'))
-      .join(' and ')}; the deterministic baseline remained available.`
+  ? 'The packaged WebGPU adapter probe passed in Chrome.'
+  : 'The optional WebGPU adapter probe was unavailable in Chrome; the deterministic baseline remained available.'
 const report = `# Phase 0 runtime and capability evidence
 
 Generated: ${generatedAt}
@@ -617,7 +549,7 @@ ${resultRows.map(row => `| ${row} |`).join('\n')}
 ## Capability evidence
 
 - CAP-002, CAP-005 and CAP-006: unit tests distinguish supported, limited, blocked, unsupported and unknown outcomes; packaged runs recorded supported and unsupported outcomes.
-- CAP-007, CAP-008 and CAP-018: required IndexedDB and messaging probes passed in both packaged browsers. ${webGpuEvidence}
+- CAP-007, CAP-008 and CAP-018: required IndexedDB and messaging probes passed in the packaged browser. ${webGpuEvidence}
 - CAP-012 and CAP-021: probe tests cover available, absent, throwing, denied, timed-out and revoked conditions. Permission and consent gates share the same finite deadline as the API probe.
 
 Runtime lifecycle, queue, cancellation and fault-injection evidence is produced by \`pnpm test:runtime\`, not by this benchmark command.
@@ -627,7 +559,7 @@ Runtime lifecycle, queue, cancellation and fault-injection evidence is produced 
 - The device is an Apple M2 Pro host with 32 GiB of memory. A lower-end Standard device has not been selected.
 - Browser runs used headless Playwright browser builds on one macOS host. Store-signed packages, mobile hardware and enterprise policies were not tested.
 - WebGPU was recorded as a probe result only. No model runtime or model budget is accepted.
-- The stable floors cover only the deterministic baseline and tested surfaces listed in ADR 0014. Store-signed packages, Firefox MV3, mobile, enterprise-policy environments, weaker devices and authenticated YouTube variants remain outside the claim.
+- The stable floor covers only the deterministic baseline and tested surfaces listed in ADR 0014. Store-signed packages, mobile, enterprise-policy environments, weaker devices and authenticated YouTube variants remain outside the claim.
 `
 await writeFile(
   resolve(evidenceDirectory, 'runtime-benchmark.md'),

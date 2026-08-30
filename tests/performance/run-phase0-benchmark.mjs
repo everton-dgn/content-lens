@@ -16,17 +16,15 @@ const run = (command, arguments_) => {
   }
 }
 
-for (const browser of ['chrome', 'firefox']) {
-  run('pnpm', [
-    'exec',
-    'wxt',
-    'build',
-    '--config',
-    'tests/browser/harness/runtime/wxt.config.ts',
-    '--browser',
-    browser
-  ])
-}
+run('pnpm', [
+  'exec',
+  'wxt',
+  'build',
+  '--config',
+  'tests/browser/harness/runtime/wxt.config.ts',
+  '--browser',
+  'chrome'
+])
 
 run('node', ['tests/performance/phase0-benchmark.ts'])
 run('pnpm', [

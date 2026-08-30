@@ -18,14 +18,13 @@ required backend. No telemetry.
 ![ContentLens filtering a YouTube home feed with the rule preview open in the browser side panel](docs/assets/readme/contentlens-hero.webp)
 
 **[Install for Chrome](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp)**
-· **[Install for Firefox](https://addons.mozilla.org/firefox/addon/contentlens/)**
 · [Install in 2 minutes](#install)
 · [Build from source](#from-source)
 · [Read the manifesto](MANIFESTO.md)
 
-Both stores carry the signed package for the current stable version. Every
-release also publishes `content-lens-<version>-chrome.zip` and
-`content-lens-<version>-firefox.zip` for manual installation and verification.
+The store carries the signed package for the current stable version. Every
+release also publishes `content-lens-<version>-chrome.zip` for manual
+installation and verification.
 
 ## Make the feed answer to you
 
@@ -36,7 +35,7 @@ turns your preferences into explicit, portable rules:
 - Protect context with explicit allow rules and scoped exceptions.
 - Preview every rule before it changes the feed.
 - Reveal any hidden item from its explainable placeholder.
-- Review corrections and carry a versioned profile between browsers.
+- Review corrections and carry a versioned profile between Chrome profiles.
 
 ## See it across your feeds
 
@@ -53,16 +52,15 @@ inactive until you enable it and approve its origin.
 
 ## Install
 
-### Browser stores
+### Chrome Web Store
 
-Requires Chrome 149 or newer, or Firefox 151 or newer.
+Requires Chrome 149 or newer.
 
-1. Add ContentLens from the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp) or from
-   [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/contentlens/).
+1. Add ContentLens from the [Chrome Web Store](https://chromewebstore.google.com/detail/njpapeialgojodjmpjmnoplebgiogkcp).
 2. Pin ContentLens, open its panel, enable one platform and create your first
    rule.
 
-Both listings serve the signed package of the current stable release.
+The listing serves the signed package of the current stable release.
 
 ### Manual package
 
@@ -71,19 +69,13 @@ Use this path to install an exact version or to verify the package yourself.
 1. Open the
    [releases list](https://github.com/everton-dgn/content-lens/releases),
    select the version you want and download its
-   `content-lens-<version>-chrome.zip` or
-   `content-lens-<version>-firefox.zip`.
+   `content-lens-<version>-chrome.zip`.
 2. Extract the ZIP into its own folder. `manifest.json` must be at the top level
    of that folder.
 3. Chrome: open `chrome://extensions`, enable **Developer mode**, choose
    **Load unpacked** and select the extracted folder.
-4. Firefox: open `about:debugging#/runtime/this-firefox`, choose **Load
-   Temporary Add-on** and select the extracted folder's `manifest.json`.
-5. Pin ContentLens, open its panel, enable one platform and create your first
+4. Pin ContentLens, open its panel, enable one platform and create your first
    rule.
-
-Firefox removes temporary add-ons when the browser closes. Install from
-[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/contentlens/) for a permanent installation.
 
 ### Verify the download
 
@@ -118,8 +110,7 @@ pnpm install --frozen-lockfile
 pnpm build:chrome
 ```
 
-Load `.output/chrome-mv3` as an unpacked extension in Chrome. For Firefox, run
-`pnpm build:firefox` and load `.output/firefox-mv2` as a temporary add-on.
+Load `.output/chrome-mv3` as an unpacked extension in Chrome.
 
 The [getting started guide](docs/getting-started.md) covers local development
 requirements, permissions and the first rule in detail.
@@ -249,17 +240,16 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Use `pnpm dev:firefox` for Firefox. Before opening a pull request, run the full
-local validation:
+Before opening a pull request, run the full local validation:
 
 ```sh
 pnpm ci:local
 pnpm test:browser
 ```
 
-Generated browser packages stay under `.output/` and are ignored by Git. See
-the [development guide](docs/development.md) for repository layout, command
-ownership and the validation matrix.
+Generated browser packages and source archives stay under `.output/` and are
+ignored by Git. See the [development guide](docs/development.md) for repository
+layout, command ownership and the validation matrix.
 
 ## Documentation
 

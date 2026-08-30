@@ -39,13 +39,10 @@ import { fingerprintPortableValue } from '@/core/operations/fingerprint'
 import type { ContentLensSettings } from '@/core/settings'
 
 type PermissionProbe = {
-  has(
-    binding: {
-      endpointOrigin: string
-      execution: 'local' | 'cloud' | 'browser'
-    },
-    dataCollection: readonly ('authenticationInfo' | 'websiteContent')[]
-  ): Promise<boolean>
+  has(binding: {
+    endpointOrigin: string
+    execution: 'local' | 'cloud' | 'browser'
+  }): Promise<boolean>
 }
 
 type RouteUnavailableCode = Extract<
@@ -230,15 +227,10 @@ export function createRoutedAssistanceService(
     }
     const permissionGranted =
       provider.execution === 'browser' ||
-      (await options.permissions.has(
-        {
-          endpointOrigin: provider.endpointOrigin,
-          execution: provider.execution
-        },
-        provider.credentialMode === 'none'
-          ? ['websiteContent']
-          : ['authenticationInfo', 'websiteContent']
-      ))
+      (await options.permissions.has({
+        endpointOrigin: provider.endpointOrigin,
+        execution: provider.execution
+      }))
     const pricing = estimatedPricing({
       model,
       capability,

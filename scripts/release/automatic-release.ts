@@ -115,7 +115,6 @@ export const stableReleaseAssetNames = (version: string) => {
   return [
     'checksums.sha256',
     `content-lens-${stableVersion}-chrome.zip`,
-    `content-lens-${stableVersion}-firefox.zip`,
     `content-lens-${stableVersion}-sources.zip`,
     'provenance.intoto.json',
     'release-manifest.json',

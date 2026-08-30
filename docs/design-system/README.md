@@ -33,8 +33,7 @@ Version 0.5.0 introduces Ember Gate and the shadcn composition layer. Radix
 primitives own keyboard and focus behavior, Lucide supplies consistent action
 icons, Tailwind v4 exposes the semantic token contract, and the existing
 ContentLens components remain the public UI API. The browser-native i18n
-runtime remains in place because it is the platform boundary for Chrome and
-Firefox.
+runtime remains in place because it is the platform boundary for Chrome.
 
 ## Sources and principles
 
@@ -285,7 +284,7 @@ must not encode recovery, warning or selection state.
    change to the visual contract is intended, regenerate the macOS set with
    `--update-snapshots` and the Linux set with the Visual baselines workflow,
    and commit both.
-8. Run the packaged Chrome and Firefox journeys before release.
+8. Run the packaged Chrome journeys before release.
 
 The public CI runs the same design-system guard through `pnpm ci:local`.
 

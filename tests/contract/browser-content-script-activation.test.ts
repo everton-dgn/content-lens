@@ -23,7 +23,6 @@ function permissionApi(granted: string[] = []): {
     api: {
       contains: async ({ origins = [] }) =>
         origins.every(origin => current.has(origin)),
-      getAll: async () => ({ origins: [...current] }),
       request: async ({ origins = [] }) => {
         requests.push(origins)
         for (const origin of origins) {

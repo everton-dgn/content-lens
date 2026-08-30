@@ -1,9 +1,6 @@
-export type PanelSurface = 'chrome-side-panel' | 'firefox-sidebar'
+export type PanelSurface = 'chrome-side-panel'
 
-export type PanelUnavailableReason =
-  | 'api-unavailable'
-  | 'configuration-failed'
-  | 'open-failed'
+export type PanelUnavailableReason = 'api-unavailable' | 'configuration-failed'
 
 export type PanelSetupResult =
   | {
@@ -25,21 +22,5 @@ export type ChromePanelApi = {
     setPanelBehavior: (options: {
       openPanelOnActionClick: boolean
     }) => Promise<void>
-  }
-}
-
-type ActionClickEvent = {
-  addListener: (listener: () => void) => void
-}
-
-export type FirefoxPanelApi = {
-  action?: {
-    onClicked: ActionClickEvent
-  }
-  browserAction?: {
-    onClicked: ActionClickEvent
-  }
-  sidebarAction?: {
-    open: () => Promise<void>
   }
 }

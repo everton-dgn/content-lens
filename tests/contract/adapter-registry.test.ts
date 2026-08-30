@@ -77,10 +77,6 @@ function descriptor(
       {
         browser: 'chrome',
         minimumVersion: '149'
-      },
-      {
-        browser: 'firefox',
-        minimumVersion: '151.0'
       }
     ],
     lastLiveSmokeAt: null,

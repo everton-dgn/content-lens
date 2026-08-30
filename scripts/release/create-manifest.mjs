@@ -24,11 +24,7 @@ export const createReleaseManifest = async ({
     await assertRegularFile(path)
     artifacts.push({
       name,
-      browser: name.includes('chrome')
-        ? 'chrome'
-        : name.includes('firefox')
-          ? 'firefox'
-          : 'sources',
+      browser: name.includes('chrome') ? 'chrome' : 'sources',
       sha256: await sha256File(path)
     })
   }

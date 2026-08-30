@@ -103,7 +103,6 @@ pnpm test:unit
 pnpm test:a11y
 pnpm typecheck
 pnpm build:chrome
-pnpm build:firefox
 pnpm test:browser v01
 ```
 

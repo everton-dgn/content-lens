@@ -105,22 +105,4 @@ describe('browser settings runtime', () => {
       origins: [`${modelOrigin}/*`]
     })
   })
-
-  it('declares Firefox authentication data collection only for credentials', async () => {
-    const modelOrigin = ['https', '://models.example.com'].join('')
-    vi.stubEnv('BROWSER', 'firefox')
-    await browserSettingsRuntime.requestProviderPermission(provider())
-    expect(browserApi.permissions.request).toHaveBeenCalledWith({
-      data_collection: ['authenticationInfo'],
-      origins: [`${modelOrigin}/*`]
-    })
-
-    browserApi.permissions.request.mockClear()
-    await browserSettingsRuntime.requestProviderPermission(
-      provider({ credentialMode: 'none', credentialRef: null })
-    )
-    expect(browserApi.permissions.request).toHaveBeenCalledWith({
-      origins: [`${modelOrigin}/*`]
-    })
-  })
 })

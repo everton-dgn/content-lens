@@ -1,5 +1,3 @@
-export function requireAmoIdentifier(value: unknown): string
-
 export function decideStoreStatus(input: {
   store: string
   version: string
@@ -9,7 +7,6 @@ export function decideStoreStatus(input: {
 }
 
 export function queryStoreStatus(input: {
-  store: 'chrome' | 'amo'
   version: string
   dryResponse?: string
   env?: Record<string, string | undefined>

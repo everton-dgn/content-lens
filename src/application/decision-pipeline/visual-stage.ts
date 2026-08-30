@@ -66,13 +66,10 @@ export type VisualStage = {
 }
 
 type PermissionProbe = {
-  has(
-    binding: {
-      endpointOrigin: string
-      execution: 'local' | 'cloud' | 'browser'
-    },
-    dataCollection: readonly ('authenticationInfo' | 'websiteContent')[]
-  ): Promise<boolean>
+  has(binding: {
+    endpointOrigin: string
+    execution: 'local' | 'cloud' | 'browser'
+  }): Promise<boolean>
 }
 
 type VisualCandidates = {
@@ -455,15 +452,10 @@ export function createRoutedVisualStage(
         }
         const permissionGranted =
           provider.execution === 'browser' ||
-          (await options.permissions.has(
-            {
-              endpointOrigin: provider.endpointOrigin,
-              execution: provider.execution
-            },
-            provider.credentialMode === 'none'
-              ? ['websiteContent']
-              : ['authenticationInfo', 'websiteContent']
-          ))
+          (await options.permissions.has({
+            endpointOrigin: provider.endpointOrigin,
+            execution: provider.execution
+          }))
         const budget = budgetFor(input)
         const price = estimatedPricing({
           model,

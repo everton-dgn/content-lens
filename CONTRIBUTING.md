@@ -60,19 +60,16 @@ Run:
 ```bash
 pnpm install --frozen-lockfile
 pnpm ci:local
-pnpm exec wxt zip -b chrome
-pnpm exec wxt zip -b firefox
+pnpm exec wxt zip -b chrome --sources
 pnpm guard:public -- \
   .output/*-chrome.zip \
-  .output/*-firefox.zip \
   .output/*-sources.zip
 pnpm test:browser panel-open-smoke
 pnpm guard:public
 git diff --check
 ```
 
-Every command must pass before review. WXT's Firefox package includes the
-minimal source archive required for store review. The public repository guard
+Every command must pass before review. The public repository guard
 scans tracked, staged and unignored workspace files. It also inspects extension,
 source and review ZIPs when their paths are passed explicitly.
 

@@ -38,7 +38,7 @@ const readCatalog = async (locale: (typeof locales)[number]) =>
 
 describe('native i18n catalogs', () => {
   it('localizes browser-owned manifest copy from the English fallback', () => {
-    expect(createManifest('chrome')).toMatchObject({
+    expect(createManifest()).toMatchObject({
       action: { default_title: '__MSG_actionOpen__' },
       default_locale: 'en',
       description: '__MSG_extensionDescription__',

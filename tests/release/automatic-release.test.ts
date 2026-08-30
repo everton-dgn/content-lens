@@ -92,7 +92,6 @@ describe('automatic stable release orchestration', () => {
     const expected = [
       'checksums.sha256',
       'content-lens-1.2.3-chrome.zip',
-      'content-lens-1.2.3-firefox.zip',
       'content-lens-1.2.3-sources.zip',
       'provenance.intoto.json',
       'release-manifest.json',

@@ -9,8 +9,9 @@ const messagesAsset = /^_locales[/\\][^/\\]+[/\\]messages\.json$/u
 
 export default defineConfig({
   srcDir: 'src',
+  targetBrowsers: ['chrome'],
   modules: ['@wxt-dev/module-react'],
-  manifest: ({ browser }) => createManifest(browser),
+  manifest: () => createManifest(),
   hooks: {
     /**
      * The repository catalogs carry a `description` per message for

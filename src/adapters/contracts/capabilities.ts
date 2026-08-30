@@ -83,6 +83,6 @@ export const ADAPTER_VISUAL_ACTIONS = [
 
 export type AdapterVisualAction = (typeof ADAPTER_VISUAL_ACTIONS)[number]
 
-export const ADAPTER_BROWSER_NAMES = ['chrome', 'firefox'] as const
+export const ADAPTER_BROWSER_NAMES = ['chrome'] as const
 
 export type AdapterBrowserName = (typeof ADAPTER_BROWSER_NAMES)[number]

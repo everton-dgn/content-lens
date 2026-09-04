@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.0.10 - 2026-09-04
+
+### Fixed
+
+- bump step-security/harden-runner
+
 ## 1.0.9 - 2026-08-30
 
 ### Changed

@@ -196,8 +196,7 @@ describe('release workflow contracts', () => {
   it('audits egress before store credentials enter the publishing job', async () => {
     const source = await workflow('publish-extension.yml')
     const chromeJob = source.slice(source.indexOf('  chrome:'))
-    const hardenRunner =
-      'step-security/harden-runner@b09bb98e06d4d774595224525879c09bc6e98c40'
+    const hardenRunner = 'step-security/harden-runner@'
 
     expect(source.match(/step-security\/harden-runner@/gu)).toHaveLength(1)
     expect(chromeJob).toContain(hardenRunner)

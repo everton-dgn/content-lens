@@ -15,10 +15,26 @@ SPEC = importlib.util.spec_from_file_location("monorepo", Path(__file__).with_na
 MONOREPO = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MONOREPO)
 
+# Todo diretório temporário da suíte nasce sob esta raiz única, removida no fim
+# da execução. Sandbox de `mkdtemp` em código de teste é a exceção da política de
+# exclusão: a remoção usa `rmtree`, nunca `trash`, porque a lixeira fica no mesmo
+# volume e não devolve espaço em disco.
+SUITE_ROOT = Path(tempfile.mkdtemp(prefix="graphify-suite-")).resolve()
+
+
+def scratch(prefix):
+    """Temporary directory inside the suite root."""
+    return Path(tempfile.mkdtemp(prefix=prefix, dir=SUITE_ROOT)).resolve()
+
+
+def tearDownModule():
+    """Remove the single suite sandbox created by these tests."""
+    shutil.rmtree(SUITE_ROOT, ignore_errors=True)
+
 
 class MonorepoTests(unittest.TestCase):
     def setUp(self):
-        self.root = Path(tempfile.mkdtemp(prefix="graphify-test-")).resolve()
+        self.root = scratch("graphify-test-")
         self.root_patch = patch.object(MONOREPO, "ROOT", self.root)
         self.root_patch.start()
         self.addCleanup(self.root_patch.stop)
@@ -40,7 +56,7 @@ class MonorepoTests(unittest.TestCase):
             self.assertEqual(MONOREPO.resolve_source(expected, f"packages/{unit}"), expected)
 
     def test_sensitive_and_external_sources_are_not_resolved(self):
-        external = Path(tempfile.mkdtemp(prefix="graphify-external-test-"))
+        external = scratch("graphify-external-test-")
         (external / "fixture.ts").write_text("export const value = 1")
         (self.root / "linked").symlink_to(external, target_is_directory=True)
         self.assertIsNone(MONOREPO.resolve_source(str(external / "fixture.ts"), "."))
@@ -205,12 +221,9 @@ class MonorepoTests(unittest.TestCase):
             labels = {node.get("label") for node in graph["nodes"]}
             self.assertIn("Changed", labels)
             self.assertNotIn("First", labels)
-            # A remoção usa `trash` porque a política do repositório proíbe apagar
-            # arquivo em definitivo, inclusive em teste. Sem o binário, o passo é
-            # pulado em vez de falhar por motivo de ambiente.
-            if not shutil.which("trash"):
-                self.skipTest("o passo de remoção precisa do binário trash")
-            subprocess.run(["trash", str(doc)], check=True)
+            # O inventário é mockado, então tirar a fonte da lista já simula a
+            # remoção. Mexer no arquivo em disco não acrescenta cobertura e só
+            # criaria dependência de ambiente.
             files.remove("guide.md")
             MONOREPO.run(True, 1)
             graph = MONOREPO.read_json(MONOREPO.active_output() / "graph.json")
@@ -433,14 +446,14 @@ class MonorepoTests(unittest.TestCase):
         self.assertEqual(MONOREPO.units(), mapping)
 
     def test_units_reject_escape_symlink_missing_root_and_missing_directory(self):
-        (self.root / "linked").symlink_to(Path(tempfile.mkdtemp(prefix="graphify-unit-external-")), target_is_directory=True)
+        (self.root / "linked").symlink_to(scratch("graphify-unit-external-"), target_is_directory=True)
         for mapping in ({"outside": "..", "rootmeta": "."}, {"linked": "linked", "rootmeta": "."}, {"missing": "missing", "rootmeta": "."}, {"project": "."}):
             self.write(".graphify.json", json.dumps({"units": mapping}))
             with self.assertRaises(ValueError):
                 MONOREPO.units()
 
     def test_shared_graph_directory_is_rejected_before_publication(self):
-        external = Path(tempfile.mkdtemp(prefix="graphify-shared-output-"))
+        external = scratch("graphify-shared-output-")
         (self.root / "graphify-out").symlink_to(external, target_is_directory=True)
         with self.assertRaisesRegex(ValueError, "Shared"):
             MONOREPO.run(True, 2)
@@ -542,7 +555,7 @@ class MonorepoTests(unittest.TestCase):
 
 class PruneTests(unittest.TestCase):
     def setUp(self):
-        self.root = Path(tempfile.mkdtemp(prefix="graphify-prune-test-")).resolve()
+        self.root = scratch("graphify-prune-test-")
         self.root_patch = patch.object(MONOREPO, "ROOT", self.root)
         self.root_patch.start()
         self.addCleanup(self.root_patch.stop)
@@ -557,7 +570,7 @@ class PruneTests(unittest.TestCase):
         os.utime(path, (age, age))
         return path
 
-    def collect(self, command, check):
+    def collect(self, command, **kwargs):
         self.trashed.extend(Path(item) for item in command[1:])
 
     def test_keeps_recent_snapshots_and_trashes_the_rest(self):
@@ -607,7 +620,7 @@ class PruneTests(unittest.TestCase):
 
 class UpdateCommandTests(unittest.TestCase):
     def setUp(self):
-        self.root = Path(tempfile.mkdtemp(prefix="graphify-command-test-")).resolve()
+        self.root = scratch("graphify-command-test-")
         self.root_patch = patch.object(MONOREPO, "ROOT", self.root)
         self.root_patch.start()
         self.addCleanup(self.root_patch.stop)
@@ -618,7 +631,7 @@ class UpdateCommandTests(unittest.TestCase):
         Each case gets its own directory so no test has to remove a file to
         change the detected package manager.
         """
-        root = Path(tempfile.mkdtemp(prefix="graphify-command-case-")).resolve()
+        root = scratch("graphify-command-case-")
         (root / "package.json").write_text(json.dumps({"scripts": {"graph:update": "sh scripts/graphify-run.sh --update-code"}}))
         if lockfile:
             (root / lockfile).write_text("")
@@ -677,7 +690,7 @@ class CoverageGapTests(unittest.TestCase):
 
 class BackupRetentionTests(unittest.TestCase):
     def setUp(self):
-        self.root = Path(tempfile.mkdtemp(prefix="graphify-backup-test-")).resolve()
+        self.root = scratch("graphify-backup-test-")
         self.trashed = []
 
     def make(self, name, age):
@@ -686,7 +699,7 @@ class BackupRetentionTests(unittest.TestCase):
         os.utime(path, (age, age))
         return path
 
-    def collect(self, command, check):
+    def collect(self, command, **kwargs):
         self.trashed.extend(Path(item) for item in command[1:])
 
     def prune(self, keep):
@@ -715,6 +728,16 @@ class BackupRetentionTests(unittest.TestCase):
             self.make("graphify-%032x" % index, 2000 + index)
         self.prune(3)
         self.assertNotIn("20260907_openrouter_removal", {path.name for path in self.trashed})
+
+    def test_missing_trash_binary_preserves_every_backup(self):
+        for index in range(5):
+            self.make("graphify-%032x" % index, 1000 + index)
+        with patch.object(MONOREPO.subprocess, "run", side_effect=self.collect), \
+             patch.object(MONOREPO.shutil, "which", return_value=None):
+            result = MONOREPO.prune_backups(keep=2, root=self.root)
+        self.assertEqual(result["prune_skipped"], "trash_missing")
+        self.assertEqual(self.trashed, [])
+        self.assertEqual(len(list(self.root.iterdir())), 5)
 
 
 if __name__ == "__main__":

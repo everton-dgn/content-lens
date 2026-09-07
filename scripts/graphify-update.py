@@ -41,7 +41,7 @@ def discard(paths):
         return []
     if not shutil.which("trash"):
         return None
-    subprocess.run(["trash", *[str(path) for path in targets]], check=True)
+    subprocess.run(["trash", *[str(path) for path in targets]], check=True, timeout=SUBPROCESS_TIMEOUT)
     return targets
 
 
@@ -137,7 +137,9 @@ def prune_backups(keep=KEEP_SNAPSHOTS, root=None):
     )
     expired = backups[keep:]
     handled = discard(expired)
-    return {"trashed_backups": 0 if handled is None else len(expired)}
+    if handled is None:
+        return {"trashed_backups": 0, "prune_skipped": "trash_missing"}
+    return {"trashed_backups": len(expired)}
 
 
 def sensitive(path):

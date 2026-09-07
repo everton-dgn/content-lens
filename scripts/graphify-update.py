@@ -22,6 +22,11 @@ ARTIFACTS = ("graph.json", "graph.html", "GRAPH_TREE.html", ".graphify_labels.js
 # Snapshots to keep besides the published one. Each run stores a full copy of
 # the graph, so an unbounded runs/ directory grows by that size on every commit.
 KEEP_SNAPSHOTS = 3
+# Teto para os subprocessos de exportação e merge. Um evento automático espera o
+# lock com `LOCK_EX` bloqueante, então um subprocesso travado seguraria o lock
+# indefinidamente e empilharia workers dos hooks. O limite converte a trava em
+# falha visível, que preserva `current` e libera o lock.
+SUBPROCESS_TIMEOUT = 900
 
 
 def discard(paths):
@@ -103,27 +108,34 @@ def prune_snapshots(keep=KEEP_SNAPSHOTS):
     return {"trashed_snapshots": len(expired), "trashed_export_contexts": len(contexts)}
 
 
-def prune_backups(keep=KEEP_SNAPSHOTS, root=Path("/tmp/claude-backups")):
+def backup_root():
+    """Directory holding publication backups, inside the ignored output tree.
+
+    A fixed path under /tmp is world-writable: another local user can pre-create
+    it as a symlink and redirect both the copy in `publish` and the trash call in
+    `prune_backups` to a directory of their choosing (CWE-377). Keeping the
+    backups next to the snapshots they roll back removes that exposure and keeps
+    the retention on one tree.
+    """
+    return ROOT / "graphify-out" / "backups"
+
+
+def prune_backups(keep=KEEP_SNAPSHOTS, root=None):
     """Trash publication backups older than the most recent `keep`.
 
-    `publish` copies the replaced artifacts to /tmp/claude-backups before moving
-    the pointer. Those copies are the rollback path for the runs still on disk,
-    so the retention matches the snapshot retention.
-
-    Setup backups written as `graphify-setup-*` get their own bucket, so a burst
-    of publications cannot evict them. Backups from unrelated tasks use other
-    names and are never touched here.
+    `publish` copies the replaced artifacts here before moving the pointer, so
+    these are the rollback path for the runs still on disk and the retention
+    matches the snapshot retention.
     """
+    root = backup_root() if root is None else root
     if not root.is_dir():
         return {"trashed_backups": 0}
-    buckets = {"runs": [], "setup": []}
-    for path in root.glob("graphify-*"):
-        if path.is_dir():
-            buckets["setup" if path.name.startswith("graphify-setup-") else "runs"].append(path)
-    expired = []
-    for paths in buckets.values():
-        paths.sort(key=lambda path: path.stat().st_mtime, reverse=True)
-        expired.extend(paths[keep:])
+    backups = sorted(
+        (path for path in root.glob("graphify-*") if path.is_dir()),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    expired = backups[keep:]
     handled = discard(expired)
     return {"trashed_backups": 0 if handled is None else len(expired)}
 
@@ -500,7 +512,7 @@ def publish(stage):
         if not (stage / name).is_file():
             raise ValueError(f"Incomplete snapshot: {name}")
     identifier = stage.name
-    backup = Path("/tmp/claude-backups") / ("graphify-" + identifier)
+    backup = backup_root() / ("graphify-" + identifier)
     backup.mkdir(parents=True)
     current = out / "current"
     if not current.is_symlink():
@@ -571,8 +583,8 @@ def render(stage, records, problems, provenance):
     export_cwd = stage.parent.parent / ("export-context-" + stage.name)
     export_cwd.mkdir()
     (export_cwd / "graphify-out").symlink_to(stage, target_is_directory=True)
-    subprocess.run([sys.executable, "-B", "-m", "graphify", "export", "html", "--graph", str(stage / "graph.json"), "--labels", str(stage / ".graphify_labels.json")], cwd=export_cwd, check=True)
-    subprocess.run([sys.executable, "-B", "-m", "graphify", "tree", "--graph", str(stage / "graph.json"), "--output", str(stage / "GRAPH_TREE.html"), "--root", ".", "--label", ROOT.name], cwd=export_cwd, check=True)
+    subprocess.run([sys.executable, "-B", "-m", "graphify", "export", "html", "--graph", str(stage / "graph.json"), "--labels", str(stage / ".graphify_labels.json")], cwd=export_cwd, check=True, timeout=SUBPROCESS_TIMEOUT)
+    subprocess.run([sys.executable, "-B", "-m", "graphify", "tree", "--graph", str(stage / "graph.json"), "--output", str(stage / "GRAPH_TREE.html"), "--root", ".", "--label", ROOT.name], cwd=export_cwd, check=True, timeout=SUBPROCESS_TIMEOUT)
     # The context only carries a symlink used while rendering. Removing it here
     # keeps one directory per run from piling up next to the snapshots.
     discard([export_cwd / "graphify-out", export_cwd])
@@ -731,7 +743,7 @@ def run(update_code, workers, semantic_input=None):
         graph = build_from_json(read_json(Path(graph_paths[0])), root=ROOT)
         write_json(stage / "merged.json", nx.node_link_data(graph, edges="links"))
     else:
-        subprocess.run([sys.executable, "-B", "-m", "graphify", "merge-graphs", *graph_paths, "--out", str(stage / "merged.json")], check=True)
+        subprocess.run([sys.executable, "-B", "-m", "graphify", "merge-graphs", *graph_paths, "--out", str(stage / "merged.json")], check=True, timeout=SUBPROCESS_TIMEOUT)
     provenance = {"run": identifier, "assembled_at": datetime.now(timezone.utc).isoformat(), "assembled_at_commit": head_commit(), "units": saved_units, "input_hashes": input_hashes, "update_code": update_code, "workers": workers, "source_snapshot": snapshot, "code_snapshot": code if update_code else state.get("code_snapshot", {}), "mapping": mapping, "engine": engine, "code_engine": engine if update_code else state.get("code_engine"), "updated_units": changed_units}
     provenance["semantic_hashes"] = semantic_hashes
     summary = render(stage, records, problems, provenance)

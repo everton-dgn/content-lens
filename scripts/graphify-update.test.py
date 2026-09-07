@@ -4,6 +4,7 @@ import importlib.util
 import io
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -204,6 +205,11 @@ class MonorepoTests(unittest.TestCase):
             labels = {node.get("label") for node in graph["nodes"]}
             self.assertIn("Changed", labels)
             self.assertNotIn("First", labels)
+            # A remoção usa `trash` porque a política do repositório proíbe apagar
+            # arquivo em definitivo, inclusive em teste. Sem o binário, o passo é
+            # pulado em vez de falhar por motivo de ambiente.
+            if not shutil.which("trash"):
+                self.skipTest("o passo de remoção precisa do binário trash")
             subprocess.run(["trash", str(doc)], check=True)
             files.remove("guide.md")
             MONOREPO.run(True, 1)
@@ -688,28 +694,27 @@ class BackupRetentionTests(unittest.TestCase):
              patch.object(MONOREPO.shutil, "which", return_value="/usr/bin/trash"):
             return MONOREPO.prune_backups(keep=keep, root=self.root)
 
-    def test_setup_backups_are_not_evicted_by_publication_backups(self):
-        self.make("graphify-setup-20260101", 1)
-        for index in range(5):
-            self.make("graphify-%032x" % index, 2000 + index)
-        result = self.prune(3)
-        self.assertNotIn("graphify-setup-20260101", {path.name for path in self.trashed})
-        self.assertEqual(result["trashed_backups"], 2)
+    def test_backup_root_lives_inside_the_ignored_output_tree(self):
+        # Um caminho fixo sob /tmp é gravável por outro usuário local, que pode
+        # pré-criar um symlink e redirecionar a cópia e a remoção (CWE-377).
+        root = MONOREPO.backup_root()
+        self.assertEqual(root.parent.name, "graphify-out")
+        self.assertTrue(root.is_relative_to(MONOREPO.ROOT))
 
-    def test_unrelated_dated_backups_are_never_touched(self):
+    def test_only_the_most_recent_backups_survive(self):
+        for index in range(5):
+            self.make("graphify-%032x" % index, 1000 + index)
+        result = self.prune(2)
+        self.assertEqual(result["trashed_backups"], 3)
+        self.assertEqual({path.name for path in self.trashed},
+                         {"graphify-%032x" % index for index in range(3)})
+
+    def test_unrelated_directories_are_never_touched(self):
         self.make("20260907_openrouter_removal", 1)
         for index in range(5):
             self.make("graphify-%032x" % index, 2000 + index)
         self.prune(3)
         self.assertNotIn("20260907_openrouter_removal", {path.name for path in self.trashed})
-
-    def test_setup_bucket_keeps_only_the_most_recent(self):
-        for index in range(5):
-            self.make(f"graphify-setup-2026010{index}", 1000 + index)
-        result = self.prune(2)
-        self.assertEqual(result["trashed_backups"], 3)
-        self.assertEqual({path.name for path in self.trashed},
-                         {"graphify-setup-20260100", "graphify-setup-20260101", "graphify-setup-20260102"})
 
 
 if __name__ == "__main__":

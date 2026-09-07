@@ -75,9 +75,13 @@ the previous graph in place.
 A snapshot of this repository takes about 25 MB, so every publication prunes
 the older ones. The three most recent runs are kept, plus the one `current`
 points at even when it is older, and the matching backups in
-`/tmp/claude-backups` follow the same retention. Everything goes to the trash,
+`graphify-out/backups/` follow the same retention. Everything goes to the trash,
 never a permanent delete, and a missing `trash` binary leaves every snapshot in
 place and reports `prune_skipped`.
+
+Backups live inside the output tree rather than a fixed path under `/tmp`,
+which any local user can pre-create as a symlink to redirect both the copy and
+the later removal.
 
 Each run reports what it pruned in `trashed_snapshots`,
 `trashed_export_contexts` and `trashed_backups`. Change the retention through

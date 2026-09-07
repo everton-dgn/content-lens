@@ -40,6 +40,8 @@ pnpm-debug.log*
 /plans/
 .mcp.json
 .serena/
+/graphify-out/
+__pycache__/
 
 # Environment variables
 .env*

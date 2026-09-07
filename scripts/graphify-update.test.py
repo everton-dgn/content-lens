@@ -127,7 +127,10 @@ class MonorepoTests(unittest.TestCase):
         records = {"guide.md": {"status": "inventory_only", "reason": "no_semantic_entities", "freshness": "verified"}}
         MONOREPO.classify_inventory(records)
         self.assertEqual(MONOREPO.coverage_gaps(records)["pending_extraction"], [])
-        self.assertFalse(MONOREPO.coverage_gaps(records)["coverage_complete"])
+        # Segue listado, agora em `no_entity_files`, sem travar a métrica.
+        self.assertEqual(MONOREPO.coverage_gaps(records)["no_entity_files"], ["guide.md"])
+        self.assertEqual(MONOREPO.coverage_gaps(records)["unrepresented_files"], [])
+        self.assertTrue(MONOREPO.coverage_gaps(records)["coverage_complete"])
         records["guide.md"]["freshness"] = "changed"
         MONOREPO.classify_inventory(records)
         self.assertEqual(MONOREPO.coverage_gaps(records)["pending_extraction"], ["guide.md"])
@@ -640,6 +643,73 @@ class UpdateCommandTests(unittest.TestCase):
     def test_unreadable_manifest_does_not_break_the_report(self):
         (self.root / "package.json").write_text("{ broken")
         self.assertEqual(MONOREPO.update_commands()[0], "sh scripts/graphify-run.sh --update-code")
+
+
+class CoverageGapTests(unittest.TestCase):
+    def test_verified_file_without_entities_does_not_block_coverage(self):
+        records = {"pnpm-lock.yaml": {"status": "inventory_only", "unit": "rootmeta",
+                                      "reason": "no_semantic_entities", "freshness": "verified"}}
+        result = MONOREPO.coverage_gaps(records)
+        self.assertEqual(result["unrepresented_files"], [])
+        self.assertEqual(result["no_entity_files"], ["pnpm-lock.yaml"])
+        self.assertTrue(result["coverage_complete"])
+
+    def test_file_without_entities_still_blocks_while_it_changed(self):
+        records = {"notes.md": {"status": "inventory_only", "unit": "rootmeta",
+                                "reason": "no_semantic_entities", "freshness": "changed"}}
+        result = MONOREPO.coverage_gaps(records)
+        self.assertEqual(result["unrepresented_files"], ["notes.md"])
+        self.assertEqual(result["pending_extraction"], ["notes.md"])
+
+    def test_document_awaiting_extraction_is_reported_as_a_gap(self):
+        records = {"docs/guide.md": {"status": "inventory_only", "unit": "rootmeta",
+                                     "reason": "pending_semantic_extraction"}}
+        result = MONOREPO.coverage_gaps(records)
+        self.assertEqual(result["unrepresented_files"], ["docs/guide.md"])
+        self.assertFalse(result["coverage_complete"])
+
+
+class BackupRetentionTests(unittest.TestCase):
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="graphify-backup-test-")).resolve()
+        self.trashed = []
+
+    def make(self, name, age):
+        path = self.root / name
+        path.mkdir()
+        os.utime(path, (age, age))
+        return path
+
+    def collect(self, command, check):
+        self.trashed.extend(Path(item) for item in command[1:])
+
+    def prune(self, keep):
+        with patch.object(MONOREPO.subprocess, "run", side_effect=self.collect), \
+             patch.object(MONOREPO.shutil, "which", return_value="/usr/bin/trash"):
+            return MONOREPO.prune_backups(keep=keep, root=self.root)
+
+    def test_setup_backups_are_not_evicted_by_publication_backups(self):
+        self.make("graphify-setup-20260101", 1)
+        for index in range(5):
+            self.make("graphify-%032x" % index, 2000 + index)
+        result = self.prune(3)
+        self.assertNotIn("graphify-setup-20260101", {path.name for path in self.trashed})
+        self.assertEqual(result["trashed_backups"], 2)
+
+    def test_unrelated_dated_backups_are_never_touched(self):
+        self.make("20260907_openrouter_removal", 1)
+        for index in range(5):
+            self.make("graphify-%032x" % index, 2000 + index)
+        self.prune(3)
+        self.assertNotIn("20260907_openrouter_removal", {path.name for path in self.trashed})
+
+    def test_setup_bucket_keeps_only_the_most_recent(self):
+        for index in range(5):
+            self.make(f"graphify-setup-2026010{index}", 1000 + index)
+        result = self.prune(2)
+        self.assertEqual(result["trashed_backups"], 3)
+        self.assertEqual({path.name for path in self.trashed},
+                         {"graphify-setup-20260100", "graphify-setup-20260101", "graphify-setup-20260102"})
 
 
 if __name__ == "__main__":

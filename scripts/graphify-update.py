@@ -103,23 +103,29 @@ def prune_snapshots(keep=KEEP_SNAPSHOTS):
     return {"trashed_snapshots": len(expired), "trashed_export_contexts": len(contexts)}
 
 
-def prune_backups(keep=KEEP_SNAPSHOTS):
+def prune_backups(keep=KEEP_SNAPSHOTS, root=Path("/tmp/claude-backups")):
     """Trash publication backups older than the most recent `keep`.
 
     `publish` copies the replaced artifacts to /tmp/claude-backups before moving
     the pointer. Those copies are the rollback path for the runs still on disk,
     so the retention matches the snapshot retention.
+
+    Setup backups written as `graphify-setup-*` get their own bucket, so a burst
+    of publications cannot evict them. Backups from unrelated tasks use other
+    names and are never touched here.
     """
-    root = Path("/tmp/claude-backups")
     if not root.is_dir():
         return {"trashed_backups": 0}
-    backups = sorted(
-        (path for path in root.glob("graphify-*") if path.is_dir()),
-        key=lambda path: path.stat().st_mtime,
-        reverse=True,
-    )
-    handled = discard(backups[keep:])
-    return {"trashed_backups": 0 if handled is None else len(backups[keep:])}
+    buckets = {"runs": [], "setup": []}
+    for path in root.glob("graphify-*"):
+        if path.is_dir():
+            buckets["setup" if path.name.startswith("graphify-setup-") else "runs"].append(path)
+    expired = []
+    for paths in buckets.values():
+        paths.sort(key=lambda path: path.stat().st_mtime, reverse=True)
+        expired.extend(paths[keep:])
+    handled = discard(expired)
+    return {"trashed_backups": 0 if handled is None else len(expired)}
 
 
 def sensitive(path):
@@ -338,17 +344,24 @@ def classify_inventory(records):
 
 def coverage_gaps(records):
     pending, unrepresented = [], []
+    # Fonte verificada cujo conteúdo não rende entidade fica em campo próprio:
+    # segue visível no relatório sem impedir `coverage_complete` de fechar. Sem
+    # isso, um único lockfile gerado trava a métrica para sempre.
+    no_entities = []
     for path, record in records.items():
         if record["status"].startswith("excluded_"):
             continue
+        empty = (record.get("reason") == "no_semantic_entities"
+                 and record.get("freshness") == "verified")
         if record["status"] != "represented":
-            unrepresented.append(path)
+            (no_entities if empty else unrepresented).append(path)
         if (record.get("reason") in {"pending_semantic_extraction", "pending_transcription"}
                 or record["status"] == "pending_semantic_verification"
                 or record.get("freshness") == "changed"):
             pending.append(path)
     return {"pending_extraction": sorted(pending),
             "unrepresented_files": sorted(unrepresented),
+            "no_entity_files": sorted(no_entities),
             "coverage_complete": not pending and not unrepresented}
 
 

@@ -33,8 +33,12 @@ printing the counters and the pending files as JSON.
 
 `--check` reports `up_to_date` and `coverage_complete` separately. The first
 says the snapshot matches the sources; the second says every inventoried file
-has entities. A structural run can leave `coverage_complete` false, and that is
-not a failure.
+has entities or is verified as having none. A structural run can leave
+`coverage_complete` false, and that is not a failure.
+
+A verified source whose content yields no entity, such as a generated lockfile,
+is listed under `no_entity_files` rather than `unrepresented_files`. It stays
+visible in the report without holding `coverage_complete` open forever.
 
 Do not run `graphify update .` here. It rewrites the consolidated graph with
 unit-level IDs and manifests, which belong to `scripts/graphify-update.py`.
@@ -91,11 +95,22 @@ entity.
 After the semantic pass, 817 of 818 inventoried files are represented and
 nothing is pending. The exception is `pnpm-lock.yaml`, recorded as
 `no_semantic_entities` because a generated lockfile carries no entity worth
-extracting. `coverage_complete` stays false for that one file.
+extracting, and reported under `no_entity_files`.
 
 File classification uses `graphify.detect.classify_file` rather than a local
 extension list, so shebangs, manifests and compound extensions are handled the
 same way the tool handles them.
+
+Run the updater's own tests through the launcher's interpreter, always with
+`-B`, because the `graphify-update.test.py` name is not discoverable by
+`unittest discover`:
+
+```bash
+"$(uv tool dir)/graphifyy/bin/python" -B scripts/graphify-update.test.py
+```
+
+Without `-B`, loading the updater writes `scripts/__pycache__/`, which Git
+ignores.
 
 ## Git hooks
 

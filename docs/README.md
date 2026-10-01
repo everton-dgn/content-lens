@@ -10,6 +10,7 @@ historical review evidence do not belong here.
 - [Development](development.md)
 - [System architecture](architecture.md)
 - [Implementation conventions](conventions.md)
+- [Knowledge graph](GRAPHIFY.md)
 - [Security policy](../SECURITY.md)
 
 ## Product

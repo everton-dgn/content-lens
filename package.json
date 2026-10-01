@@ -20,6 +20,7 @@
     "dev": "wxt",
     "docs:check": "node scripts/check-docs.mjs",
     "format": "biome check --write --no-errors-on-unmatched .",
+    "graph:update": "sh scripts/graphify-run.sh --update-code",
     "guard:public": "pnpm docs:check && pnpm design-system:check && pnpm brand:icons:check && pnpm lint && node scripts/ci/public-guard.ts",
     "i18n:check": "node src/i18n/generate-message-keys.ts --check",
     "i18n:generate": "node src/i18n/generate-message-keys.ts",

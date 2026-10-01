@@ -30,3 +30,24 @@ pre-push:
       run: pnpm test
     - name: public-repository-guard
       run: pnpm guard:public
+
+post-commit:
+  jobs:
+    - name: graph-update
+      run: sh scripts/graphify-run.sh --update-code --background
+
+post-merge:
+  jobs:
+    - name: graph-update
+      run: sh scripts/graphify-run.sh --update-code --background
+
+post-checkout:
+  jobs:
+    - name: graph-update
+      # {1} previous HEAD, {2} new HEAD, {3} branch flag. Skips file checkouts
+      # and a checkout that leaves HEAD unchanged.
+      run: |
+        if [ "{3}" != "1" ] || [ "{1}" = "{2}" ]; then
+          exit 0
+        fi
+        sh scripts/graphify-run.sh --update-code --background

@@ -157,7 +157,7 @@ describe('release workflow contracts', () => {
     )
 
     expect(verifyJob).toContain(
-      'uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86'
+      'uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413'
     )
     expect(verifyJob).toContain('cache: pnpm')
     expect(verifyJob).toContain('cache-dependency-path: pnpm-lock.yaml')

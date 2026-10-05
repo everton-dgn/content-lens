@@ -1,5 +1,27 @@
 # ContentLens agent rules
 
+## Repository knowledge graph
+
+- After a task with changes, once validation passes, call
+  `pnpm graph:update --background` once. Scheduling is not a published graph:
+  read `graphify-out/auto-update.log` when the task has to confirm publication.
+- Secondary worktrees neither update automatically nor write to the main graph.
+  Do not treat the base checkout's graph as evidence for the current branch.
+- Query the local graph with `graphify query "<question>"` when useful and
+  confirm each result against the cited `source_file`. Use ordinary search when
+  the graph is absent or stale; never rebuild inside a worktree to answer a
+  question.
+- Do not run `graphify update .` against the consolidated graph: IDs and
+  manifests belong to the units. Keep semantic extraction separate and
+  reconcile `.graphify.json` when the topology changes.
+- Documents and images gain entities only through a manual semantic pass with
+  `--semantic-input`, described in `docs/GRAPHIFY.md`. Hooks preserve the
+  existing layer and leave new files in `pending_extraction`.
+- `graphify-out/` is untracked local output. Read `GRAPH_REPORT.md`,
+  `coverage.json` and `diagnostics.json` there for coverage and limits, and
+  `docs/GRAPHIFY.md` for the full setup. `up_to_date` and `coverage_complete`
+  are different claims; do not read one as the other.
+
 ## Sources of truth
 
 - Read `docs/architecture.md` and `docs/conventions.md` before changing module

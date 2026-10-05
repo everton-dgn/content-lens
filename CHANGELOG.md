@@ -4,6 +4,17 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.1.0 - 2026-10-04
+
+### Added
+
+- add local knowledge graph consolidator
+
+### Fixed
+
+- harden backup path and bound export subprocesses
+- report verified empty sources separately
+
 ## 1.0.11 - 2026-10-01
 
 ### Fixed

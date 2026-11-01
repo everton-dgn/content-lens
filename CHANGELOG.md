@@ -4,6 +4,12 @@ Significant user-facing and contributor-facing changes are recorded here.
 
 ## Unreleased
 
+## 1.1.1 - 2026-11-01
+
+### Fixed
+
+- bump the github-actions group with 4 updates
+
 ## 1.1.0 - 2026-10-04
 
 ### Added

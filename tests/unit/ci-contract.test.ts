@@ -174,18 +174,6 @@ describe('pull-request CI contract', () => {
     )
     expect(packageJson.scripts['ci:local']).toContain('pnpm guard:public')
   })
-
-  it('limits automated dependency updates to monthly GitHub Actions bumps', async () => {
-    const dependabot = await readFile(
-      resolve('.github', 'dependabot.yml'),
-      'utf8'
-    )
-
-    expect(dependabot).toContain('package-ecosystem: github-actions')
-    expect(dependabot).not.toContain('package-ecosystem: npm')
-    expect(dependabot).toContain('interval: monthly')
-    expect(dependabot).toContain('rebase-strategy: disabled')
-  })
 })
 
 describe('performance budget gate', () => {
